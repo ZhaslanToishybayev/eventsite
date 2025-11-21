@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block content %}
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 60vh;">
+    <div class="card shadow-lg p-4"
+        style="width: 100%; max-width: 500px; border-radius: 15px; background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(10px);">
+        <div class="card-body text-center">
+            <div class="mb-4">
+                <i class="fa-solid fa-ban text-warning" style="font-size: 4rem;"></i>
+            </div>
+            <h2 class="mb-3" style="font-weight: 700; color: #333;">{% trans "Вход отменен" %}</h2>
+
+            <p class="text-muted mb-4">
+                {% trans "Вы отменили процесс входа через Google. Вы можете попробовать снова или войти другим
+                способом." %}
+            </p>
+
+            <div class="d-flex flex-column gap-3">
+                <a href="{% url 'login' %}" class="primary-btn text-uppercase w-100 mb-2"
+                    style="border-radius: 10px; padding: 12px;">
+                    {% trans "Вернуться на страницу входа" %}
+                </a>
+                <a href="{% url 'index' %}" class="text-muted" style="font-size: 0.9rem;">
+                    {% trans "На главную" %}
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

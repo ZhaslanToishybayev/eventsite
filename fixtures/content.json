@@ -1,0 +1,795 @@
+[
+{
+  "model": "clubs.clubcategory",
+  "pk": "e8e93fcd-32a4-44bc-a3ac-ba9452db7b32",
+  "fields": {
+    "name": "Спортивные клубы",
+    "is_active": true,
+    "created_at": "2024-05-15T15:19:47.345Z",
+    "updated_at": "2024-05-15T15:50:53.926Z"
+  }
+},
+{
+  "model": "clubs.clubcategory",
+  "pk": "e95d2fbb-b9c3-46ec-826d-a2652adc4632",
+  "fields": {
+    "name": "Профессиональные клубы",
+    "is_active": true,
+    "created_at": "2024-05-21T12:01:32.644Z",
+    "updated_at": "2024-05-21T12:01:32.644Z"
+  }
+},
+{
+  "model": "clubs.clubcategory",
+  "pk": "f14f8797-fe95-4f0d-a520-379d759a63b0",
+  "fields": {
+    "name": "Хобби клубы",
+    "is_active": true,
+    "created_at": "2024-05-21T12:00:13.269Z",
+    "updated_at": "2024-05-21T12:00:13.269Z"
+  }
+},
+{
+  "model": "clubs.city",
+  "pk": "0dc971aa-b021-4c4c-8883-247921f850b6",
+  "fields": {
+    "iata_code": "AKX",
+    "name": "Актобе",
+    "created_at": "2024-05-21T11:59:43.214Z",
+    "updated_at": "2024-05-21T11:59:43.214Z"
+  }
+},
+{
+  "model": "clubs.city",
+  "pk": "0f09bc35-24e9-4baa-9e36-60cf4a67b0d6",
+  "fields": {
+    "iata_code": "GUW",
+    "name": "Атырау",
+    "created_at": "2024-05-21T11:59:43.230Z",
+    "updated_at": "2024-05-21T11:59:43.230Z"
+  }
+},
+{
+  "model": "clubs.city",
+  "pk": "316f5fc0-9247-40f6-b712-2d84605d6e97",
+  "fields": {
+    "iata_code": "PPK",
+    "name": "Петропавловск",
+    "created_at": "2024-05-21T11:59:43.255Z",
+    "updated_at": "2024-05-21T11:59:43.255Z"
+  }
+},
+{
+  "model": "clubs.city",
+  "pk": "359623c0-5b04-4072-99ce-bdbcb3d2b3c6",
+  "fields": {
+    "iata_code": "ALA",
+    "name": "Алматы",
+    "created_at": "2024-05-21T11:59:43.135Z",
+    "updated_at": "2024-05-21T11:59:43.135Z"
+  }
+},
+{
+  "model": "clubs.city",
+  "pk": "46d6e0c0-6be6-4b4f-872d-4cd2f7f01473",
+  "fields": {
+    "iata_code": "HSA",
+    "name": "Туркестан",
+    "created_at": "2024-05-21T11:59:43.277Z",
+    "updated_at": "2024-05-21T11:59:43.277Z"
+  }
+},
+{
+  "model": "clubs.city",
+  "pk": "62c65528-bdb7-4782-9398-baafe566f111",
+  "fields": {
+    "iata_code": "KSN",
+    "name": "Костанай",
+    "created_at": "2024-05-21T11:59:43.230Z",
+    "updated_at": "2024-05-21T11:59:43.230Z"
+  }
+},
+{
+  "model": "clubs.city",
+  "pk": "67977feb-c6ad-4574-abf9-c26646eef3c9",
+  "fields": {
+    "iata_code": "PWQ",
+    "name": "Павлодар",
+    "created_at": "2024-05-21T11:59:43.245Z",
+    "updated_at": "2024-05-21T11:59:43.245Z"
+  }
+},
+{
+  "model": "clubs.city",
+  "pk": "838d38a3-49f3-446a-a41f-450256d466fe",
+  "fields": {
+    "iata_code": "DZN",
+    "name": "Жезказган",
+    "created_at": "2024-05-21T11:59:43.261Z",
+    "updated_at": "2024-05-21T11:59:43.261Z"
+  }
+},
+{
+  "model": "clubs.city",
+  "pk": "860a8605-c5b9-4fc3-b8ca-bc7e8a100c88",
+  "fields": {
+    "iata_code": "TSE",
+    "name": "Нур-Султан (Астана)",
+    "created_at": "2024-05-21T11:59:43.199Z",
+    "updated_at": "2024-05-21T11:59:43.199Z"
+  }
+},
+{
+  "model": "clubs.city",
+  "pk": "87e6e7ed-7548-468d-bc37-b3b70485d91a",
+  "fields": {
+    "iata_code": "CIT",
+    "name": "Шымкент",
+    "created_at": "2024-05-21T11:59:43.214Z",
+    "updated_at": "2024-05-21T11:59:43.214Z"
+  }
+},
+{
+  "model": "clubs.city",
+  "pk": "8940c089-fa24-4df5-9042-5d8dc691cfad",
+  "fields": {
+    "iata_code": "ALA",
+    "name": "Алматы",
+    "created_at": "2024-05-15T15:17:05.516Z",
+    "updated_at": "2024-05-15T15:54:07.843Z"
+  }
+},
+{
+  "model": "clubs.city",
+  "pk": "b3008868-84a0-4805-80fe-63c5fc3c3db9",
+  "fields": {
+    "iata_code": "SCO",
+    "name": "Актау",
+    "created_at": "2024-05-21T11:59:43.214Z",
+    "updated_at": "2024-05-21T11:59:43.214Z"
+  }
+},
+{
+  "model": "clubs.city",
+  "pk": "b8fb72d4-3121-4b00-a116-df48717bb8f1",
+  "fields": {
+    "iata_code": "URA",
+    "name": "Уральск",
+    "created_at": "2024-05-21T11:59:43.261Z",
+    "updated_at": "2024-05-21T11:59:43.261Z"
+  }
+},
+{
+  "model": "clubs.city",
+  "pk": "cf7595f8-1dc2-41cc-9303-d498c0cde901",
+  "fields": {
+    "iata_code": "UKK",
+    "name": "Усть-Каменогорск",
+    "created_at": "2024-05-21T11:59:43.261Z",
+    "updated_at": "2024-05-21T11:59:43.261Z"
+  }
+},
+{
+  "model": "clubs.city",
+  "pk": "d43c83aa-e042-4a4f-99cf-26d33a72d6a3",
+  "fields": {
+    "iata_code": "KRG",
+    "name": "Караганда",
+    "created_at": "2024-05-15T15:54:23.493Z",
+    "updated_at": "2024-05-15T15:54:23.493Z"
+  }
+},
+{
+  "model": "clubs.city",
+  "pk": "ee80152c-eedf-44e5-8338-feb117158a16",
+  "fields": {
+    "iata_code": "DMB",
+    "name": "Тараз",
+    "created_at": "2024-05-21T11:59:43.261Z",
+    "updated_at": "2024-05-21T11:59:43.261Z"
+  }
+},
+{
+  "model": "clubs.city",
+  "pk": "f23d0eb0-57c2-41f7-8d31-9bfee7404f71",
+  "fields": {
+    "iata_code": "KZO",
+    "name": "Кызылорда",
+    "created_at": "2024-05-21T11:59:43.245Z",
+    "updated_at": "2024-05-21T11:59:43.245Z"
+  }
+},
+{
+  "model": "clubs.city",
+  "pk": "f9976cf6-9e6d-4cca-9fdd-af203758d8ec",
+  "fields": {
+    "iata_code": "KGF",
+    "name": "Караганда",
+    "created_at": "2024-05-21T11:59:43.230Z",
+    "updated_at": "2024-05-21T11:59:43.230Z"
+  }
+},
+{
+  "model": "clubs.club",
+  "pk": "0c528861-d6d7-47ff-aa7e-25189b5aec94",
+  "fields": {
+    "name": "Книжные Вдохновители",
+    "category": "f14f8797-fe95-4f0d-a520-379d759a63b0",
+    "logo": "club/logos/book-and-studen-logo-free-vector_3B6hreV.jpg",
+    "whatsapp_group_link": null,
+    "creater": "f0c2895a-b172-41e3-b299-85f755bf923e",
+    "description": "Клуб 'Книжные Вдохновители' приглашает всех, кто ценит красоту слова и хочет погрузиться в мир литературы. Мы проводим обсуждения книг, литературные вечера, креативные мастер-классы и книжные выставки.",
+    "email": "booklovers@example.com",
+    "phone": "+77777777777",
+    "city": "8940c089-fa24-4df5-9042-5d8dc691cfad",
+    "address": "Ауезова 180",
+    "members_count": 0,
+    "likes_count": 0,
+    "is_active": true,
+    "is_private": false,
+    "created_at": "2024-05-21T12:46:14.626Z",
+    "updated_at": "2024-06-19T15:14:26.063Z",
+    "partners_count": 0,
+    "managers": [
+      "e8e48d41-0d19-4e08-abbe-517ce0b72cb7",
+      "f0c2895a-b172-41e3-b299-85f755bf923e"
+    ],
+    "members": [],
+    "likes": [],
+    "partners": []
+  }
+},
+{
+  "model": "clubs.club",
+  "pk": "4d75267e-8869-4511-9417-154f7af2445d",
+  "fields": {
+    "name": "Красавцы 2",
+    "category": "e8e93fcd-32a4-44bc-a3ac-ba9452db7b32",
+    "logo": "club/logos/club-icon.png",
+    "whatsapp_group_link": null,
+    "creater": "e8e48d41-0d19-4e08-abbe-517ce0b72cb7",
+    "description": "выфвфыввыфвфыввыфвфыввыфвфыввыфвфыввыфвфыввыфвфыввыфвфыввыфвфыввыфвфыввыфвфыввыфвфыввыфвфыввыфвфыввыфвфыввыфвфыввыфвфыввыфвфыввыфвфыввыфвфыввыфвфыввыфвфыввыфвфыввыфвфыввыфвфыввыфвфыввыфвфыввыфвфыввыфвфыввыфвфыввыфвфыввыфвфыввыфвфыввыфвфыв",
+    "email": "karzhaubayerbolat@gmail.com",
+    "phone": "+77772222224",
+    "city": "8940c089-fa24-4df5-9042-5d8dc691cfad",
+    "address": "Абая 101",
+    "members_count": 0,
+    "likes_count": 0,
+    "is_active": false,
+    "is_private": false,
+    "created_at": "2024-07-01T05:40:59.787Z",
+    "updated_at": "2024-08-28T11:30:35.203Z",
+    "partners_count": 0,
+    "managers": [
+      "e8e48d41-0d19-4e08-abbe-517ce0b72cb7"
+    ],
+    "members": [],
+    "likes": [],
+    "partners": []
+  }
+},
+{
+  "model": "clubs.club",
+  "pk": "8f85a1c0-21dc-40f9-a1c5-840f860b59ab",
+  "fields": {
+    "name": "Танцующие Экстазы",
+    "category": "f14f8797-fe95-4f0d-a520-379d759a63b0",
+    "logo": "club/logos/depositphotos_46573749-stock-illustration-abstract-vector-logo-design-templat_2Rx7nwW.jpg",
+    "whatsapp_group_link": null,
+    "creater": "a5becb03-a239-4bc5-9847-24777d20dc44",
+    "description": "Клуб 'Танцующие Экстазы' приглашает всех, кто обожает движение и ритм. Мы проводим танцевальные вечера, мастер-классы по различным стилям танцев, флешмобы и шоу для настоящих энтузиастов. Вступай наш клуб и танцуй с настоящими профессионалами",
+    "email": "danceecstasy@example.com",
+    "phone": "+77777777777",
+    "city": "8940c089-fa24-4df5-9042-5d8dc691cfad",
+    "address": "Наурызбай батыр 150",
+    "members_count": 0,
+    "likes_count": 0,
+    "is_active": true,
+    "is_private": false,
+    "created_at": "2024-05-21T12:52:35.163Z",
+    "updated_at": "2024-06-18T05:58:24.435Z",
+    "partners_count": 0,
+    "managers": [
+      "a5becb03-a239-4bc5-9847-24777d20dc44"
+    ],
+    "members": [],
+    "likes": [],
+    "partners": []
+  }
+},
+{
+  "model": "clubs.club",
+  "pk": "96eadd2b-f2f8-4cdb-b087-bd54709d3e5d",
+  "fields": {
+    "name": "Красавцы",
+    "category": "e8e93fcd-32a4-44bc-a3ac-ba9452db7b32",
+    "logo": "club/logos/club-icon.png",
+    "whatsapp_group_link": null,
+    "creater": "e8e48d41-0d19-4e08-abbe-517ce0b72cb7",
+    "description": "выфвфыввыфвфыввыфвфыввыфвфыввыфвфыввыфвфыввыфвфыввыфвфыввыфвфыввыфвфыввыфвфыввыфвфыввыфвфыввыфвфыввыфвфыввыфвфыввыфвфыввыфвфыввыфвфыввыфвфыввыфвфыввыфвфыввыфвфыввыфвфыввыфвфыввыфвфыввыфвфыввыфвфыввыфвфыввыфвфыввыфвфыввыфвфыввыфвфыввыфвфыв",
+    "email": "karzhaubayerbolat@gmail.com",
+    "phone": "+77772222224",
+    "city": "8940c089-fa24-4df5-9042-5d8dc691cfad",
+    "address": "Абая 101",
+    "members_count": 0,
+    "likes_count": 0,
+    "is_active": false,
+    "is_private": false,
+    "created_at": "2024-07-01T05:40:02.498Z",
+    "updated_at": "2024-08-28T06:58:37.921Z",
+    "partners_count": 0,
+    "managers": [
+      "e8e48d41-0d19-4e08-abbe-517ce0b72cb7"
+    ],
+    "members": [
+      "e8e48d41-0d19-4e08-abbe-517ce0b72cb7"
+    ],
+    "likes": [],
+    "partners": []
+  }
+},
+{
+  "model": "clubs.club",
+  "pk": "98c76ea2-c457-4e82-b6ea-6b834bc79a87",
+  "fields": {
+    "name": "Вершинные Скалолазы",
+    "category": "e8e93fcd-32a4-44bc-a3ac-ba9452db7b32",
+    "logo": "club/logos/0c221465875e886bef97c57ae6d80875_IOcJRwT.jpg",
+    "whatsapp_group_link": null,
+    "creater": "f0c2895a-b172-41e3-b299-85f755bf923e",
+    "description": "orem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing",
+    "email": "gorec@gmail.com",
+    "phone": "+77085872998",
+    "city": "8940c089-fa24-4df5-9042-5d8dc691cfad",
+    "address": "Алимжанова 51",
+    "members_count": 1,
+    "likes_count": 0,
+    "is_active": true,
+    "is_private": false,
+    "created_at": "2024-05-15T15:52:13.109Z",
+    "updated_at": "2024-09-10T04:38:33.455Z",
+    "partners_count": 0,
+    "managers": [
+      "e8e48d41-0d19-4e08-abbe-517ce0b72cb7",
+      "f0c2895a-b172-41e3-b299-85f755bf923e"
+    ],
+    "members": [
+      "e8e48d41-0d19-4e08-abbe-517ce0b72cb7"
+    ],
+    "likes": [],
+    "partners": []
+  }
+},
+{
+  "model": "clubs.club",
+  "pk": "c300bdf3-a152-4c9f-9d3d-cb752e947f93",
+  "fields": {
+    "name": "на Эверест",
+    "category": "e8e93fcd-32a4-44bc-a3ac-ba9452db7b32",
+    "logo": "club/logos/na-everest_6I6Ujq1.jpg",
+    "whatsapp_group_link": null,
+    "creater": "5e250a6a-2f57-4f8c-9c0a-14fb8b9643a1",
+    "description": "Это сообщество истинных любителей приключений и духовного роста, объединенных страстью к путешествиям по вершинам мира. Мы вдохновляем и поддерживаем друг друга в освоении горных троп и восхождений, делясь опытом и знаниями. В клубе ценятся смелость, уважение к природе и дружба. Наша миссия — не просто достичь вершин, но и обрести новые горизонты внутри себя, преодолевая горные преграды с собственной силой и силой команды. Присоединяйтесь к нам и откройте для себя мир высоких гор вместе с единомышленниками, готовыми вместе с вами преодолевать любые высоты!",
+    "email": "gorec@gmail.com",
+    "phone": "+77771112211",
+    "city": "8940c089-fa24-4df5-9042-5d8dc691cfad",
+    "address": "Абая 46",
+    "members_count": 0,
+    "likes_count": 0,
+    "is_active": true,
+    "is_private": false,
+    "created_at": "2024-05-21T12:44:58.362Z",
+    "updated_at": "2024-08-29T04:40:45.576Z",
+    "partners_count": 0,
+    "managers": [
+      "5e250a6a-2f57-4f8c-9c0a-14fb8b9643a1",
+      "6d50c35b-25d7-4ccb-b92d-248122958430",
+      "e341bd4e-2e2b-435c-9919-59151970e6bb",
+      "e8e48d41-0d19-4e08-abbe-517ce0b72cb7"
+    ],
+    "members": [
+      "f0c2895a-b172-41e3-b299-85f755bf923e"
+    ],
+    "likes": [],
+    "partners": [
+      "c9fa4ac3-e77a-4f78-81fc-69212ecfe7af"
+    ]
+  }
+},
+{
+  "model": "clubs.club",
+  "pk": "c9fa4ac3-e77a-4f78-81fc-69212ecfe7af",
+  "fields": {
+    "name": "Художественная Палитра",
+    "category": "f14f8797-fe95-4f0d-a520-379d759a63b0",
+    "logo": "club/logos/club-icon.png",
+    "whatsapp_group_link": null,
+    "creater": "168371d8-6782-4b49-a6fe-435da130b4ca",
+    "description": "Клуб 'Художественная Палитра' приглашает всех, кто творит и наслаждается искусством. Мы организуем художественные выставки, мастер-классы по рисованию и скульптуре, а также творческие встречи для любителей изобразительного искусства.",
+    "email": "artpalette@example.com",
+    "phone": "+77777777777",
+    "city": "8940c089-fa24-4df5-9042-5d8dc691cfad",
+    "address": "Сатпаева 55",
+    "members_count": 1,
+    "likes_count": 1,
+    "is_active": true,
+    "is_private": false,
+    "created_at": "2024-05-21T12:58:24.926Z",
+    "updated_at": "2024-08-27T09:13:58.439Z",
+    "partners_count": 0,
+    "managers": [
+      "168371d8-6782-4b49-a6fe-435da130b4ca"
+    ],
+    "members": [],
+    "likes": [],
+    "partners": [
+      "c300bdf3-a152-4c9f-9d3d-cb752e947f93"
+    ]
+  }
+},
+{
+  "model": "clubs.club",
+  "pk": "cec70880-4c1f-4022-b6b2-9bc49bdc85c8",
+  "fields": {
+    "name": "Игровые Магистры",
+    "category": "f14f8797-fe95-4f0d-a520-379d759a63b0",
+    "logo": "club/logos/e5da351e9780000a1d9711bc3c845207_1bCxAUj.jpg",
+    "whatsapp_group_link": null,
+    "creater": "6d50c35b-25d7-4ccb-b92d-248122958430",
+    "description": "Клуб 'Игровые Магистры' создан для всех, кто ценит мир виртуальных приключений и стратегий. Мы организуем турниры, LAN-вечера, косплей-конкурсы и другие мероприятия для настоящих геймеров. Вступай в нашу команду для дальнейших веселых времяпроваждении",
+    "email": "gamingmasters@example.com",
+    "phone": "+77777777777",
+    "city": "8940c089-fa24-4df5-9042-5d8dc691cfad",
+    "address": "Конаева 40",
+    "members_count": 0,
+    "likes_count": 1,
+    "is_active": false,
+    "is_private": false,
+    "created_at": "2024-05-21T12:47:24.899Z",
+    "updated_at": "2024-09-06T05:12:38.217Z",
+    "partners_count": 0,
+    "managers": [
+      "6d50c35b-25d7-4ccb-b92d-248122958430",
+      "e8e48d41-0d19-4e08-abbe-517ce0b72cb7"
+    ],
+    "members": [],
+    "likes": [
+      "e8e48d41-0d19-4e08-abbe-517ce0b72cb7"
+    ],
+    "partners": []
+  }
+},
+{
+  "model": "clubs.club",
+  "pk": "d469d5aa-f964-4e53-b85f-e70b5c8ec351",
+  "fields": {
+    "name": "ФотоАрт Мастерская",
+    "category": "f14f8797-fe95-4f0d-a520-379d759a63b0",
+    "logo": "club/logos/club-icon.png",
+    "whatsapp_group_link": null,
+    "creater": "fd8e8802-5bd2-4c28-801d-d4ea0d9b98e5",
+    "description": "Клуб 'ФотоАрт Мастерская' объединяет всех, кто видит мир сквозь объектив фотокамеры. Мы организуем фотовыставки, мастер-классы, фотопрогулки и конкурсы для творческих фотографов всех уровней. Вступай в наше сообщество и участвуй в крутых фотосъемках",
+    "email": "photoartstudio@example.com",
+    "phone": "+77777777777",
+    "city": "8940c089-fa24-4df5-9042-5d8dc691cfad",
+    "address": "Тимирязева 88",
+    "members_count": 0,
+    "likes_count": 0,
+    "is_active": true,
+    "is_private": false,
+    "created_at": "2024-05-21T12:57:26.012Z",
+    "updated_at": "2024-05-21T12:57:26.012Z",
+    "partners_count": 0,
+    "managers": [
+      "fd8e8802-5bd2-4c28-801d-d4ea0d9b98e5"
+    ],
+    "members": [],
+    "likes": [],
+    "partners": []
+  }
+},
+{
+  "model": "clubs.clubjoinrequest",
+  "pk": "db54f562-122e-4066-bc14-7f11c380bc23",
+  "fields": {
+    "user": "f0c2895a-b172-41e3-b299-85f755bf923e",
+    "club": "c300bdf3-a152-4c9f-9d3d-cb752e947f93",
+    "approved": true,
+    "created_at": "2024-05-28T06:59:17.820Z",
+    "updated_at": "2024-05-28T07:02:59.330Z"
+  }
+},
+{
+  "model": "clubs.clubpartnershiprequest",
+  "pk": "034e3b84-b2eb-43ba-a69e-d30058c4f907",
+  "fields": {
+    "club_requester": "cec70880-4c1f-4022-b6b2-9bc49bdc85c8",
+    "club_accepter": "98c76ea2-c457-4e82-b6ea-6b834bc79a87",
+    "approved": null,
+    "created_at": "2024-06-03T14:56:50.366Z",
+    "updated_at": "2024-06-03T14:56:50.366Z"
+  }
+},
+{
+  "model": "clubs.clubservice",
+  "pk": "261f0b71-4be5-426b-8b6d-88f8330a5971",
+  "fields": {
+    "club": "0c528861-d6d7-47ff-aa7e-25189b5aec94",
+    "name": "Инструктаж по забору на гору",
+    "description": "Инструктаж по забору на гору Инструктаж по забору на гору Инструктаж по забору на гору Инструктаж по забору на гору Инструктаж по забору на гору Инструктаж по забору на гору Инструктаж по забору на гору Инструктаж по забору на гору Инструктаж по забору на гору Инструктаж по забору на гору Инструктаж по забору на гору Инструктаж по забору на гору Инструктаж по забору на гору Инструктаж по забору на гору Инструктаж по забору на гору Инструктаж по забору на гору Инструктаж по забору на гору Инструктаж по забору на гору Инструктаж по забору на гору Инструктаж по забору на гору Инструктаж по забору на гору Инструктаж по забору на гору Инструктаж по забору на гору Инструктаж по забору на гору Инструктаж по забору на гору Инструктаж по забору на гору Инструктаж по забору на гору Инструктаж по забору на гору Инструктаж по забору на гору Инструктаж по забору на гору Инструктаж по забору на гору Инструктаж по забору на гору Инструктаж по забору на гору Инструктаж по забору на гору Инструктаж по забору на гору",
+    "price": "10000.00",
+    "created_at": "2024-05-31T04:57:57.313Z",
+    "updated_at": "2024-06-27T05:53:18.905Z"
+  }
+},
+{
+  "model": "clubs.clubservice",
+  "pk": "f9a0778d-3e9e-42ac-838c-18655829d873",
+  "fields": {
+    "club": "0c528861-d6d7-47ff-aa7e-25189b5aec94",
+    "name": "Создание аудиокниги",
+    "description": "Создание аудиокниги",
+    "price": "10000.00",
+    "created_at": "2024-05-31T12:48:35.753Z",
+    "updated_at": "2024-05-31T12:48:35.753Z"
+  }
+},
+{
+  "model": "clubs.serviceforclubs",
+  "pk": "68e15df0-ce3f-499f-90f2-20e421d403f1",
+  "fields": {
+    "name": "Брендирование одежды",
+    "description": "Вышивка и печать логотипа сообществ на кепки, футболки, кофты, флаги и многом другом",
+    "min_price": "5000.00",
+    "max_price": "20000.00",
+    "phone": "+77777777777",
+    "image": "clubs/service_for_clubs/atributika.jpg",
+    "created_at": "2024-09-05T10:13:26.713Z",
+    "updated_at": "2024-09-06T05:05:25.684Z"
+  }
+},
+{
+  "model": "clubs.serviceforclubs",
+  "pk": "82775817-158a-44b7-8fbb-f70ad73194f3",
+  "fields": {
+    "name": "Организация мероприятии",
+    "description": "Предоставление льготных цен для сообществ на необходимое для проведении мероприятий",
+    "min_price": "5000.00",
+    "max_price": "20000.00",
+    "phone": "+77774441177",
+    "image": "clubs/service_for_clubs/audience.jpg",
+    "created_at": "2024-09-05T10:16:07.009Z",
+    "updated_at": "2024-09-05T10:16:07.009Z"
+  }
+},
+{
+  "model": "clubs.serviceforclubs",
+  "pk": "c12cf6c1-ca55-4489-8d91-7b54401a2d10",
+  "fields": {
+    "name": "Консультация специалистов",
+    "description": "Юрист, бухгалтер, маркетолог, нотариусЮрист, бухгалтер, маркетолог, нотариусЮрист, бухгалтер, маркетолог, нотариусЮрист, бухгалтер, маркетолог, нотариусЮрист, бухгалтер, маркетолог, нотариусЮрист, бух",
+    "min_price": "5000.00",
+    "max_price": "20000.00",
+    "phone": "+77777777778",
+    "image": "clubs/service_for_clubs/consult.jpg",
+    "created_at": "2024-09-05T10:15:17.321Z",
+    "updated_at": "2024-09-05T10:57:45.523Z"
+  }
+},
+{
+  "model": "clubs.serviceforclubs",
+  "pk": "f1ceb0d4-f8e2-47eb-9d3d-aa4799a3fe94",
+  "fields": {
+    "name": "Вышивка логотипов v1",
+    "description": "Вышивка логотипов v1Вышивка логотипов v1Вышивка логотипов v1Вышивка логотипов v1Вышивка логотипов v1",
+    "min_price": "5000.00",
+    "max_price": "10000.00",
+    "phone": "+77777777777",
+    "image": "clubs/service_for_clubs/nature1_0PWgz7E.jpg",
+    "created_at": "2024-09-19T10:51:30.722Z",
+    "updated_at": "2024-09-19T10:51:30.722Z"
+  }
+},
+{
+  "model": "clubs.clubserviceimage",
+  "pk": "0cddb942-bd63-4468-99e0-ff20712acfc3",
+  "fields": {
+    "service": "f9a0778d-3e9e-42ac-838c-18655829d873",
+    "image": "club/service_images/book-and-studen-logo-free-vector.jpg",
+    "created_at": "2024-05-31T12:48:35.760Z",
+    "updated_at": "2024-05-31T12:48:35.760Z"
+  }
+},
+{
+  "model": "clubs.clubserviceimage",
+  "pk": "981cb875-0fcd-4be8-a547-1dcc916d616f",
+  "fields": {
+    "service": "f9a0778d-3e9e-42ac-838c-18655829d873",
+    "image": "club/service_images/98fdc3265bfa7288cc6112ee2171482a_XL.jpg",
+    "created_at": "2024-05-31T12:48:35.764Z",
+    "updated_at": "2024-05-31T12:48:35.764Z"
+  }
+},
+{
+  "model": "clubs.clubserviceimage",
+  "pk": "a9b4966c-d89b-4f92-bff5-e9e43aeeaf95",
+  "fields": {
+    "service": "261f0b71-4be5-426b-8b6d-88f8330a5971",
+    "image": "club/service_images/na-everest_b3rJvRS.jpg",
+    "created_at": "2024-05-31T04:57:57.322Z",
+    "updated_at": "2024-05-31T04:57:57.322Z"
+  }
+},
+{
+  "model": "clubs.clubgalleryphoto",
+  "pk": "1212d98f-3021-4075-87c2-b54ebebef61c",
+  "fields": {
+    "club": "0c528861-d6d7-47ff-aa7e-25189b5aec94",
+    "image": "clubs/gallery/b1.jpg",
+    "created_at": "2024-06-18T11:26:59.929Z",
+    "updated_at": "2024-06-18T11:26:59.929Z"
+  }
+},
+{
+  "model": "clubs.clubgalleryphoto",
+  "pk": "3489ad97-0e37-4436-ba4b-f7aa5da1d26d",
+  "fields": {
+    "club": "0c528861-d6d7-47ff-aa7e-25189b5aec94",
+    "image": "clubs/gallery/b4.jpg",
+    "created_at": "2024-06-18T11:27:05.712Z",
+    "updated_at": "2024-06-18T11:27:05.712Z"
+  }
+},
+{
+  "model": "clubs.clubgalleryphoto",
+  "pk": "47efdd1c-0af8-46f0-9127-b0fad73dbb66",
+  "fields": {
+    "club": "0c528861-d6d7-47ff-aa7e-25189b5aec94",
+    "image": "clubs/gallery/p4.jpg",
+    "created_at": "2024-06-18T11:27:11.947Z",
+    "updated_at": "2024-06-18T11:27:11.947Z"
+  }
+},
+{
+  "model": "clubs.clubgalleryphoto",
+  "pk": "4e4f7403-a37e-40b2-8ed7-4bf1b13d9fb1",
+  "fields": {
+    "club": "0c528861-d6d7-47ff-aa7e-25189b5aec94",
+    "image": "clubs/gallery/video-bg.jpg",
+    "created_at": "2024-06-18T11:27:19.302Z",
+    "updated_at": "2024-06-18T11:27:19.302Z"
+  }
+},
+{
+  "model": "clubs.clubgalleryphoto",
+  "pk": "963d25c0-880a-403a-8048-f5ccf88f8892",
+  "fields": {
+    "club": "0c528861-d6d7-47ff-aa7e-25189b5aec94",
+    "image": "clubs/gallery/banner-bg.jpg",
+    "created_at": "2024-06-18T11:22:08.438Z",
+    "updated_at": "2024-06-18T11:22:08.438Z"
+  }
+},
+{
+  "model": "clubs.clubgalleryphoto",
+  "pk": "a6e2fe39-620c-42b7-8523-041291de5e35",
+  "fields": {
+    "club": "cec70880-4c1f-4022-b6b2-9bc49bdc85c8",
+    "image": "clubs/gallery/website.png",
+    "created_at": "2024-08-28T11:36:11.075Z",
+    "updated_at": "2024-08-28T11:36:11.075Z"
+  }
+},
+{
+  "model": "clubs.clubevent",
+  "pk": "63a610d2-50bf-4d96-8fd1-b5a05801c427",
+  "fields": {
+    "club": "0c528861-d6d7-47ff-aa7e-25189b5aec94",
+    "title": "Скалолазный Марафон: Завоевание Горных Вершин",
+    "description": "Для настоящих любителей экстремальных приключений и духовных побед приглашаем принять участие в \"Скалолазном Марафоне: Завоевание Горных Вершин\"! Это уникальное событие, где каждый участник сможет испытать свои силы, выносливость и мастерство в покорении непокоренных вершин.\r\n\r\nНа протяжении нескольких дней участники будут путешествовать по извилистым тропам и скалистым утесам, преодолевая различные препятствия и преодолевая самые сложные маршруты. Соперничество, дружба и взаимопомощь станут вашими верными спутниками в этом захватывающем путешествии.",
+    "banner": "clubs/event_banners/skalolaz_L2jqDJm.jpg",
+    "location": "Место проведения",
+    "start_datetime": "2024-08-01T16:35:36Z",
+    "old_datetime": null,
+    "end_datetime": "2024-08-01T16:35:43Z",
+    "min_age": 18,
+    "max_age": 45,
+    "entry_requirements": "Необходимо иметь с собой экипировку и карту",
+    "created_at": "2024-05-21T16:36:09.450Z",
+    "updated_at": "2024-06-18T12:52:52.250Z"
+  }
+},
+{
+  "model": "clubs.clubevent",
+  "pk": "7faf0590-3adc-402c-a9e5-e713a9319206",
+  "fields": {
+    "club": "0c528861-d6d7-47ff-aa7e-25189b5aec94",
+    "title": "Игровой Гений: Битва за Чемпионство",
+    "description": "Приветствуем всех гениев игрового мира в нашем клубе \"Игровые Магистры\"! Мы приглашаем вас принять участие в уникальном событии под названием \"Игровой Гений: Битва за Чемпионство\" — грандиозном турнире, где лучшие киберспортсмены сойдутся в схватке за звание настоящего мастера игр!\r\n\r\nЭто событие представляет собой настоящий вызов для всех участников, где они смогут продемонстрировать свое мастерство, тактический гений и непревзойденное умение владеть контроллерами или клавиатурой и мышью. Соперничество будет ожесточенным, а адреналин и эмоции будут бурлить на протяжении всего турнира.",
+    "banner": "clubs/event_banners/cybersport.jpg",
+    "location": "Компьютерный клуб",
+    "start_datetime": "2024-08-21T04:00:00Z",
+    "old_datetime": null,
+    "end_datetime": "2024-08-21T13:00:00Z",
+    "min_age": null,
+    "max_age": null,
+    "entry_requirements": "Без ограничении",
+    "created_at": "2024-05-21T16:39:35.053Z",
+    "updated_at": "2024-06-18T12:52:47.954Z"
+  }
+},
+{
+  "model": "clubs.clubevent",
+  "pk": "94f422be-2530-4499-9428-6b939218e37a",
+  "fields": {
+    "club": "0c528861-d6d7-47ff-aa7e-25189b5aec94",
+    "title": "Экстазные Ритмы: Огненный Танцевальный Марафон",
+    "description": "Добро пожаловать в клуб \"Танцующие Экстазы\"! Мы приглашаем вас окунуться в мир страсти, энергии и безудержного веселья на нашем событии под названием \"Экстазные Ритмы: Огненный Танцевальный Марафон\".\r\n\r\nЭто событие станет неповторимым праздником танца, где участники смогут выразить себя через движение, раскачать весь зал и потеряться в ритме музыки. Наши диджеи будут подбирать самые горячие треки, а специально созданная атмосфера клуба наполнит вас энергией и эйфорией.",
+    "banner": "clubs/event_banners/dancers-event.jpg",
+    "location": "Танцевальный клуб \"Радуга\"",
+    "start_datetime": "2024-05-21T16:41:49Z",
+    "old_datetime": null,
+    "end_datetime": "2024-05-21T16:41:53Z",
+    "min_age": 18,
+    "max_age": null,
+    "entry_requirements": "",
+    "created_at": "2024-05-21T16:42:11.144Z",
+    "updated_at": "2024-06-18T12:42:44.845Z"
+  }
+},
+{
+  "model": "clubs.clubevent",
+  "pk": "b6e1208b-fa39-4529-81a4-3fc093ca8143",
+  "fields": {
+    "club": "0c528861-d6d7-47ff-aa7e-25189b5aec94",
+    "title": "Высотные Вершины: Освоение 100-метрового Пика",
+    "description": "Приглашаем всех смельчаков и любителей экстремальных ощущений на захватывающее событие \"Высотные Вершины: Освоение 100-метрового Пика\"! Это уникальная возможность испытать свои силы и преодолеть границы своего воображения, взбираясь на высоту 100 метров среди потрясающей природы и пейзажей.",
+    "banner": "clubs/event_banners/skalolaz.jpg",
+    "location": "Медеу",
+    "start_datetime": "2024-08-31T01:00:00Z",
+    "old_datetime": null,
+    "end_datetime": "2024-08-31T13:00:00Z",
+    "min_age": 18,
+    "max_age": 45,
+    "entry_requirements": "Необходимо иметь с собой экипировку и еду",
+    "created_at": "2024-05-21T16:33:36.210Z",
+    "updated_at": "2024-06-18T12:52:42.669Z"
+  }
+},
+{
+  "model": "clubs.festival",
+  "pk": "ed615f5c-cb3a-4d56-ac04-45cf56684cb8",
+  "fields": {
+    "name": "Фестиваль сообществ",
+    "description": "Описание фестиваля 1",
+    "image": "clubs/festival_photo/festival.jpg",
+    "created_at": "2024-05-27T05:07:41.284Z",
+    "updated_at": "2024-05-27T12:04:28.543Z",
+    "start_datetime": "2024-05-27T10:32:25Z",
+    "location": "Абая 101",
+    "approved_clubs": []
+  }
+},
+{
+  "model": "clubs.festivalparticipationrequest",
+  "pk": "a53dc853-1b39-4122-98c2-c00080f9b5b7",
+  "fields": {
+    "club": "c300bdf3-a152-4c9f-9d3d-cb752e947f93",
+    "festival": "ed615f5c-cb3a-4d56-ac04-45cf56684cb8",
+    "approved": true,
+    "created_at": "2024-05-27T12:39:38.345Z",
+    "updated_at": "2024-05-29T15:30:15.602Z"
+  }
+},
+{
+  "model": "clubs.publication",
+  "pk": "6b28bc79-620e-4b29-b70a-cae2de3b2194",
+  "fields": {
+    "title": "asdasdasdasd",
+    "annotation": "asdasdasdasdasdasdasdasdasdasdasdasd asdasdasdasdasdasdasdasdasdasdasdasd asdasdasdasdasdasdasdasdasdasdasdasd asdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasd",
+    "content": "<p>&nbsp;НОВОСТЬ&nbsp;НОВОСТЬ&nbsp;НОВОСТЬ&nbsp;НОВОСТЬ&nbsp;НОВОСТЬ&nbsp;НОВОСТЬ&nbsp;НОВОСТЬ&nbsp;НОВОСТЬ&nbsp;НОВОСТЬ&nbsp;НОВОСТЬ&nbsp;НОВОСТЬ&nbsp;НОВОСТЬ&nbsp;НОВОСТЬ&nbsp;НОВОСТЬ&nbsp;НОВОСТЬ&nbsp;НОВОСТЬ&nbsp;НОВОСТЬ&nbsp;НОВОСТЬ&nbsp;НОВОСТЬ&nbsp;НОВОСТЬ&nbsp;НОВОСТЬ&nbsp;НОВОСТЬ&nbsp;НОВОСТЬ&nbsp;НОВОСТЬ&nbsp;НОВОСТЬ&nbsp;НОВОСТЬ&nbsp;НОВОСТЬ&nbsp;НОВОСТЬ&nbsp;НОВОСТЬ&nbsp;НОВОСТЬ&nbsp;НОВОСТЬ&nbsp;НОВОСТЬ&nbsp;НОВОСТЬ&nbsp;НОВОСТЬ&nbsp;НОВОСТЬ&nbsp;НОВОСТЬ&nbsp;НОВОСТЬ&nbsp;НОВОСТЬ&nbsp;НОВОСТЬ&nbsp;НОВОСТЬ</p>\r\n\r\n<p><img alt=\"\" src=\"/media/uploads/2024/09/19/nature1_0pwgz7e_rcjMszo.jpg\" style=\"height:806px; width:1200px\" /></p>",
+    "created_at": "2024-09-09T10:56:19.406Z",
+    "updated_at": "2024-09-19T10:20:11.421Z"
+  }
+}
+]

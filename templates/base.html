@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="zxx" class="no-js">
+<head>
+    {% load static %}
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="shortcut icon" href="{%  static 'images/favicon-32x32.png' %}">
+    <meta name="author" content="colorlib">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta charset="UTF-8">
+    {% csrf_token %}
+    <meta name="csrf-token" content="{{ csrf_token }}">
+    <title>Центр событий</title>
+    <script src="https://kit.fontawesome.com/77b427ccd5.js" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,400,300,500,600,700" rel="stylesheet">
+
+  
+    {% block styles %}
+    {% endblock %}
+</head>
+<body>
+    <div class="wrapper">
+    {% block header %}
+    {% endblock %}
+    <div class="content-block">
+    {% block content %}
+    {% endblock %}
+    </div>
+    {% block footer %}
+    {% endblock %}
+    </div>
+
+    <!-- AI Chat Widget Script moved to clubs/index.html -->
+
+    {% block scripts %}
+    {% endblock %}
+
+</body>
+</html>

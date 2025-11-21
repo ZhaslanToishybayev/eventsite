@@ -1,0 +1,42 @@
+# Core Django
+django>=4.2,<6.0
+djangorestframework
+django-cors-headers
+django-filter
+django-ckeditor
+
+# Database
+psycopg2-binary
+
+# Image processing
+Pillow
+
+# HTML parsing
+beautifulsoup4
+
+# Time zones
+pytz
+
+# Email (resend)
+resend
+
+# AI Consultant
+openai>=1.0.0
+python-dotenv>=1.0.0
+
+# Additional dependencies
+django-js-asset
+
+# Authentication
+django-allauth
+PyJWT
+cryptography
+chromadb
+sentence-transformers
+python-magic==0.4.27
+django-ratelimit
+nltk
+scikit-learn
+bleach
+gunicorn
+gevent

@@ -1,0 +1,94 @@
+{% extends "accounts/auth_base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="login-wrap p-4 p-md-5">
+    <div class="d-flex">
+        <div class="w-100">
+            <h3 class="mb-4 text-center">Вход через Google</h3>
+        </div>
+    </div>
+
+    <p class="text-center mb-4">
+        Вы собираетесь войти, используя стороннюю учетную запись из Google.
+    </p>
+
+    <form method="post" action="{% url 'google_login' %}" class="signin-form">
+        {% csrf_token %}
+
+        <div class="form-group">
+            <button type="submit" class="form-control btn btn-primary submit px-3">
+                <i class="fab fa-google me-2"></i>
+                Продолжить через Google
+            </button>
+        </div>
+
+        <div class="text-center mt-4">
+            <p class="mb-0">
+                <a href="{% url 'account_login' %}" class="text-decoration-none">
+                    <i class="fas fa-arrow-left me-1"></i>
+                    Вернуться к обычному входу
+                </a>
+            </p>
+            <p class="mt-2">
+                Еще нет аккаунта?
+                <a href="{% url 'account_signup' %}" class="text-decoration-none">
+                    Зарегистрироваться
+                </a>
+            </p>
+        </div>
+    </form>
+</div>
+
+<style>
+.login-wrap {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    max-width: 450px;
+    margin: 0 auto;
+}
+
+.btn-primary {
+    background: linear-gradient(45deg, #4285f4, #34a853);
+    border: none;
+    padding: 12px 20px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(45deg, #34a853, #4285f4);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(66, 133, 244, 0.3);
+}
+
+.text-center {
+    text-align: center !important;
+}
+
+.text-decoration-none {
+    text-decoration: none !important;
+    color: #4285f4;
+}
+
+.text-decoration-none:hover {
+    color: #34a853;
+}
+
+h3 {
+    color: #333;
+    font-weight: 600;
+}
+
+p {
+    color: #666;
+    font-size: 14px;
+}
+
+.fa-google {
+    color: #4285f4;
+}
+</style>
+{% endblock %}

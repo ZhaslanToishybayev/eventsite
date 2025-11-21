@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Минимальный тест виджета</title>
+    <link rel="stylesheet" href="/static/css/ai-chat-widget-v2.css?v=2.4.6">
+</head>
+<body>
+    <div style="padding: 50px; font-family: Arial, sans-serif;">
+        <h1>🔍 Минимальный тест AI виджета</h1>
+        <p>Эта страница содержит только базовые элементы для тестирования виджета</p>
+
+        <button onclick="testWidget()" style="background: #007bff; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; margin: 10px;">
+            🧪 Проверить виджет через консоль
+        </button>
+
+        <div id="test-results" style="margin-top: 20px; padding: 15px; background: #f8f9fa; border-radius: 5px; font-family: monospace; white-space: pre-wrap;"></div>
+    </div>
+
+    <script src="/static/js/ai-chat-widget-v2.js?v=2.4.6"></script>
+
+    <script>
+        function updateResults(message) {
+            const results = document.getElementById('test-results');
+            results.textContent += new Date().toLocaleTimeString() + ': ' + message + '\n';
+        }
+
+        function testWidget() {
+            updateResults('=== НАЧАЛО ТЕСТИРОВАНИЯ ===');
+
+            // Проверяем загруженные классы и функции
+            updateResults('1. AIChatWidgetV2 класс: ' + (typeof AIChatWidgetV2));
+            updateResults('2. initAIChatWidgetV2 функция: ' + (typeof initAIChatWidgetV2));
+            updateResults('3. window.aiChatWidgetV2: ' + (typeof window.aiChatWidgetV2));
+
+            // Проверяем DOM элементы
+            updateResults('4. Элемент #ai-chat-widget: ' + !!document.getElementById('ai-chat-widget'));
+            updateResults('5. Кнопка #chatToggleBtn: ' + !!document.getElementById('chatToggleBtn'));
+
+            // Пробуем инициализировать
+            try {
+                if (typeof initAIChatWidgetV2 === 'function') {
+                    updateResults('6. Запускаем initAIChatWidgetV2()...');
+                    const widget = initAIChatWidgetV2();
+                    updateResults('7. Результат инициализации: ' + (widget ? 'SUCCESS' : 'NULL'));
+
+                    // Проверяем элементы после инициализации
+                    setTimeout(() => {
+                        updateResults('8. Элемент #ai-chat-widget после инициализации: ' + !!document.getElementById('ai-chat-widget'));
+                        updateResults('9. Кнопка #chatToggleBtn после инициализации: ' + !!document.getElementById('chatToggleBtn'));
+
+                        // Пробуем открыть виджет программно
+                        if (window.aiChatWidgetV2 && typeof window.aiChatWidgetV2.openChat === 'function') {
+                            updateResults('10. Пробуем открыть виджет программно...');
+                            window.aiChatWidgetV2.openChat();
+                            updateResults('11. Виджет должен быть открыт');
+                        } else {
+                            updateResults('10. Метод openChat не найден');
+                        }
+                    }, 1000);
+                } else {
+                    updateResults('6. ОШИБКА: initAIChatWidgetV2 не является функцией');
+                }
+            } catch (error) {
+                updateResults('6. ИСКЛЮЧЕНИЕ: ' + error.message);
+            }
+        }
+
+        // Автоматический тест через 2 секунды
+        setTimeout(testWidget, 2000);
+
+        // Отслеживаем ошибки
+        window.addEventListener('error', function(e) {
+            updateResults('ОШИБКА JavaScript: ' + e.message + ' в ' + e.filename + ':' + e.lineno);
+        });
+    </script>
+</body>
+</html>

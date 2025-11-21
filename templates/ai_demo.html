@@ -1,0 +1,245 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}AI Консультант Демонстрация{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/ai-chat-widget-v2.css' %}?v=2.5.5">
+<style>
+.demo-section {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 40px 0;
+    margin: 40px 0;
+    border-radius: 20px;
+    text-align: center;
+}
+
+.demo-content {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.demo-commands {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    padding: 20px;
+    margin: 20px 0;
+    backdrop-filter: blur(10px);
+}
+
+.command-item {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    padding: 15px;
+    margin: 10px 0;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.command-item:hover {
+    background: rgba(255, 255, 255, 0.15);
+    transform: translateY(-2px);
+}
+
+.command-example {
+    font-family: 'Courier New', monospace;
+    background: rgba(0, 0, 0, 0.2);
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.info-box {
+    background: #f8f9fa;
+    border-left: 4px solid #667eea;
+    padding: 20px;
+    margin: 20px 0;
+    border-radius: 8px;
+    color: #333;
+}
+
+.response-area {
+    background: #2d3748;
+    color: #e2e8f0;
+    padding: 20px;
+    border-radius: 10px;
+    margin: 20px 0;
+    min-height: 100px;
+    font-family: 'Courier New', monospace;
+}
+
+.response-text {
+    line-height: 1.6;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="demo-section">
+    <div class="demo-content">
+        <h1>🤖 AI Консультант Демонстрация</h1>
+        <p>Попробуйте умного ассистента платформы "ЦЕНТР СОБЫТИЙ"</p>
+
+        <div class="demo-commands">
+            <h3>Попробуйте эти команды:</h3>
+            <div class="command-item" onclick="sendTestMessage('Привет! Помоги создать клуб')">
+                <h4>🏗️ Создание клуба</h4>
+                <p>Помощь в создании нового сообщества</p>
+                <div class="command-example">"Привет! Помоги создать клуб"</div>
+            </div>
+
+            <div class="command-item" onclick="sendTestMessage('Найди интересные клубы')">
+                <h4>🔍 Поиск клубов</h4>
+                <p>Поиск существующих сообществ</p>
+                <div class="command-example">"Найди интересные клубы"</div>
+            </div>
+
+            <div class="command-item" onclick="sendTestMessage('Какие возможности у платформы?')">
+                <h4>📊 Возможности платформы</h4>
+                <p>Узнать о функциях платформы</p>
+                <div class="command-example">"Какие возможности у платформы?"</div>
+            </div>
+
+            <div class="command-item" onclick="sendTestMessage('Помощь')">
+                <h4>💬 Помощь</h4>
+                <p>Общие рекомендации и помощь</p>
+                <div class="command-example">"Помощь"</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="info-box">
+                <h4>📋 Информация о виджете:</h4>
+                <ul>
+                    <li>AI консультант работает в fallback режиме</li>
+                    <li>Rate limiting: 30 запросов в минуту на IP</li>
+                    <li>Безопасная обработка сообщений</li>
+                    <li>Автоматическое сохранение истории</li>
+                </ul>
+            </div>
+
+            <div class="info-box">
+                <h4>🔧 Функционал:</h4>
+                <ul>
+                    <li>Создание клубов (подробные инструкции)</li>
+                    <li>Поиск сообществ по интересам</li>
+                    <li>Консультации по развитию</li>
+                    <li>Помощь с организацией мероприятий</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="info-box">
+                <h4>⚡ Тестирование API:</h4>
+                <div class="command-example">
+                    <h5>Прямой API запрос:</h5>
+                    <code>
+                        POST http://localhost:8002/api/v1/ai/chat/<br>
+                        {"message": "Помоги создать клуб"}
+                    </code>
+                </div>
+
+                <div class="mt-3">
+                    <h5>Статус:</h5>
+                    <p>
+                        <span class="badge badge-success">API работает</span>
+                        <span class="badge badge-info">Rate limiting активен</span>
+                        <span class="badge badge-warning">Fallback режим</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="{% static 'js/ai-chat-widget-v2.js' %}?v=2.5.2"></script>
+
+<script>
+// Тестовые функции для демонстрации
+function sendTestMessage(message) {
+    // Отправляем сообщение через виджет
+    if (window.aiChatWidgetV2 && window.aiChatWidgetV2.sendMessage) {
+        window.aiChatWidgetV2.sendMessage(message);
+        // Показываем виджет если скрыт
+        if (window.aiChatWidgetV2.openChat) {
+            window.aiChatWidgetV2.openChat();
+        }
+    } else {
+        // Fallback: отправляем напрямую через fetch
+        fetch('/api/v1/ai/chat/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': getCookie('csrftoken')
+            },
+            body: JSON.stringify({
+                'message': message
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            showResponse(data.response || 'Произошла ошибка');
+        })
+        .catch(error => {
+            showResponse('Ошибка: ' + error.message);
+        });
+    }
+}
+
+function showResponse(response) {
+    // Создаем или обновляем область ответа
+    let responseArea = document.querySelector('.response-area');
+    if (!responseArea) {
+        responseArea = document.createElement('div');
+        responseArea.className = 'response-area';
+        document.querySelector('.demo-section .demo-content').appendChild(responseArea);
+    }
+
+    responseArea.innerHTML = '<h4>Ответ AI:</h4><div class="response-text">' + response + '</div>';
+
+    // Показываем область ответа
+    responseArea.style.display = 'block';
+    responseArea.scrollIntoView({ behavior: 'smooth' });
+}
+
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+// Инициализация при загрузке страницы
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('AI Demo page loaded');
+
+    // Проверяем наличие виджета
+    setTimeout(() => {
+        const widget = document.getElementById('ai-chat-widget');
+        console.log('AI Widget found:', !!widget);
+
+        if (!widget) {
+            console.warn('AI Widget not found, trying to initialize...');
+            if (typeof initAIChatWidgetV2 === 'function') {
+                initAIChatWidgetV2();
+            }
+        }
+    }, 1000);
+});
+</script>
+{% endblock %}

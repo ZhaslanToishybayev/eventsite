@@ -1,0 +1,112 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{%  static 'css/template_css/linearicons.css' %}">
+    <link rel="stylesheet" href="{%  static 'css/template_css/font-awesome.min.css' %}">
+    <link rel="stylesheet" href="{%  static 'css/template_css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{%  static 'css/template_css/magnific-popup.css' %}">
+    <link rel="stylesheet" href="{%  static 'css/template_css/nice-select.css' %}">
+    <link rel="stylesheet" href="{%  static 'css/template_css/animate.min.css' %}">
+    <link rel="stylesheet" href="{%  static 'css/template_css/owl.carousel.css' %}">
+    <link rel="stylesheet" href="{%  static 'css/template_css/jquery-ui.css' %}">
+    <link rel="stylesheet" href="{%  static 'css/template_css/main.css' %}">
+    <link rel="stylesheet" href="{%  static 'css/our_css/style.css' %}">
+{% endblock %}
+
+{% block header %}
+    {% include 'partial/header.html' %}
+{% endblock %}
+
+{% block content %}
+    {% include 'partial/breadcrumb.html' %}
+    <section class="event-details-area section-gap">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-7 event-details-left">
+                    <div class="main-img">
+                        <img class="img-fluid" src="{{ festival.image.url }}" alt="festival image">
+                    </div>
+                </div>
+                <div class="col-lg-5 event-details-right">
+                    <div class="single-event-details">
+                        <h4>Детали</h4>
+                        <ul class="mt-10">
+                            <li class="justify-content-between d-flex">
+                                <span>Начало</span>
+                                <span>
+                                    {{ festival.start_datetime|date:'d.m.Y H:i' }}
+                                </span>
+                            </li>
+                            <li class="justify-content-between d-flex">
+                                <span>Место проведения</span>
+                                <span>{{ festival.location }}</span>
+                            </li>
+                            <li class="justify-content-between d-flex">
+                                <span>Будут участвовать</span>
+                                <a href="{% url 'festival_approved_clubs' festival.id %}">{{ festival.approved_clubs.all|length }} (просмотр)</a>
+                            </li>
+                            <li class="justify-content-between d-flex">
+                                <span>Хотят участвовать</span>
+                                <a href="{% url 'festival_requests' festival.id %}">{{ festival.get_not_approved_clubs|length }} (просмотр)</a>
+                            </li>
+
+                        </ul>
+                    </div>
+                    <div class="single-event-details">
+                        <h4>Описание</h4>
+                        <ul class="mt-10">
+                            <li class="justify-content-between d-flex">
+                                <span class="festival-description">{{ festival.description }}</span>
+                            </li>
+                        </ul>
+                    </div>
+                    {% if user.is_superuser %}
+                        <a href="{% url 'festival_update' festival.pk %}" class="btn btn-primary w-100 mb-2">
+                            Редактировать
+                        </a>
+                        <form action="{% url 'festival_delete' festival.pk %}" method="post" onsubmit="return confirm('Удалить фестиваль?')">
+                            {% csrf_token %}
+                            <button class="btn btn-danger w-100">Удалить</button>
+                        </form>
+                    {% elif user.is_authenticated %}
+                        <button type="button" class="btn btn-success w-100" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                            Записаться
+                        </button>
+                        <input type="hidden" id="festivalId" value="{{ festival.pk }}">
+                        <label for="festivalId"></label>
+                        {% include 'partial/choose_club_modal.html' %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+{% block footer %}
+    <div style="position: fixed; bottom: 0; width: 100%">
+        {% include 'partial/footer.html' %}
+    </div>
+    
+{% endblock %}
+
+{% block scripts %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="{%  static 'js/template_js/vendor/jquery-2.2.4.min.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="{%  static 'js/template_js/vendor/bootstrap.min.js' %}"></script>
+{#    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBhOdIF3Y9382fqJYt5I_sswSrEw5eihAA"></script>#}
+    <script src="{%  static 'js/template_js/easing.min.js' %}"></script>
+    <script src="{%  static 'js/template_js/hoverIntent.js' %}"></script>
+    <script src="{%  static 'js/template_js/superfish.min.js' %}"></script>
+    <script src="{%  static 'js/template_js/jquery.ajaxchimp.min.js' %}"></script>
+    <script src="{%  static 'js/template_js/jquery.magnific-popup.min.js' %}"></script>
+    <script src="{%  static 'js/template_js/jquery.tabs.min.js' %}"></script>
+    <script src="{%  static 'js/template_js/jquery.nice-select.min.js' %}"></script>
+    <script src="{%  static 'js/template_js/owl.carousel.min.js' %}"></script>
+    <script src="{%  static 'js/template_js/mail-script.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.min.js" integrity="sha512-ykZ1QQr0Jy/4ZkvKuqWn4iF3lqPZyij9iRv6sGqLRdTPkY69YX6+7wvVGmsdBbiIfN/8OdsI7HABjvEok6ZopQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="{%  static 'js/template_js/main.js' %}"></script>
+    <script src="{% static 'js/our_js/fest.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends 'accounts/auth_base.html' %}
+{% load static %}
+{% load socialaccount %}
+{% block content %}
+<div class="wrap d-md-flex">
+    <div class="text-wrap p-4 p-lg-5 text-center d-flex align-items-center order-md-last">
+        <div class="text w-100">
+            <h2>Добро пожаловать!</h2>
+            <div class="d-flex justify-content-between pt-5">
+                <div class="pr-2">
+                    <p>Нет аккаунта?</p>
+                    <a href="{% url 'register' %}" class="btn btn-white btn-outline-white">Регистрация</a>
+                </div>
+                <div class="pl-2">
+                    <p>Забыли пароль?</p>
+                    <a href="{% url 'reset_password' %}" class="btn btn-white btn-outline-white">Восстановить</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="login-wrap p-4 p-lg-5" id="auth-form-block">
+        <div class="w-100">
+            <h3 class="mb-4 text-center" id="form-title">Вход</h3>
+        </div>
+        {% include 'partial/form.html' with btn_text="Войти" form_method="post" form_id="login_user_form" %}
+        
+        <div class="text-center mt-4 mb-3">
+            <span class="text-muted">или</span>
+        </div>
+
+        <a href="{% provider_login_url 'google' %}" class="btn btn-block btn-outline-primary d-flex align-items-center justify-content-center" style="gap: 10px; border-color: #ddd; color: #333;">
+            <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" style="width: 20px; height: 20px;">
+            Войти через Google
+        </a>
+    </div>
+</div>
+
+{% endblock %}
+{% block extra_scripts %}
+    <script src="{% static 'js/our_js/login.js' %}"></script>
+    <script src="{%  static 'js/template_js/main.js' %}"></script>
+{% endblock %}

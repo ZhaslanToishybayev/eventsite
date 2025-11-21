@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{%  static 'css/template_css/linearicons.css' %}">
+    <link rel="stylesheet" href="{%  static 'css/template_css/font-awesome.min.css' %}">
+    <link rel="stylesheet" href="{%  static 'css/template_css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{%  static 'css/template_css/magnific-popup.css' %}">
+    <link rel="stylesheet" href="{%  static 'css/template_css/nice-select.css' %}">
+    <link rel="stylesheet" href="{%  static 'css/template_css/animate.min.css' %}">
+    <link rel="stylesheet" href="{%  static 'css/template_css/owl.carousel.css' %}">
+    <link rel="stylesheet" href="{%  static 'css/template_css/jquery-ui.css' %}">
+    <link rel="stylesheet" href="{%  static 'css/template_css/main.css' %}">
+    <link rel="stylesheet" href="{%  static 'css/our_css/style.css' %}">
+    <style>
+        .service-detail-section {
+            background: #f8f9fa;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+        }
+        .service-detail-section h1 {
+            color: #343a40;
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
+            font-weight: bold;
+            text-align: center;
+        }
+        .service-detail-section p {
+            font-size: 1.1rem;
+            margin-bottom: 0.75rem;
+        }
+        .service-detail-section .service-price {
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: #28a745;
+            text-align: center;
+        }
+        .service-detail-section .service-image {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 1rem auto;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .service-detail-section .btn {
+            display: block;
+            width: fit-content;
+            margin: 2rem auto 0;
+            padding: 0.5rem 1.5rem;
+            font-size: 1rem;
+        }
+    </style>
+{% endblock %}
+
+{% block header %}
+    {% include 'partial/header.html' %}
+{% endblock %}
+
+{% block content %}
+    {% include 'partial/breadcrumb.html' %}
+    <section class="service-detail-section w-75 mx-auto p-4">
+        <h1 class="text-wrap">{{ service.name }}</h1>
+        <p class="text-wrap">{{ service.description }}</p>
+        <p class="service-price">Цена: {{ service.price }} Тг</p>
+        <p>Создано: {{ service.created_at }}</p>
+        <p>Обновлено: {{ service.updated_at }}</p>
+
+        {% for image in service.images.all %}
+            <img src="{{ image.image.url }}" alt="{{ service.name }}" class="service-image">
+        {% empty %}
+            <p>Изображений нет.</p>
+        {% endfor %}
+
+        {% if request.user in service.club.managers.all %}
+            <a href="{% url 'edit_service' service.pk %}" class="btn btn-secondary">Редактировать</a>
+        {% endif %}
+        <a href="{% url 'club_detail' service.club.pk %}" class="btn btn-primary mt-3">Назад к списку услуг</a>
+    </section>
+{% endblock %}
+
+{% block footer %}
+    {% include 'partial/footer.html' %}
+{% endblock %}
+
+{% block scripts %}
+    <script src="{%  static 'js/template_js/vendor/jquery-2.2.4.min.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="{%  static 'js/template_js/vendor/bootstrap.min.js' %}"></script>
+    <script src="{%  static 'js/template_js/easing.min.js' %}"></script>
+    <script src="{%  static 'js/template_js/hoverIntent.js' %}"></script>
+    <script src="{%  static 'js/template_js/superfish.min.js' %}"></script>
+    <script src="{%  static 'js/template_js/jquery.ajaxchimp.min.js' %}"></script>
+    <script src="{%  static 'js/template_js/jquery.magnific-popup.min.js' %}"></script>
+    <script src="{%  static 'js/template_js/jquery.tabs.min.js' %}"></script>
+    <script src="{%  static 'js/template_js/jquery.nice-select.min.js' %}"></script>
+    <script src="{%  static 'js/template_js/owl.carousel.min.js' %}"></script>
+    <script src="{%  static 'js/template_js/mail-script.js' %}"></script>
+    <script src="{%  static 'js/template_js/main.js' %}"></script>
+{% endblock %}

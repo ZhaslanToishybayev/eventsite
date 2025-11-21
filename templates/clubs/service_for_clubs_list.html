@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{%  static 'css/template_css/linearicons.css' %}">
+    <link rel="stylesheet" href="{%  static 'css/template_css/font-awesome.min.css' %}">
+    <link rel="stylesheet" href="{%  static 'css/template_css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{%  static 'css/template_css/magnific-popup.css' %}">
+    <link rel="stylesheet" href="{%  static 'css/template_css/nice-select.css' %}">
+    <link rel="stylesheet" href="{%  static 'css/template_css/animate.min.css' %}">
+    <link rel="stylesheet" href="{%  static 'css/template_css/owl.carousel.css' %}">
+    <link rel="stylesheet" href="{%  static 'css/template_css/jquery-ui.css' %}">
+    <link rel="stylesheet" href="{%  static 'css/template_css/main.css' %}">
+    <link rel="stylesheet" href="{%  static 'css/our_css/style.css' %}">
+{% endblock %}
+
+{% block header %}
+    {% include 'partial/header.html' %}
+{% endblock %}
+
+{% block content %}
+    {% include 'partial/breadcrumb.html' %}
+    <section class="top-category-widget-area pt-90 pb-90 ">
+        <div class="container y-border-eee">
+            <div class="row">
+                {% for service in services %}
+                <div class="col-lg-4">
+                    <div class="single-cat-widget">
+                        <div class="content relative">
+                            <div class="overlay overlay-bg"></div>
+                            <a href="{% url 'service_for_club_detail' service.pk %}">
+                              <div class="thumb">
+                                 <img class="content-image img-fluid d-block mx-auto" src="{{ service.image.url }}" alt=""  style="height: 250px;">
+                              </div>
+                              <div class="content-details">
+                                <h4 class="content-title text-wrap mx-auto text-uppercase w-75">{{ service.name }}</h4>
+                                  <b class="service-price">{{ service.get_price_range_str }}</b>
+                                <p class="mx-auto text-wrap service-for-club-description">{{ service.description|slice:":100" }}...</p>
+                              </div>
+                            </a>
+                        </div>
+                    </div>
+                    {% if request.user.is_superuser %}
+                        <a href="{% url 'service_for_club_edit' service.pk %}" class="btn btn-primary d-block mx-auto text-white mt-1"><i class="fa-solid fa-pen-to-square mr-1"></i>Редактировать</a>
+                        <a href="{% url 'service_for_club_delete' service.pk %}" class="btn btn-danger d-block mx-auto text-white my-1"><i class="fa-solid fa-trash mr-1"></i>Удалить</a>
+                    {% else %}
+                        <a href="tel:{{ service.phone }}" class="btn btn-primary d-block mx-auto text-white my-1"><i class="fa-solid fa-square-phone mr-1"></i>Связаться</a>
+                    {% endif %}
+                </div>
+
+                {% empty %}
+                    <h5 class="festResponseText text-center mx-auto">Список услуг пуст</h5>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+    <section class="pagination">
+
+        <div class="container">
+            {% include 'partial/pagination.html' %}
+        </div>
+
+    </section>
+{% endblock %}
+
+{% block footer %}
+    {% include 'partial/footer.html' %}
+{% endblock %}
+
+{% block scripts %}
+    <script src="{%  static 'js/template_js/vendor/jquery-2.2.4.min.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="{%  static 'js/template_js/vendor/bootstrap.min.js' %}"></script>
+{#    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBhOdIF3Y9382fqJYt5I_sswSrEw5eihAA"></script>#}
+    <script src="{%  static 'js/template_js/easing.min.js' %}"></script>
+    <script src="{%  static 'js/template_js/hoverIntent.js' %}"></script>
+    <script src="{%  static 'js/template_js/superfish.min.js' %}"></script>
+    <script src="{%  static 'js/template_js/jquery.ajaxchimp.min.js' %}"></script>
+    <script src="{%  static 'js/template_js/jquery.magnific-popup.min.js' %}"></script>
+    <script src="{%  static 'js/template_js/jquery.tabs.min.js' %}"></script>
+    <script src="{%  static 'js/template_js/jquery.nice-select.min.js' %}"></script>
+    <script src="{%  static 'js/template_js/owl.carousel.min.js' %}"></script>
+    <script src="{%  static 'js/template_js/mail-script.js' %}"></script>
+    <script src="{%  static 'js/template_js/main.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Диагностика главной страницы</title>
+    <link rel="stylesheet" href="/static/css/ai-chat-widget-v2.css?v=2.4.8">
+    <style>
+        .debug-panel {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            background: #000;
+            color: #0f0;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: monospace;
+            font-size: 12px;
+            z-index: 99999;
+            max-width: 400px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        .debug-panel .error { color: #f00; }
+        .debug-panel .success { color: #0f0; }
+        .debug-panel .info { color: #ff0; }
+        .debug-panel button {
+            background: #333;
+            color: #fff;
+            border: 1px solid #666;
+            padding: 5px 10px;
+            margin: 2px;
+            cursor: pointer;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body style="background: #333; color: #fff; padding: 50px;">
+    <div class="debug-panel">
+        <h3>🔍 ДИАГНОСТИКА ГЛАВНОЙ СТРАНИЦЫ</h3>
+        <div id="debug-output"></div>
+        <button onclick="checkWidget()">🔍 Проверить виджет</button>
+        <button onclick="forceInit()">🔧 Принудительная инициализация</button>
+        <button onclick="toggleWidget()">🔄 Переключить виджет</button>
+        <button onclick="clearDebug()">🗑️ Очистить лог</button>
+    </div>
+
+    <div style="text-align: center; margin-top: 50px;">
+        <h1>Проверка работы AI виджета</h1>
+        <p>Эта страница имитирует главную страницу с диагностикой</p>
+        <p>Если виджет работает, вы увидите кнопку в правом нижнем углу</p>
+    </div>
+
+    <script src="/static/js/ai-chat-widget-v2.js?v=2.4.9"></script>
+
+    <script>
+        const debugOutput = document.getElementById('debug-output');
+
+        function log(message, type = 'info') {
+            const time = new Date().toLocaleTimeString();
+            const div = document.createElement('div');
+            div.className = type;
+            div.textContent = `${time}: ${message}`;
+            debugOutput.appendChild(div);
+            debugOutput.scrollTop = debugOutput.scrollHeight;
+            console.log(`[DEBUG ${time}] ${message}`);
+        }
+
+        function checkWidget() {
+            log('=== НАЧАЛО ДИАГНОСТИКИ ===', 'info');
+
+            // Проверяем загрузку классов
+            log(`1. AIChatWidgetV2 класс: ${typeof AIChatWidgetV2}`, typeof AIChatWidgetV2 === 'function' ? 'success' : 'error');
+            log(`2. initAIChatWidgetV2 функция: ${typeof initAIChatWidgetV2}`, typeof initAIChatWidgetV2 === 'function' ? 'success' : 'error');
+
+            // Проверяем глобальные объекты
+            log(`3. window.aiChatWidgetV2: ${typeof window.aiChatWidgetV2}`, typeof window.aiChatWidgetV2 === 'object' ? 'success' : 'error');
+            log(`4. window.aiChatWidget: ${typeof window.aiChatWidget}`, typeof window.aiChatWidget === 'object' ? 'success' : 'error');
+
+            // Проверяем DOM элементы
+            const widget = document.getElementById('ai-chat-widget');
+            const button = document.getElementById('chatToggleBtn');
+
+            log(`5. Элемент #ai-chat-widget: ${!!widget}`, widget ? 'success' : 'error');
+            log(`6. Кнопка #chatToggleBtn: ${!!button}`, button ? 'success' : 'error');
+
+            if (widget) {
+                log(`7. CSS классы виджета: ${widget.className}`, 'info');
+                log(`8. Стили виджета: display=${widget.style.display}`, 'info');
+            }
+
+            if (button) {
+                log(`9. CSS классы кнопки: ${button.className}`, 'info');
+                log(`10. Стили кнопки: display=${button.style.display}`, 'info');
+            }
+
+            // Проверяем состояние
+            if (window.aiChatWidgetV2) {
+                log(`11. Состояние виджета: isOpen=${window.aiChatWidgetV2.isOpen}, isMinimized=${window.aiChatWidgetV2.isMinimized}`, 'info');
+                log(`12. Текущая тема: ${window.aiChatWidgetV2.currentTheme}`, 'info');
+                log(`13. Количество сообщений: ${window.aiChatWidgetV2.messages.length}`, 'info');
+            }
+
+            log('=== ДИАГНОСТИКА ЗАВЕРШЕНА ===', 'success');
+        }
+
+        function forceInit() {
+            log('🔧 Принудительная инициализация...', 'info');
+            try {
+                const widget = initAIChatWidgetV2();
+                if (widget) {
+                    log('✅ Инициализация успешна!', 'success');
+                    setTimeout(checkWidget, 1000);
+                } else {
+                    log('❌ Инициализация не удалась!', 'error');
+                }
+            } catch (error) {
+                log(`❌ Ошибка инициализации: ${error.message}`, 'error');
+            }
+        }
+
+        function toggleWidget() {
+            log('🔄 Переключение виджета...', 'info');
+            if (window.aiChatWidgetV2 && typeof window.aiChatWidgetV2.toggleChat === 'function') {
+                try {
+                    window.aiChatWidgetV2.toggleChat();
+                    log('✅ Виджет переключен!', 'success');
+                    setTimeout(checkWidget, 500);
+                } catch (error) {
+                    log(`❌ Ошибка переключения: ${error.message}`, 'error');
+                }
+            } else {
+                log('❌ Метод toggleChat не найден!', 'error');
+            }
+        }
+
+        function clearDebug() {
+            debugOutput.innerHTML = '';
+            log('Лог очищен', 'info');
+        }
+
+        // Автоматическая проверка через 3 секунды
+        setTimeout(() => {
+            log('🚀 Автоматическая диагностика через 3 секунды...', 'info');
+            checkWidget();
+        }, 3000);
+
+        // Отслеживаем ошибки
+        window.addEventListener('error', function(e) {
+            log(`JavaScript ошибка: ${e.message} в ${e.filename}:${e.lineno}`, 'error');
+        });
+
+        // Отслеживаем console ошибки
+        const originalError = console.error;
+        console.error = function(...args) {
+            log(`Console.error: ${args.join(' ')}`, 'error');
+            originalError.apply(console, args);
+        };
+
+        // Начальная проверка
+        log('🔍 Страница загружена, начинаю диагностику...', 'info');
+    </script>
+</body>
+</html>

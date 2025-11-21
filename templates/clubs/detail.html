@@ -1,0 +1,328 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block styles %}
+<link rel="stylesheet" href="{%  static 'css/template_css/linearicons.css' %}">
+<link rel="stylesheet" href="{%  static 'css/template_css/font-awesome.min.css' %}">
+<link rel="stylesheet" href="{%  static 'css/template_css/bootstrap.css' %}">
+<link rel="stylesheet" href="{%  static 'css/template_css/magnific-popup.css' %}">
+<link rel="stylesheet" href="{%  static 'css/template_css/nice-select.css' %}">
+<link rel="stylesheet" href="{%  static 'css/template_css/animate.min.css' %}">
+<link rel="stylesheet" href="{%  static 'css/template_css/owl.carousel.css' %}">
+<link rel="stylesheet" href="{%  static 'css/template_css/jquery-ui.css' %}">
+<link rel="stylesheet" href="{%  static 'css/template_css/main.css' %}">
+<link rel="stylesheet" href="{%  static 'css/our_css/style.css' %}">
+{% endblock %}
+
+{% block header %}
+{% include 'partial/header.html' %}
+{% endblock %}
+
+{% block content %}
+{% include 'partial/breadcrumb.html' %}
+<section class="course-details-area pt-60 pb-60">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-3">
+                <div class="main-image">
+                    <img class="img-fluid club-detail-img w-100" src="{{ club.logo.url }}" alt="">
+                </div>
+                <div class="club-likes-members-count px-2 d-flex justify-content-between">
+                    <span class="font-weight-bold d-block">
+                        {% if request.user in club.likes.all %}
+                        <button class="without-bg" onclick="dislikeClub(this)" club_id="{{ club.id }}"
+                            id="like-club-btn">
+                            <i class="fa-solid fa-heart club-likes" id="like-icon"></i>
+                        </button>
+                        {% else %}
+                        <button class="without-bg" onclick="likeClub(this)" club_id="{{ club.id }}" id="like-club-btn">
+                            <i class="fa-regular fa-heart club-likes" id="like-icon"></i>
+                        </button>
+                        {% endif %}
+                        <span id="likes_count">
+                            {{ club.likes_count }}
+                        </span>
+                    </span>
+                    <span class="font-weight-bold d-block">
+                        <i class="fa-solid fa-user-group club-members"></i>
+                        <span id="members_count">{{ club.members_count }}</span>
+                    </span>
+                </div>
+                {% if request.user in club.members.all %}
+                <button class="btn btn-danger w-100 mt-1" onclick="leaveClub(this)" club_id="{{ club.id }}"
+                    id="join-club-btn"><i class="fa-solid fa-right-from-bracket mr-1" id="join-icon"></i>
+                    <span id="join-btn-text">Покинуть</span>
+                </button>
+                {% else %}
+                <button class="btn btn-success w-100 mt-1" onclick="joinClub(this)" club_id="{{ club.id }}"
+                    id="join-club-btn" wa="{{ club.whatsapp_group_link }}"><i
+                        class="fa-solid fa-arrow-right-to-bracket mr-1" id="join-icon"></i>
+                    <span id="join-btn-text">Вступить</span>
+                </button>
+
+                {% endif %}
+                {% if request.user in club.managers.all %}
+                <a href="{% url 'club_edit' club.pk %}" class="btn btn-primary w-100 mt-1"><i
+                        class="fa-solid fa-pen mr-1"></i>Редактировать</a>
+                <a href="{% url 'club_managers_choose' club.pk %}" class="btn btn-info w-100 mt-1"><i
+                        class="fa-solid fa-user-group mr-1"></i>Руководители</a>
+                <a href="{% url 'club_delete' club.pk %}" class="btn btn-danger w-100 mt-1"><i
+                        class="fa-solid fa-trash mr-1"></i></i>Удалить</a>
+                {% endif %}
+            </div>
+            <div class="col-lg-4 right-contents">
+                <ul>
+                    <li>
+                        <span class="justify-content-between d-flex" href="#">
+                            <p class="font-weight-bold">Создатель:</p>
+                            <span>{{ club.creater }}</span>
+                        </span>
+                    </li>
+                    <li>
+                        <span class="justify-content-between d-flex" href="#">
+                            <p class="font-weight-bold">Категория:</p>
+                            <span>{{ club.category }}</span>
+                        </span>
+                    </li>
+                    <li>
+                        <span class="justify-content-between d-flex" href="#">
+                            <p class="font-weight-bold">Город:</p>
+                            <span>
+                                {% if club.city %}
+                                {{ club.city }}
+                                {% else %}
+                                Не указано
+                                {% endif %}
+                            </span>
+                        </span>
+                    </li>
+                    <li>
+                        <span class="justify-content-between d-flex" href="#">
+                            <p class="font-weight-bold">Адрес:</p>
+                            <span>
+                                {% if club.address %}
+                                {{ club.address }}
+                                {% else %}
+                                Не указано
+                                {% endif %}
+                            </span>
+                        </span>
+                    </li>
+                    <li>
+                        <span class="justify-content-between d-flex" href="#">
+                            <p class="font-weight-bold">Email:</p>
+                            <span>{{ club.email }}</span>
+                        </span>
+                    </li>
+                    <li>
+                        <span class="justify-content-between d-flex" href="#">
+                            <p class="font-weight-bold">Телефон:</p>
+                            <span>{{ club.phone }}</span>
+                        </span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 left-contents">
+                <div class="main-image">
+                    <img class="img-fluid" src="img/m-img.jpg" alt="">
+                </div>
+                <div class="jq-tab-wrapper" id="horizontalTab">
+                    <div class="jq-tab-menu mx-auto">
+                        <div class="jq-tab-title active" data-tab="1">Анкета</div>
+                        <div class="jq-tab-title" data-tab="2">Фотогалерея</div>
+                        <div class="jq-tab-title" data-tab="3">Услуги</div>
+                        <div class="jq-tab-title" data-tab="4">События</div>
+                        {# <div class="jq-tab-title" data-tab="5">Новости</div>
+                    </div>
+                    <div class="jq-tab-content-wrapper">
+                        <div class="jq-tab-content active mt-2 club-description" data-tab="1">
+                            {{ club.description }}
+                        </div>
+                        <div class="jq-tab-content" data-tab="2">
+                            <div class="row">
+                                {% for photo in club.gallery_photos.all|slice:":12" %}
+                                <div class="col-lg-4 pb-4">
+                                    <a href="{{ photo.image.url }}" class="club-image-link">
+                                        <div class="gallery-photos-container">
+                                            <div class="gallery-photos-container-image"><img src="{{ photo.image.url }}"
+                                                    alt="" class="club-gallery-image"></div>
+                                            {% if request.user in photo.club.managers.all %}
+                                            <a class="primary-btn action-btn text-uppercase d-block w-50 mx-auto my-2"
+                                                href="{% url 'gallery_for_club_delete' photo.pk %}">Удалить</a>
+                                            {% endif %}
+                                        </div>
+                                    </a>
+                                </div>
+                                {% empty %}
+                                <p class="text-center col-12">Фотогалерея пуста</p>
+                                {% endfor %}
+                                {% if request.user in club.managers.all %}
+                                <div class="col-lg-4 mb-4">
+                                    <div
+                                        class="event-card d-flex align-items-center justify-content-center w-100 h-100">
+                                        <a href="{% url 'club_photogallery_add' club.pk %}" class="add-item">
+                                            <i class="fa-solid fa-circle-plus" style="font-size: 130px"></i>
+                                            <span class="add-item-text d-block mt-2 text-center">Добавить фото</span>
+                                        </a>
+                                    </div>
+                                </div>
+                                {% endif %}
+                            </div>
+                            {% if photos|length > 12 %}
+                            <a href="#" class="text-center d-block">Все фото</a>
+                            {% endif %}
+                        </div>
+                        <div class="jq-tab-content" data-tab="3">
+                            <div class="row">
+                                {% for service in club.services.all|slice:":12" %}
+                                <div class="col-lg-4 mb-4">
+                                    <div class="event-card">
+                                        <div class="event-img">
+                                            <img src="{{ service.images.first.image.url }}" alt="">
+                                        </div>
+                                        <div class="event-detail">
+                                            <h5 class="event-title text-center y-border-eee">
+                                                {{ service.name }}
+                                            </h5>
+                                            <p class="text-center">
+                                                <b class="text-dark font-weight-bold">Цена:</b> {{ service.price }} Тг
+                                            </p>
+                                            <a class="primary-btn action-btn text-uppercase d-block w-50 mx-auto my-2"
+                                                href="{% url 'service_detail' service.id %}">Детали</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% empty %}
+                                <p class="text-center col-12">Список услуг пуст</p>
+                                {% endfor %}
+                                {% if request.user in club.managers.all %}
+                                <div class="col-lg-4 mb-4">
+                                    <div
+                                        class="event-card d-flex align-items-center justify-content-center w-100 h-100">
+                                        <a href="{% url 'create_service' club.pk %}" class="add-item">
+                                            <i class="fa-solid fa-circle-plus" style="font-size: 130px"></i>
+                                            <span class="add-item-text d-block mt-2 text-center">Добавить услугу</span>
+                                        </a>
+                                    </div>
+                                </div>
+                                {% endif %}
+                                {% if events|length > 12 %}
+                                <a href="#" class="d-block text-center">Все услуги</a>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="jq-tab-content" data-tab="4">
+                            <div class="row">
+                                {% for event in events|slice:":12" %}
+                                <div class="col-lg-4 mb-4">
+                                    <div class="event-card">
+                                        <div class="event-img">
+                                            {% if event.banner %}
+                                                <img src="{{ event.banner.url }}" alt="{{ event.title }}">
+                                            {% else %}
+                                                <img src="{% static 'images/event-details-img.jpg' %}" alt="{{ event.title }}">
+                                            {% endif %}
+                                        </div>
+                                        <div class="event-detail">
+                                            <h5 class="event-title text-center y-border-eee">
+                                                {{ event.title }}
+                                            </h5>
+                                            <span class="event-startdatetime">
+                                                <i
+                                                    class="fa-regular fa-calendar {% if event.is_passed %}event-passed{% else %}event-not-passed{% endif %}"></i>
+                                                {{ event.start_datetime|date:'d.m.Y H:i' }}
+                                            </span>
+                                            <a class="primary-btn action-btn text-uppercase d-block w-50 mx-auto my-2"
+                                                href="{% url 'event_detail' event.pk %}">Детали</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% empty %}
+                                <p class="text-center col-12">Список событии пуст</p>
+                                {% endfor %}
+                                {% if request.user in club.managers.all %}
+                                <div class="col-lg-4 mb-4">
+                                    <div
+                                        class="event-card d-flex align-items-center justify-content-center w-100 h-100">
+                                        <a href="{% url 'event_create' club.pk %}" class="add-item">
+                                            <i class="fa-solid fa-circle-plus" style="font-size: 130px"></i>
+                                            <span class="add-item-text d-block mt-2 text-center">Добавить событие</span>
+                                        </a>
+                                    </div>
+                                </div>
+                                {% endif %}
+                                {% if events|length > 12 %}
+                                <a href="#" class="d-block text-center">Все услуги</a>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="jq-tab-content" data-tab="5">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    {% for post in club.posts.all %}
+                                    {% if post.is_published %}
+                                    <div class="single-post-list d-flex flex-row align-items-center"
+                                        style="margin-bottom: 30px; padding-bottom: 30px; border-bottom: 1px solid #eee;">
+                                        <div class="details w-100">
+                                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                                <h3 class="mb-0">{{ post.title }}</h3>
+                                                <span class="text-muted"><i class="fa fa-clock-o mr-1"></i>{{
+                                                    post.created_at|date:"d.m.Y H:i" }}</span>
+                                            </div>
+                                            <div class="description">
+                                                {{ post.content|safe }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% endif %}
+                                    {% empty %}
+                                    <p class="text-center my-5">Новостей пока нет.</p>
+                                    {% endfor %}
+
+                                    {% if request.user in club.managers.all %}
+                                    <div class="alert alert-info text-center mt-4">
+                                        <i class="fa-solid fa-robot mr-2"></i>
+                                        <strong>Совет:</strong> Вы можете попросить AI-консультанта создать новость для
+                                        вашего клуба!
+                                        <br>
+                                        <em>"Напиши пост о нашей новой тренировке для клуба {{ club.name }}"</em>
+                                    </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block footer %}
+{% include 'partial/footer.html' %}
+{% endblock %}
+
+{% block scripts %}
+<script src="{%  static 'js/template_js/vendor/jquery-2.2.4.min.js' %}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+<script src="{%  static 'js/template_js/vendor/bootstrap.min.js' %}"></script>
+{#
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBhOdIF3Y9382fqJYt5I_sswSrEw5eihAA"></script>#}
+<script src="{%  static 'js/template_js/easing.min.js' %}"></script>
+<script src="{%  static 'js/template_js/hoverIntent.js' %}"></script>
+<script src="{%  static 'js/template_js/superfish.min.js' %}"></script>
+<script src="{%  static 'js/template_js/jquery.ajaxchimp.min.js' %}"></script>
+<script src="{%  static 'js/template_js/jquery.magnific-popup.min.js' %}"></script>
+<script src="{%  static 'js/template_js/jquery.tabs.min.js' %}"></script>
+<script src="{%  static 'js/template_js/jquery.nice-select.min.js' %}"></script>
+<script src="{%  static 'js/template_js/owl.carousel.min.js' %}"></script>
+<script src="{%  static 'js/template_js/mail-script.js' %}"></script>
+<script src="{%  static 'js/our_js/club-detail.js' %}"></script>
+<script src="{%  static 'js/template_js/main.js' %}"></script>
+{% endblock %}

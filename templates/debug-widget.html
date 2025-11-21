@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тест AI Виджета</title>
+    <link rel="stylesheet" href="/static/css/ai-chat-widget-v2.css">
+</head>
+<body>
+    <div style="padding: 20px;">
+        <h1>Тестовая страница для AI Виджета</h1>
+        <p>Если виджет работает, вы должны увидеть кнопку в правом нижнем углу.</p>
+    </div>
+
+    <script src="/static/js/ai-chat-widget-v2.js?v=2.4.2"></script>
+
+    <script>
+        // Явная инициализация виджета
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM загружен, инициализируем виджет...');
+
+            // Проверяем, что класс загружен
+            if (typeof AIChatWidgetV2 !== 'undefined') {
+                console.log('Класс AIChatWidgetV2 найден');
+
+                // Проверяем, что функция инициализации существует
+                if (typeof initAIChatWidgetV2 === 'function') {
+                    console.log('Функция initAIChatWidgetV2 найдена');
+                    const widget = initAIChatWidgetV2();
+                    console.log('Виджет инициализирован:', widget);
+
+                    // Проверяем, что виджет добавился в window
+                    setTimeout(() => {
+                        console.log('window.aiChatWidgetV2:', window.aiChatWidgetV2);
+                        console.log('HTML виджета:', document.getElementById('ai-chat-widget-v2'));
+                    }, 1000);
+                } else {
+                    console.error('Функция initAIChatWidgetV2 не найдена');
+                }
+            } else {
+                console.error('Класс AIChatWidgetV2 не найден');
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1 @@
+jQuery("#password_reset_form input, #password_reset_confirm input").addClass("form-control text-center")

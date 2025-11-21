@@ -1,0 +1,119 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{%  static 'css/template_css/linearicons.css' %}">
+    <link rel="stylesheet" href="{%  static 'css/template_css/font-awesome.min.css' %}">
+    <link rel="stylesheet" href="{%  static 'css/template_css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{%  static 'css/template_css/magnific-popup.css' %}">
+    <link rel="stylesheet" href="{%  static 'css/template_css/nice-select.css' %}">
+    <link rel="stylesheet" href="{%  static 'css/template_css/animate.min.css' %}">
+    <link rel="stylesheet" href="{%  static 'css/template_css/owl.carousel.css' %}">
+    <link rel="stylesheet" href="{%  static 'css/template_css/jquery-ui.css' %}">
+    <link rel="stylesheet" href="{%  static 'css/template_css/main.css' %}">
+    <link rel="stylesheet" href="{%  static 'css/our_css/style.css' %}">
+{% endblock %}
+
+{% block header %}
+    {% include 'partial/header.html' %}
+{% endblock %}
+
+{% block content %}
+    {% include 'partial/breadcrumb.html' %}
+    <section class="event-details-area section-gap">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-7 event-details-left">
+                    <div class="main-img">
+                        {% if event.banner %}
+                            <img class="img-fluid" src="{{ event.banner.url }}" alt="{{ event.title }}">
+                        {% else %}
+                            <img class="img-fluid" src="{% static 'images/event-details-img.jpg' %}" alt="{{ event.title }}">
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="col-lg-5 event-details-right">
+                    <div class="single-event-details">
+                        <h4>Детали</h4>
+                        <ul class="mt-10">
+                            <li class="justify-content-between d-flex">
+                                <span>Организатор</span>
+                                <a href="{{ event.club.get_absolute_url }}">
+                                    <span>{{ event.club.name }}</span>
+                                </a>
+                            </li>
+                            <li class="justify-content-between d-flex">
+                                <span>Телефон организатора</span>
+                                <span class="text-right">
+                                <span>{{ event.club.creater.phone }}</span>
+                            </li>
+                            <li class="justify-content-between d-flex">
+                                <span>Начало</span>
+                                <span>
+                                    <i class="fa-regular fa-calendar {% if event.is_passed %}event-passed{% else %}event-not-passed{% endif %}"></i>
+                                    {{ event.start_datetime|date:'d.m.Y H:i' }}
+                                </span>
+                            </li>
+                            <li class="justify-content-between d-flex">
+                                <span>Окончание</span>
+                                <span>{{ event.end_datetime|date:'d.m.Y H:i' }}</span>
+                            </li>
+                            <li class="justify-content-between d-flex">
+                                <span>Место проведения</span>
+                                <span>{{ event.location }}</span>
+                            </li>		
+                            <li class="justify-content-between d-flex">
+                                <span>Возрастные ограничения</span>
+                                <span>
+                                    {{ event.get_age_restriction_str }}
+                                </span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="single-event-details">
+                        <h4>Критерии входа</h4>
+                        <ul class="mt-10">
+                            <li class="justify-content-between d-flex">
+                                <span>{{ event.entry_requirements }}</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="single-event-details">
+                        <h4>Описание</h4>
+                        <ul class="mt-10">
+                            <li class="justify-content-between d-flex">
+                                <span>{{ event.description }}</span>
+                            </li>
+                        </ul>
+                    </div>
+                    {% if request.user in event.club.managers.all %}
+                        <a href="{% url 'edit_event' event.pk %}" class="btn btn-primary w-100 mt-1 mb-2"><i class="fa-solid fa-pen mr-1"></i>Редактировать</a>
+                    {% endif %}
+                    <a href="https://wa.me/{{ event.club.creater.get_formatted_phone }}" class="btn btn-success w-100"><i class="fa-brands fa-whatsapp mr-1"></i>Записаться</a>
+                </div>
+            </div>
+        </div>	
+    </section>
+{% endblock %}
+
+{% block footer %}
+    {% include 'partial/footer.html' %}
+{% endblock %}
+
+{% block scripts %}
+    <script src="{%  static 'js/template_js/vendor/jquery-2.2.4.min.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="{%  static 'js/template_js/vendor/bootstrap.min.js' %}"></script>
+{#    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBhOdIF3Y9382fqJYt5I_sswSrEw5eihAA"></script>#}
+    <script src="{%  static 'js/template_js/easing.min.js' %}"></script>
+    <script src="{%  static 'js/template_js/hoverIntent.js' %}"></script>
+    <script src="{%  static 'js/template_js/superfish.min.js' %}"></script>
+    <script src="{%  static 'js/template_js/jquery.ajaxchimp.min.js' %}"></script>
+    <script src="{%  static 'js/template_js/jquery.magnific-popup.min.js' %}"></script>
+    <script src="{%  static 'js/template_js/jquery.tabs.min.js' %}"></script>
+    <script src="{%  static 'js/template_js/jquery.nice-select.min.js' %}"></script>
+    <script src="{%  static 'js/template_js/owl.carousel.min.js' %}"></script>
+    <script src="{%  static 'js/template_js/mail-script.js' %}"></script>
+    <script src="{%  static 'js/template_js/main.js' %}"></script>
+{% endblock %}

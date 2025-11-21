@@ -1,0 +1,52 @@
+{% load static %}
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+    {% if created_clubs %}
+      <div class="modal-header">
+        <h2 class="modal-title fs-5" id="modal">Выберите ваше сообщество</h2>
+      </div>
+      <div class="modal-body">
+        
+            
+        <select type="radio" id="selectedClub" class="form-select form-select-lg mb-3" >
+            {% for club in created_clubs %}
+                <option value="{{ club.id }}">{{ club.name }}</option>
+            {% endfor %}
+            
+        </select>
+        <div class="fest-req-error-block" id="festResponseText">
+        
+        </div>
+   
+        
+
+    {% else %}
+      <div class="modal-header mb-3 mt-3">
+        <h3 class="modal-title fs-5" id="exampleModalLabel">У вас нет сообществ</h3>
+
+      </div>
+      <div class="modal-body mb-5">
+        <a href="{% url 'club_create' %}">Создать сообщество</a>
+      </div>
+    {% endif %}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary close-button" data-bs-dismiss="modal">Закрыть</button>
+        {% if created_clubs %}
+            <button type="button" class="btn btn-primary" id="FestivalParticipationRequest">
+                Отправить запрос
+            </button>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% block extra_scripts %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.min.js" integrity="sha512-ykZ1QQr0Jy/4ZkvKuqWn4iF3lqPZyij9iRv6sGqLRdTPkY69YX6+7wvVGmsdBbiIfN/8OdsI7HABjvEok6ZopQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="{% static 'js/our_js/fest.js' %}"></script>
+    <script src="{%  static 'js/template_js/main.js' %}"></script>
+{% endblock %}

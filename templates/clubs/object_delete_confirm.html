@@ -1,0 +1,24 @@
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Центр событии</title>
+    <link rel="stylesheet" href="{%  static 'css/template_css/bootstrap.css' %}">
+</head>
+<body>
+    <div class="delete-modal container mt-5">
+        <div class="delete-modal-inner col-10 col-lg-6 mx-auto text-center pt-5 px-2 border border-secondary">
+            <h5 class="mb-5">Вы уверены, что хотите удалить {{ object_name }}?</h5>
+            <form action="{% url action_url object_id %}" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="_method" value="DELETE">
+                <div class="delete-modal-buttons">
+                    <button class="btn btn-danger" type="submit">Подтверждаю</button>
+                    <a href="{{ request.META.HTTP_REFERER }}" class="btn btn-secondary">Отмена</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Простой тест AI виджета</title>
+    <link rel="stylesheet" href="/static/css/ai-chat-widget-v2.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: #f0f0f0;
+        }
+        .test-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .status {
+            padding: 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+        .status.success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .status.error { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+        .status.info { background: #d1ecf1; color: #0c5460; border: 1px solid #bee5eb; }
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover { background: #0056b3; }
+        #widget-status {
+            font-family: monospace;
+            font-size: 14px;
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+            white-space: pre-line;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>🔍 Простой тест AI виджета</h1>
+
+        <div class="status info">
+            <strong>Информация:</strong> Эта страница проверяет базовую функциональность AI виджета.
+        </div>
+
+        <div id="loading-status">
+            <div class="status info">Загрузка...</div>
+        </div>
+
+        <div id="widget-status"></div>
+
+        <div>
+            <button onclick="testWidgetCreation()">🔧 Создать виджет принудительно</button>
+            <button onclick="testWidgetVisibility()">👁️ Проверить видимость</button>
+            <button onclick="forceShowButton()">⚡ Принудительно показать кнопку</button>
+            <button onclick="clearStatus()">🧹 Очистить статус</button>
+        </div>
+
+        <div class="status info">
+            <strong>Ожидаемый результат:</strong> В правом нижнем углу должна появиться круглая кнопка с иконкой ✨ и зеленой точкой онлайн-статуса.
+        </div>
+    </div>
+
+    <script src="/static/js/ai-chat-widget-v2.js"></script>
+
+    <script>
+        let statusDiv = document.getElementById('widget-status');
+        let loadingDiv = document.getElementById('loading-status');
+
+        function updateStatus(message, type = 'info') {
+            const timestamp = new Date().toLocaleTimeString();
+            const entry = document.createElement('div');
+            entry.className = `status ${type}`;
+            entry.innerHTML = `<strong>[${timestamp}]</strong> ${message}`;
+
+            if (loadingDiv) {
+                loadingDiv.style.display = 'none';
+            }
+
+            statusDiv.appendChild(entry);
+            statusDiv.scrollTop = statusDiv.scrollHeight;
+            console.log(`[${type.toUpperCase()}] ${message}`);
+        }
+
+        function checkBasicStatus() {
+            updateStatus('🚀 Начало проверки виджета...', 'info');
+
+            // Проверяем базовые компоненты
+            const checks = [
+                { name: 'AIChatWidget класс', check: typeof AIChatWidget !== 'undefined' },
+                { name: 'initAIChatWidgetV2 функция', check: typeof initAIChatWidgetV2 === 'function' },
+                { name: 'window.aiChatWidgetV2', check: !!window.aiChatWidgetV2 },
+                { name: 'CSS файл загружен', check: !!document.querySelector('link[href*="ai-chat-widget"]') },
+                { name: 'JS файл загружен', check: !!document.querySelector('script[src*="ai-chat-widget"]') }
+            ];
+
+            let allPassed = true;
+            checks.forEach(item => {
+                if (item.check) {
+                    updateStatus(`✅ ${item.name}: Доступен`, 'success');
+                } else {
+                    updateStatus(`❌ ${item.name}: Не найден`, 'error');
+                    allPassed = false;
+                }
+            });
+
+            return allPassed;
+        }
+
+        function checkDOMElements() {
+            updateStatus('🔍 Проверка DOM элементов...', 'info');
+
+            const widget = document.getElementById('ai-chat-widget');
+            const button = document.getElementById('chatToggleBtn');
+
+            if (widget) {
+                updateStatus('✅ Виджет (#ai-chat-widget): Найден в DOM', 'success');
+
+                const styles = window.getComputedStyle(widget);
+                const rect = widget.getBoundingClientRect();
+
+                updateStatus(`🎨 Стили виджета:
+  Display: ${styles.display}
+  Visibility: ${styles.visibility}
+  Opacity: ${styles.opacity}
+  Position: ${styles.position}
+  Bottom: ${styles.bottom}
+  Right: ${styles.right}
+  Z-Index: ${styles.zIndex}
+  Width: ${styles.width}
+  Height: ${styles.height}`, 'info');
+
+                updateStatus(`📐 Позиция виджета:
+  Top: ${rect.top}px
+  Left: ${rect.left}px
+  Width: ${rect.width}px
+  Height: ${rect.height}px
+  Видимый: ${rect.width > 0 && rect.height > 0 ? 'Да' : 'Нет'}`, rect.width > 0 && rect.height > 0 ? 'success' : 'error');
+
+            } else {
+                updateStatus('❌ Виджет (#ai-chat-widget): Не найден в DOM', 'error');
+            }
+
+            if (button) {
+                updateStatus('✅ Кнопка (#chatToggleBtn): Найдена в DOM', 'success');
+
+                const styles = window.getComputedStyle(button);
+                const rect = button.getBoundingClientRect();
+
+                updateStatus(`🎨 Стили кнопки:
+  Display: ${styles.display}
+  Visibility: ${styles.visibility}
+  Opacity: ${styles.opacity}
+  Background: ${styles.background}`, 'info');
+
+                updateStatus(`📐 Позиция кнопки:
+  Top: ${rect.top}px
+  Left: ${rect.left}px
+  Width: ${rect.width}px
+  Height: ${rect.height}px
+  Видима: ${rect.width > 0 && rect.height > 0 ? 'Да' : 'Нет'}`, rect.width > 0 && rect.height > 0 ? 'success' : 'error');
+
+            } else {
+                updateStatus('❌ Кнопка (#chatToggleBtn): Не найдена в DOM', 'error');
+            }
+
+            return !!(widget && button);
+        }
+
+        function testWidgetCreation() {
+            updateStatus('🔧 Попытка создания виджета...', 'info');
+
+            try {
+                if (typeof initAIChatWidgetV2 === 'function') {
+                    const widget = initAIChatWidgetV2();
+                    updateStatus(`✅ Виджет создан через initAIChatWidgetV2(): ${widget ? 'Успешно' : 'Ошибка'}`, widget ? 'success' : 'error');
+
+                    setTimeout(() => {
+                        checkDOMElements();
+                    }, 1000);
+                } else {
+                    updateStatus('❌ Функция initAIChatWidgetV2 не найдена', 'error');
+                }
+            } catch (error) {
+                updateStatus(`❌ Ошибка при создании виджета: ${error.message}`, 'error');
+            }
+        }
+
+        function testWidgetVisibility() {
+            updateStatus('👁️ Проверка видимости виджета...', 'info');
+            checkDOMElements();
+        }
+
+        function forceShowButton() {
+            updateStatus('⚡ Создание полного виджета с обработчиками...', 'info');
+
+            try {
+                if (typeof initAIChatWidgetV2 === 'function') {
+                    updateStatus('🔧 Используем initAIChatWidgetV2...', 'info');
+                    const widget = initAIChatWidgetV2();
+
+                    setTimeout(() => {
+                        const button = document.getElementById('chatToggleBtn');
+                        const container = document.getElementById('chatContainer');
+
+                        if (button && widget && widget.toggleChat) {
+                            updateStatus('✅ Виджет и кнопка найдены, привязываем обработчик...', 'info');
+
+                            // Привязываем правильный обработчик
+                            button.onclick = (e) => {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                updateStatus('🎯 Кнопка нажата! Вызываем toggleChat...', 'info');
+
+                                try {
+                                    widget.toggleChat();
+                                    updateStatus('✅ toggleChat выполнен успешно!', 'success');
+                                } catch (error) {
+                                    updateStatus(`❌ Ошибка в toggleChat: ${error.message}`, 'error');
+                                }
+                            };
+
+                            // Проверяем наличие контейнера чата
+                            if (!container) {
+                                updateStatus('⚠️ Контейнер чата не найден, проверяем HTML...', 'info');
+                            } else {
+                                updateStatus('✅ Контейнер чата найден!', 'success');
+                            }
+
+                            updateStatus('✅ Кнопка принудительно отображена с рабочим обработчиком!', 'success');
+                        } else {
+                            updateStatus(`❌ Ошибка: виджет=${!!widget}, кнопка=${!!button}, toggleChat=${!!widget?.toggleChat}`, 'error');
+                        }
+                    }, 1000);
+                } else {
+                    updateStatus('❌ Функция initAIChatWidgetV2 не найдена!', 'error');
+                }
+            } catch (error) {
+                updateStatus(`❌ Ошибка при создании виджета: ${error.message}`, 'error');
+            }
+
+            setTimeout(() => {
+                checkDOMElements();
+            }, 2000);
+        }
+
+        function clearStatus() {
+            statusDiv.innerHTML = '';
+            loadingDiv.style.display = 'block';
+        }
+
+        // Инициализация при загрузке страницы
+        document.addEventListener('DOMContentLoaded', function() {
+            updateStatus('🚀 Страница загружена, начинаю тестирование...', 'info');
+
+            setTimeout(() => {
+                const basicOK = checkBasicStatus();
+
+                if (basicOK) {
+                    updateStatus('✅ Базовая проверка пройдена, проверяю DOM...', 'success');
+                    setTimeout(() => {
+                        const domOK = checkDOMElements();
+
+                        if (!domOK) {
+                            updateStatus('⚠️ Проблемы с DOM элементами, попробуйте принудительное создание', 'error');
+                        }
+                    }, 2000);
+                } else {
+                    updateStatus('❌ Базовая проверка не пройдена', 'error');
+                }
+            }, 1000);
+        });
+
+        // Отслеживание ошибок
+        window.addEventListener('error', function(event) {
+            updateStatus(`❌ JavaScript ошибка: ${event.error.message}`, 'error');
+        });
+
+        window.addEventListener('unhandledrejection', function(event) {
+            updateStatus(`⚠️ Promise ошибка: ${event.reason}`, 'error');
+        });
+    </script>
+</body>
+</html>

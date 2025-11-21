@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+<div class="container" style="margin-top: 100px; margin-bottom: 100px;">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm border-danger">
+                <div class="card-body text-center">
+                    <h2 class="card-title text-danger mb-4">{% trans "Social Network Login Failure" %}</h2>
+                    <p class="card-text">
+                        {% trans "An error occurred while attempting to login via your social network account." %}
+                    </p>
+                    <div class="alert alert-danger">
+                        {{ auth_error.code }}
+                        {% if auth_error.exception %}
+                        : {{ auth_error.exception }}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

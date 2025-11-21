@@ -1,0 +1,44 @@
+{
+  "mcpServers": {
+    "serena": {
+      "command": "uvx",
+      "args": [
+        "--from",
+        "git+https://github.com/oraios/serena",
+        "serena",
+        "start-mcp-server",
+        "--project",
+        "/home/zhaslan/Downloads/unitysphere-project/home/almalinux/new/unitysphere",
+        "--transport",
+        "streamable-http",
+        "--port",
+        "8001"
+      ]
+    },
+    "filesystem": {
+      "command": "/home/zhaslan/.nvm/versions/node/v22.20.0/bin/npx",
+      "args": [
+        "@modelcontextprotocol/server-filesystem",
+        "/home/zhaslan/Downloads/unitysphere-project/home/almalinux/new/unitysphere"
+      ]
+    },
+    "code-runner": {
+      "command": "/home/zhaslan/.nvm/versions/node/v22.20.0/bin/npx",
+      "args": [
+        "mcp-server-code-runner"
+      ]
+    },
+    "chrome-devtools": {
+      "command": "/home/zhaslan/.nvm/versions/node/v22.20.0/bin/npx",
+      "args": [
+        "chrome-devtools-mcp"
+      ]
+    },
+    "web-research": {
+      "command": "/home/zhaslan/.nvm/versions/node/v22.20.0/bin/npx",
+      "args": [
+        "@mzxrai/mcp-webresearch"
+      ]
+    }
+  }
+}

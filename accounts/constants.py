@@ -1,0 +1,3 @@
+USER_SESSION_KEY = 'user_session_key_{}'
+USER_SESSION_KEY_TTL = 60 * 5
+USER_SESION_KEY_COOKIE_TTL = 60 * 5

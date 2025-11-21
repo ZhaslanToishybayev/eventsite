@@ -1,0 +1,73 @@
+# Production requirements for UnitySphere
+
+# Core Django
+django>=4.2.0,<5.0
+djangorestframework>=3.14.0
+django-cors-headers>=4.0.0
+django-ratelimit>=4.1.0
+django-filter>=23.0
+django-extensions>=3.2.0
+django-constance>=3.0.0
+
+# Database
+psycopg2-binary>=2.9.0
+django-redis>=5.2.0
+
+# Web Server
+gunicorn>=21.0.0
+gevent>=23.0.0
+
+# Static Files
+whitenoise>=6.5.0
+
+# Security
+cryptography>=41.0.0
+bcrypt>=4.1.0
+bleach>=6.1.0
+python-magic>=0.4.27
+
+# Authentication
+django-allauth>=0.54.0
+
+# Content Management
+django-ckeditor>=6.5.0
+Pillow>=10.0.0
+
+# AI and Monitoring
+openai>=1.0.0
+structlog>=23.2.0
+psutil>=5.9.0
+
+# Environment
+python-dotenv>=1.0.0
+dj-database-url>=2.0.0
+
+# HTTP Client
+requests>=2.31.0
+urllib3>=2.0.0
+
+# Error Tracking (optional)
+sentry-sdk>=1.28.0
+
+# Performance
+redis>=4.5.0
+hiredis>=2.2.0
+
+# Utilities
+beautifulsoup4>=4.12.0
+pytz>=2023.3
+python-dateutil>=2.8.0
+
+# Development (optional, can be removed in production)
+django-debug-toolbar>=4.2.0
+django-silk>=5.0.0
+
+# Testing (optional, can be removed in production)
+pytest>=7.4.0
+pytest-django>=4.5.0
+factory-boy>=3.3.0
+coverage>=7.3.0
+
+# Monitoring and Logging
+prometheus-client>=0.17.0
+statsd>=3.3.0

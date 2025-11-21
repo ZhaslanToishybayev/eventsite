@@ -1,0 +1,37 @@
+[Unit]
+Description=UnitySphere Django Application
+After=network.target postgresql.service redis.service
+Wants=postgresql.service redis.service
+
+[Service]
+Type=notify
+User=www-data
+Group=www-data
+RuntimeDirectory=gunicorn
+WorkingDirectory=/var/www/unitysphere
+Environment=DJANGO_SETTINGS_MODULE=core.settings_production
+Environment=PATH=/var/www/venv_unitysphere/bin:/usr/local/bin:/usr/bin:/bin
+
+# Load environment variables from .env file
+EnvironmentFile=/var/www/unitysphere/.env
+
+# Gunicorn settings
+ExecStart=/var/www/venv_unitysphere/bin/gunicorn -c gunicorn.conf.py core.wsgi:application
+ExecReload=/bin/kill -s HUP $MAINPID
+KillMode=mixed
+TimeoutStopSec=5
+PrivateTmp=true
+Restart=on-failure
+RestartSec=5
+
+# Security
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/var/log/unitysphere /var/www/unitysphere/media /tmp
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+
+[Install]
+WantedBy=multi-user.target

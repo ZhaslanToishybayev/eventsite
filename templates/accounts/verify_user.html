@@ -1,0 +1,21 @@
+{% extends 'accounts/auth_base.html' %}
+
+{% block content %}
+
+<div class="wrap d-md-flex">
+    <div class="text-wrap p-4 p-lg-5 text-center d-flex align-items-center order-md-last">
+        <div class="text w-100">
+            <h2>Добро пожаловать!</h2>
+            <p>Уже есть аккаунт?</p>
+            <a href="#" class="btn btn-white btn-outline-white">Войти</a>
+        </div>
+    </div>
+    <div class="login-wrap p-4 p-lg-5">
+        <div class="w-100">
+            <h3 class="mb-4 text-center">Регистрация</h3>
+        </div>
+        {% include 'partial/form.html' with btn_text="Зарегистрироваться" form_method="post" form_id="register_user_form" %}
+    </div>
+</div>
+
+{% endblock %}

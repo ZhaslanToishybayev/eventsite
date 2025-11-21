@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{%  static 'css/template_css/linearicons.css' %}">
+    <link rel="stylesheet" href="{%  static 'css/template_css/font-awesome.min.css' %}">
+    <link rel="stylesheet" href="{%  static 'css/template_css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{%  static 'css/template_css/magnific-popup.css' %}">
+    <link rel="stylesheet" href="{%  static 'css/template_css/nice-select.css' %}">
+    <link rel="stylesheet" href="{%  static 'css/template_css/animate.min.css' %}">
+    <link rel="stylesheet" href="{%  static 'css/template_css/owl.carousel.css' %}">
+    <link rel="stylesheet" href="{%  static 'css/template_css/jquery-ui.css' %}">
+    <link rel="stylesheet" href="{%  static 'css/template_css/main.css' %}">
+    <link rel="stylesheet" href="{%  static 'css/our_css/style.css' %}">
+{% endblock %}
+
+{% block header %}
+    {% include 'partial/header.html' %}
+{% endblock %}
+
+{% block content %}
+    {% include 'partial/breadcrumb.html' %}
+    <section class="club-filter my-4">
+        <div class="container">
+            <form class="search-form" action="#">
+                <div class="inner-form d-flex w-75 mx-auto">
+                <select name="search-field" id="" class="search-field">
+                    <option value="name" {% if search_field == 'name' %}selected{% endif %}>По имени</option>
+                    <option value="interests" {% if search_field == 'interests' %}selected{% endif %}>По интересам</option>
+                    <option value="all" {% if search_field == 'all' %}selected{% endif %}>Искать все</option>
+                </select>
+                <input  class="custom-search-input" name="search" type="text" value="{% if search %}{{ search }}{% endif %}" placeholder="Найти пользователей">
+                <button type="submit" class="custom-search-button"><i class="fa fa-search"></i></button>
+                </div>
+            </form>
+        </div>
+    </section>
+    <section class="club-list mb-5">
+        <div class="container">
+            <div class="row club-list">
+                {% for user in users %}
+                    <div class="single-popular-carusel col-lg-3 col-md-6">
+                        <div class="thumb-wrap relative">
+                            <div class="thumb relative">
+                                <div class="overlay overlay-bg"></div>
+                                <a href="{{ user.get_absolute_url }}">
+                                    <div class="image-container">
+                                        <img class="img-fluid" src="{{ user.avatar.url }}" alt="">
+                                    </div>
+                                </a>
+                            </div>	                            
+                        </div>
+                        <div class="details">
+                            <a href="{{ user.get_absolute_url }}">
+                                <h6 class="mt-1 text-uppercase text-center">
+                                    {{ user }}
+                                </h6>
+                            </a>
+                        </div>
+                    </div>
+                {% empty %}
+                    {% if search %}
+                        <h5 class="text-danger text-center mx-auto">По запросу {{ search }} ничего не найдено</h5>
+                    {% else %}
+                        <h5 class="text-danger text-center mx-auto">Список пользователей пуст</h5>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+    <section class="pagination">
+        
+        <div class="container">
+            {% include 'partial/pagination.html' %}
+        </div>
+    
+    </section>
+{% endblock %}
+
+{% block footer %}
+    {% include 'partial/footer.html' %}
+{% endblock %}
+
+{% block scripts %}
+    <script src="{%  static 'js/template_js/vendor/jquery-2.2.4.min.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="{%  static 'js/template_js/vendor/bootstrap.min.js' %}"></script>
+{#    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBhOdIF3Y9382fqJYt5I_sswSrEw5eihAA"></script>#}
+    <script src="{%  static 'js/template_js/easing.min.js' %}"></script>
+    <script src="{%  static 'js/template_js/hoverIntent.js' %}"></script>
+    <script src="{%  static 'js/template_js/superfish.min.js' %}"></script>
+    <script src="{%  static 'js/template_js/jquery.ajaxchimp.min.js' %}"></script>
+    <script src="{%  static 'js/template_js/jquery.magnific-popup.min.js' %}"></script>
+    <script src="{%  static 'js/template_js/jquery.tabs.min.js' %}"></script>
+    <script src="{%  static 'js/template_js/jquery.nice-select.min.js' %}"></script>
+    <script src="{%  static 'js/template_js/owl.carousel.min.js' %}"></script>
+    <script src="{%  static 'js/template_js/mail-script.js' %}"></script>
+    <script src="{%  static 'js/template_js/main.js' %}"></script>
+{% endblock %}

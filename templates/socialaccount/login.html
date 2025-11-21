@@ -1,0 +1,145 @@
+{% extends "allauth/layouts/base.html" %}
+{% load i18n %}
+
+{% block head_title %}
+    {% trans "Sign In" %} via {{ provider.name }}
+{% endblock head_title %}
+
+{% block content %}
+<div class="login-wrap p-4 p-md-5">
+    <div class="d-flex">
+        <div class="w-100">
+            <h3 class="mb-4 text-center">
+                {% if process == "connect" %}
+                    {% blocktrans with provider.name as provider %}Connect {{ provider }}{% endblocktrans %}
+                {% else %}
+                    {% blocktrans with provider.name as provider %}Sign In Via {{ provider }}{% endblocktrans %}
+                {% endif %}
+            </h3>
+        </div>
+    </div>
+
+    <p class="text-center mb-4">
+        {% if process == "connect" %}
+            {% blocktrans with provider.name as provider %}You are about to connect a new third-party account from {{ provider }}.{% endblocktrans %}
+        {% else %}
+            {% blocktrans with provider.name as provider %}You are about to sign in using a third-party account from {{ provider }}.{% endblocktrans %}
+        {% endif %}
+    </p>
+
+    <form method="post">
+        {% csrf_token %}
+
+        <div class="form-group">
+            <button type="submit" class="form-control btn btn-primary submit px-3">
+                {% if provider.name == "Google" %}
+                    <i class="fab fa-google me-2"></i>
+                {% elif provider.name == "Facebook" %}
+                    <i class="fab fa-facebook me-2"></i>
+                {% elif provider.name == "GitHub" %}
+                    <i class="fab fa-github me-2"></i>
+                {% else %}
+                    <i class="fas fa-sign-in-alt me-2"></i>
+                {% endif %}
+                {% trans "Continue" %}
+            </button>
+        </div>
+
+        <div class="text-center mt-4">
+            <p class="mb-0">
+                <a href="{% url 'account_login' %}" class="text-decoration-none">
+                    <i class="fas fa-arrow-left me-1"></i>
+                    {% trans "Back to Login" %}
+                </a>
+            </p>
+            {% if not user.is_authenticated %}
+                <p class="mt-2">
+                    {% trans "Don't have an account?" %}
+                    <a href="{% url 'account_signup' %}" class="text-decoration-none">
+                        {% trans "Sign Up" %}
+                    </a>
+                </p>
+            {% endif %}
+        </div>
+    </form>
+</div>
+
+<style>
+.login-wrap {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    max-width: 450px;
+    margin: 0 auto;
+}
+
+.btn-primary {
+    background: linear-gradient(45deg, #4285f4, #34a853);
+    border: none;
+    padding: 12px 20px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    color: white;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(45deg, #34a853, #4285f4);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(66, 133, 244, 0.3);
+    color: white;
+}
+
+.text-center {
+    text-align: center !important;
+}
+
+.text-decoration-none {
+    text-decoration: none !important;
+    color: #4285f4;
+}
+
+.text-decoration-none:hover {
+    color: #34a853;
+}
+
+h3 {
+    color: #333;
+    font-weight: 600;
+}
+
+p {
+    color: #666;
+    font-size: 14px;
+}
+
+.fa-google {
+    color: #ffffff;
+}
+
+.fa-facebook {
+    color: #ffffff;
+}
+
+.fa-github {
+    color: #ffffff;
+}
+
+.ftco-section {
+    padding: 50px 0;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+}
+
+.alert {
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.alert-info {
+    background-color: rgba(23, 162, 184, 0.1);
+    border-color: rgba(23, 162, 184, 0.3);
+    color: #17a2b8;
+}
+</style>
+{% endblock content %}

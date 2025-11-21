@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{%  static 'css/template_css/linearicons.css' %}">
+    <link rel="stylesheet" href="{%  static 'css/template_css/font-awesome.min.css' %}">
+    <link rel="stylesheet" href="{%  static 'css/template_css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{%  static 'css/template_css/magnific-popup.css' %}">
+    <link rel="stylesheet" href="{%  static 'css/template_css/nice-select.css' %}">
+    <link rel="stylesheet" href="{%  static 'css/template_css/animate.min.css' %}">
+    <link rel="stylesheet" href="{%  static 'css/template_css/owl.carousel.css' %}">
+    <link rel="stylesheet" href="{%  static 'css/template_css/jquery-ui.css' %}">
+    <link rel="stylesheet" href="{%  static 'css/template_css/main.css' %}">
+    <link rel="stylesheet" href="{%  static 'css/our_css/style.css' %}">
+{% endblock %}
+
+{% block header %}
+    {% include 'partial/header.html' %}
+{% endblock %}
+
+{% block content %}
+    {% include 'partial/breadcrumb.html' %}
+    <section class="club-list mb-5">
+        <div class="container">
+            <div class="row club-list">
+                {% for request in requests %}
+                    <div class="single-popular-carusel col-lg-3 col-md-6">
+                        <div class="thumb-wrap relative">
+                            <div class="thumb relative">
+                                <div class="overlay overlay-bg"></div>
+                                <a href="{{ request.club.get_absolute_url }}">
+                                    <div class="image-container">
+                                        <img class="img-fluid" src="{{ request.club.logo.url }}" alt="">
+                                    </div>
+                                </a>
+                            </div>	                            
+                        </div>
+                        <div class="details">
+                            <a href="{{ request.club.get_absolute_url }}">
+                                <h6 class="mt-1 text-uppercase text-center mb-1">
+                                    {{ request.club.name }}
+                                </h6>
+                            </a>
+                            <div class="request-status-block d-flex justify-content-center mb-1">
+
+                                <span class="request_status d-block font-weight-bold text-center" id="request-status-{{ request.id }}">
+
+                                </span>
+                            </div>
+                        </div>
+                        {% if user.is_superuser %}
+                        {% csrf_token %}
+                        <div class="request-actions d-flex">
+                            <button type="button" class="btn btn-danger d-block w-100" request-id="{{ request.id }}" onclick="DeleteClubFromFestival(this)">Удалить</button>
+                        </div>
+                        {% endif %}
+                    </div>
+                {% empty %}
+                    <h5 class="festResponseText text-center mx-auto">Список запросов пуст</h5>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+    <section>
+        <div class="container">
+            <a href="{% url 'festival_requests' festival.id %}" class="text-center d-block">На страницу запросов</a>
+        </div>
+    </section>
+    <section class="pagination">
+        
+        <div class="container">
+            {% include 'partial/pagination.html' %}
+        </div>
+    
+    </section>
+{% endblock %}
+
+{% block footer %}
+    {% include 'partial/footer.html' %}
+{% endblock %}
+
+{% block scripts %}
+    <script src="{%  static 'js/template_js/vendor/jquery-2.2.4.min.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="{%  static 'js/template_js/vendor/bootstrap.min.js' %}"></script>
+{#    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBhOdIF3Y9382fqJYt5I_sswSrEw5eihAA"></script>#}
+    <script src="{%  static 'js/template_js/easing.min.js' %}"></script>
+    <script src="{%  static 'js/template_js/hoverIntent.js' %}"></script>
+    <script src="{%  static 'js/template_js/superfish.min.js' %}"></script>
+    <script src="{%  static 'js/template_js/jquery.ajaxchimp.min.js' %}"></script>
+    <script src="{%  static 'js/template_js/jquery.magnific-popup.min.js' %}"></script>
+    <script src="{%  static 'js/template_js/jquery.tabs.min.js' %}"></script>
+    <script src="{%  static 'js/template_js/jquery.nice-select.min.js' %}"></script>
+    <script src="{%  static 'js/template_js/owl.carousel.min.js' %}"></script>
+    <script src="{%  static 'js/template_js/mail-script.js' %}"></script>
+    <script src="{% static 'js/our_js/festival_request.js' %}"></script>
+    <script src="{%  static 'js/template_js/main.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+    {% load static %}
+    <title>Центр сообществ</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="shortcut icon" href="{%  static 'images/favicon-32x32.png' %}">
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+{#    <link rel="stylesheet" href="{% static 'css/template_css/bootstrap/bootstrap.min.css' %}">#}
+    <link rel="stylesheet" href="{% static 'css/template_css/auth-style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/our_css/style.css' %}">
+
+</head>
+<body class="bg-white">
+    <section class="ftco-section">
+        <div class="container">
+        <img src="{% static 'images/fanclub_horizontal.png' %}" alt="" class="d-block mx-auto mb-2">
+            <div class="row justify-content-center">
+                <div class="col-md-12 col-lg-10 auth-base">
+                    {% block content %}
+
+                    {% endblock %}
+                </div>
+            </div>
+        </div>
+    </section>
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery.maskedinput@1.4.1/src/jquery.maskedinput.min.js" crossorigin="anonymous"></script>
+<script src="{% static 'js/our_js/auth-js/popper.js' %}"></script>
+<script src="{%  static 'js/template_js/main.js' %}"></script>
+<script src="{% static 'js/our_js/mask.js' %}"></script>
+<script src="{%  static 'js/template_js/jquery.magnific-popup.min.js' %}"></script>
+<script src="{%  static 'js/template_js/superfish.min.js' %}"></script>
+<script src="{%  static 'js/template_js/owl.carousel.min.js' %}"></script>
+<script src="{%  static 'js/template_js/jquery.ajaxchimp.min.js' %}"></script>
+{% block extra_scripts %}
+
+{% endblock %}
+</body>
+</html>
+

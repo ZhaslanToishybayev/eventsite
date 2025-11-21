@@ -1,0 +1,19 @@
+#header {
+    background-color: #04091e;
+}
+
+.error-container {
+    text-align: center;
+    margin: 100px auto;
+    font-family: Arial, sans-serif;
+}
+
+.error-container h1 {
+    font-size: 120px;
+    color: #FF0000;
+}
+
+.error-container p {
+    font-size: 24px;
+    color: #333;
+}

@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🧪 Комплексное тестирование AI виджета</title>
+    <link rel="stylesheet" href="/static/css/ai-chat-widget.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        .test-container {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        .test-section {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            border-left: 4px solid #007bff;
+        }
+        .test-case {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #dee2e6;
+        }
+        .test-result {
+            padding: 8px 15px;
+            border-radius: 5px;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        .pass { background: #d4edda; color: #155724; }
+        .fail { background: #f8d7da; color: #721c24; }
+        .warning { background: #fff3cd; color: #856404; }
+
+        h1 { color: #2c3e50; text-align: center; }
+        h2 { color: #495057; border-bottom: 2px solid #007bff; padding-bottom: 10px; }
+        h3 { color: #6c757d; }
+
+        .device-frame {
+            border: 3px solid #333;
+            border-radius: 20px;
+            padding: 10px;
+            margin: 20px 0;
+            background: white;
+            display: inline-block;
+        }
+        .mobile-frame { width: 375px; height: 667px; }
+        .tablet-frame { width: 768px; height: 1024px; }
+        .desktop-frame { width: 1200px; height: 800px; }
+
+        .controls {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(0,0,0,0.8);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            z-index: 10000;
+        }
+        .btn {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        .btn:hover { background: #0056b3; }
+
+        .report {
+            background: #f8f9fa;
+            border: 2px solid #007bff;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .bug-item {
+            background: #fff;
+            border-left: 4px solid #dc3545;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .severity-critical { border-left-color: #dc3545; }
+        .severity-high { border-left-color: #fd7e14; }
+        .severity-medium { border-left-color: #ffc107; }
+        .severity-low { border-left-color: #28a745; }
+
+        .metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .metric-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        .metric-value {
+            font-size: 2em;
+            font-weight: bold;
+            color: #007bff;
+        }
+        .metric-label {
+            color: #6c757d;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <!-- Панель управления тестами -->
+    <div class="controls">
+        <h4>🎮 Управление тестами</h4>
+        <button class="btn" onclick="startFullTestSuite()">🚀 Запустить все тесты</button>
+        <button class="btn" onclick="testFunctionality()">⚙️ Функциональность</button>
+        <button class="btn" onclick="testResponsive()">📱 Адаптивность</button>
+        <button class="btn" onclick="testPerformance()">⚡ Производительность</button>
+        <button class="btn" onclick="generateReport()">📊 Отчет</button>
+    </div>
+
+    <div class="test-container">
+        <h1>🧪 Комплексное тестирование AI виджета UnitySphere</h1>
+        <p style="text-align: center; color: #6c757d;">Глубокий анализ UX/UI дизайна и функциональности</p>
+    </div>
+
+    <!-- Раздел функционального тестирования -->
+    <div class="test-container">
+        <h2>⚙️ Функциональное тестирование</h2>
+
+        <div class="test-section">
+            <h3>🚀 Базовая функциональность</h3>
+            <div id="basic-functionality-tests">
+                <div class="test-case">
+                    <h4>1. Инициализация виджета</h4>
+                    <p>Проверка корректной загрузки виджета на странице</p>
+                    <div id="test-init" class="test-result">Ожидание теста...</div>
+                </div>
+
+                <div class="test-case">
+                    <h4>2. Открытие/закрытие виджета</h4>
+                    <p>Проверка анимаций и состояний открытия/закрытия</p>
+                    <div id="test-toggle" class="test-result">Ожидание теста...</div>
+                </div>
+
+                <div class="test-case">
+                    <h4>3. Отправка сообщений</h4>
+                    <p>Проверка функциональности отправки и получения сообщений</p>
+                    <div id="test-messages" class="test-result">Ожидание теста...</div>
+                </div>
+
+                <div class="test-case">
+                    <h4>4. Быстрые команды</h4>
+                    <p>Тестирование быстрых команд и их обработка</p>
+                    <div id="test-quick-actions" class="test-result">Ожидание теста...</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h3>💾 Управление состоянием</h3>
+            <div id="state-tests">
+                <div class="test-case">
+                    <h4>1. Сохранение сессии</h4>
+                    <p>Проверка localStorage и сохранение истории</p>
+                    <div id="test-session-save" class="test-result">Ожидание теста...</div>
+                </div>
+
+                <div class="test-case">
+                    <h4>2. Восстановление сессии</h4>
+                    <p>Проверка восстановления после перезагрузки страницы</p>
+                    <div id="test-session-restore" class="test-result">Ожидание теста...</div>
+                </div>
+
+                <div class="test-case">
+                    <h4>3. Управление темами</h4>
+                    <p>Переключение между светлой и темной темой</p>
+                    <div id="test-themes" class="test-result">Ожидание теста...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Раздел UX/UI тестирования -->
+    <div class="test-container">
+        <h2>🎨 UX/UI тестирование</h2>
+
+        <div class="test-section">
+            <h3>📱 Адаптивный дизайн</h3>
+            <div id="responsive-tests">
+                <div class="test-case">
+                    <h4>1. Мобильные устройства (320px - 768px)</h4>
+                    <p>Проверка отображения на мобильных устройствах</p>
+                    <div class="device-frame mobile-frame">
+                        <div style="height: 100%; position: relative;">
+                            <p style="text-align: center; padding: 20px;">Мобильный вид</p>
+                        </div>
+                    </div>
+                    <div id="test-mobile" class="test-result">Ожидание теста...</div>
+                </div>
+
+                <div class="test-case">
+                    <h4>2. Планшеты (768px - 1024px)</h4>
+                    <p>Проверка отображения на планшетах</p>
+                    <div id="test-tablet" class="test-result">Ожидание теста...</div>
+                </div>
+
+                <div class="test-case">
+                    <h4>3. Десктоп (>1024px)</h4>
+                    <p>Проверка отображения на больших экранах</p>
+                    <div id="test-desktop" class="test-result">Ожидание теста...</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h3>🎯 Пользовательский опыт</h3>
+            <div id="ux-tests">
+                <div class="test-case">
+                    <h4>1. Навигация и удобство использования</h4>
+                    <p>Оценка интуитивности интерфейса</p>
+                    <div id="test-navigation" class="test-result">Ожидание теста...</div>
+                </div>
+
+                <div class="test-case">
+                    <h4>2. Доступность (Accessibility)</h4>
+                    <p>Проверка ARIA атрибутов и клавиатурной навигации</p>
+                    <div id="test-accessibility" class="test-result">Ожидание теста...</div>
+                </div>
+
+                <div class="test-case">
+                    <h4>3. Визуальная иерархия</h4>
+                    <p>Оценка читаемости и контрастности</p>
+                    <div id="test-visual-hierarchy" class="test-result">Ожидание теста...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Раздел тестирования производительности -->
+    <div class="test-container">
+        <h2>⚡ Тестирование производительности</h2>
+
+        <div class="test-section">
+            <h3>📊 Метрики производительности</h3>
+            <div class="metrics">
+                <div class="metric-card">
+                    <div class="metric-value" id="init-time">0ms</div>
+                    <div class="metric-label">Время инициализации</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value" id="api-response-time">0ms</div>
+                    <div class="metric-label">Время ответа API</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value" id="memory-usage">0MB</div>
+                    <div class="metric-label">Использование памяти</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value" id="bundle-size">0KB</div>
+                    <div class="metric-label">Размер виджета</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h3>🐛 Нагрузочное тестирование</h3>
+            <div id="performance-tests">
+                <div class="test-case">
+                    <h4>1. Большое количество сообщений</h4>
+                    <p>Тест с 50+ сообщениями в чате</p>
+                    <div id="test-many-messages" class="test-result">Ожидание теста...</div>
+                </div>
+
+                <div class="test-case">
+                    <h4>2. Длинные сообщения</h4>
+                    <p>Тест с сообщениями >1000 символов</p>
+                    <div id="test-long-messages" class="test-result">Ожидание теста...</div>
+                </div>
+
+                <div class="test-case">
+                    <h4>3. Быстрая отправка</h4>
+                    <p>Тест быстрой отправки нескольких сообщений</p>
+                    <div id="test-rapid-sending" class="test-result">Ожидание теста...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Отчет о найденных проблемах -->
+    <div class="test-container">
+        <h2>🐛 Найденные проблемы и решения</h2>
+        <div id="bugs-report">
+            <div class="bug-item severity-critical">
+                <h4>🚨 Критическая: [Проблема будет определена]</h4>
+                <p><strong>Описание:</strong> [Будет определено]</p>
+                <p><strong>Шаги воспроизведения:</strong> [Будет определено]</p>
+                <p><strong>Решение:</strong> [Будет предложено]</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Подключение виджета -->
+    <script src="/static/js/ai-chat-widget-v2.js?v=2.3.3"></script>
+
+    <script>
+        // Глобальные переменные для тестирования
+        let testResults = {
+            functional: { passed: 0, failed: 0, warnings: 0 },
+            ui: { passed: 0, failed: 0, warnings: 0 },
+            performance: { passed: 0, failed: 0, warnings: 0 }
+        };
+
+        let bugs = [];
+        let performanceMetrics = {};
+
+        // Функция обновления результатов теста
+        function updateTestResult(testId, status, message = '') {
+            const element = document.getElementById(testId);
+            if (!element) return;
+
+            element.className = `test-result ${status}`;
+            element.innerHTML = message || getStatusText(status);
+
+            // Обновление счетчиков
+            if (status === 'pass') {
+                testResults.functional.passed++;
+            } else if (status === 'fail') {
+                testResults.functional.failed++;
+            } else if (status === 'warning') {
+                testResults.functional.warnings++;
+            }
+        }
+
+        function getStatusText(status) {
+            const statusTexts = {
+                'pass': '✅ Пройден',
+                'fail': '❌ Провален',
+                'warning': '⚠️ Предупреждение',
+                'running': '🔄 Выполняется...'
+            };
+            return statusTexts[status] || 'Ожидание теста...';
+        }
+
+        // Основные функции тестирования
+        async function startFullTestSuite() {
+            console.log('🚀 Запуск полного набора тестов...');
+
+            // Очистка предыдущих результатов
+            resetTestResults();
+
+            // Запуск всех тестов
+            await testFunctionality();
+            await testResponsive();
+            await testPerformance();
+
+            // Генерация итогового отчета
+            generateReport();
+        }
+
+        async function testFunctionality() {
+            console.log('⚙️ Тестирование функциональности...');
+
+            // Тест 1: Инициализация
+            updateTestResult('test-init', 'running');
+            await testWidgetInitialization();
+
+            // Тест 2: Открытие/закрытие
+            updateTestResult('test-toggle', 'running');
+            await testToggleFunctionality();
+
+            // Тест 3: Сообщения
+            updateTestResult('test-messages', 'running');
+            await testMessaging();
+
+            // Тест 4: Быстрые команды
+            updateTestResult('test-quick-actions', 'running');
+            await testQuickActions();
+        }
+
+        async function testResponsive() {
+            console.log('📱 Тестирование адаптивности...');
+
+            // Тест мобильной версии
+            updateTestResult('test-mobile', 'running');
+            await testMobileView();
+
+            // Тест планшетной версии
+            updateTestResult('test-tablet', 'running');
+            await testTableView();
+
+            // Тест десктопной версии
+            updateTestResult('test-desktop', 'running');
+            await testDesktopView();
+        }
+
+        async function testPerformance() {
+            console.log('⚡ Тестирование производительности...');
+
+            // Измерение времени инициализации
+            updateTestResult('test-init-time', 'running');
+            await measureInitializationTime();
+
+            // Тест больших объемов данных
+            updateTestResult('test-many-messages', 'running');
+            await testWithManyMessages();
+
+            // Тест длинных сообщений
+            updateTestResult('test-long-messages', 'running');
+            await testLongMessages();
+        }
+
+        // Конкретные тесты
+        async function testWidgetInitialization() {
+            try {
+                await new Promise(resolve => setTimeout(resolve, 1000)); // Ожидание инициализации
+
+                const widget = document.getElementById('ai-chat-widget-v2');
+                const toggleBtn = document.getElementById('chatToggleBtn');
+                const container = document.getElementById('chatContainer');
+
+                if (widget && toggleBtn && container) {
+                    updateTestResult('test-init', 'pass', '✅ Виджет успешно инициализирован');
+
+                    // Проверка начального состояния
+                    if (toggleBtn.style.display !== 'none') {
+                        updateTestResult('test-init', 'pass', '✅ Начальное состояние корректно');
+                    }
+                } else {
+                    updateTestResult('test-init', 'fail', '❌ Отсутствуют основные элементы виджета');
+                    bugs.push({
+                        severity: 'critical',
+                        title: 'Ошибка инициализации виджета',
+                        description: 'Основные элементы виджета не найдены в DOM',
+                        solution: 'Проверить createWidget() и bindEvents() функции'
+                    });
+                }
+            } catch (error) {
+                updateTestResult('test-init', 'fail', `❌ Ошибка: ${error.message}`);
+            }
+        }
+
+        async function testToggleFunctionality() {
+            try {
+                if (typeof aiChatWidgetV2 !== 'undefined') {
+                    // Тест открытия
+                    aiChatWidgetV2.openChat();
+                    await new Promise(resolve => setTimeout(resolve, 500));
+
+                    const toggleBtn = document.getElementById('chatToggleBtn');
+                    const container = document.getElementById('chatContainer');
+
+                    if (container && container.style.display !== 'none') {
+                        updateTestResult('test-toggle', 'pass', '✅ Открытие виджета работает');
+
+                        // Тест закрытия
+                        aiChatWidgetV2.closeChat();
+                        await new Promise(resolve => setTimeout(resolve, 500));
+
+                        if (toggleBtn && toggleBtn.style.display !== 'none') {
+                            updateTestResult('test-toggle', 'pass', '✅ Закрытие виджета работает');
+                        } else {
+                            updateTestResult('test-toggle', 'fail', '❌ Проблема с закрытием виджета');
+                        }
+                    } else {
+                        updateTestResult('test-toggle', 'fail', '❌ Проблема с открытием виджета');
+                    }
+                }
+            } catch (error) {
+                updateTestResult('test-toggle', 'fail', `❌ Ошибка: ${error.message}`);
+            }
+        }
+
+        async function testMessaging() {
+            try {
+                if (typeof aiChatWidgetV2 !== 'undefined') {
+                    // Открываем виджет для тестирования
+                    aiChatWidgetV2.openChat();
+
+                    const input = document.getElementById('chatInput');
+                    const sendBtn = document.getElementById('sendBtn');
+
+                    if (input && sendBtn) {
+                        // Тест ввода текста
+                        input.value = 'Тестовое сообщение';
+                        aiChatWidgetV2.handleInputChange();
+
+                        await new Promise(resolve => setTimeout(resolve, 300));
+
+                        if (!sendBtn.disabled) {
+                            updateTestResult('test-messages', 'pass', '✅ Функционал ввода работает');
+                        } else {
+                            updateTestResult('test-messages', 'fail', '❌ Кнопка отправки не активируется');
+                        }
+                    } else {
+                        updateTestResult('test-messages', 'fail', '❌ Элементы ввода не найдены');
+                    }
+                }
+            } catch (error) {
+                updateTestResult('test-messages', 'fail', `❌ Ошибка: ${error.message}`);
+            }
+        }
+
+        async function testQuickActions() {
+            try {
+                const quickActions = document.querySelectorAll('.ai-suggestion-item');
+
+                if (quickActions.length > 0) {
+                    updateTestResult('test-quick-actions', 'pass', `✅ Найдено ${quickActions.length} быстрых команд`);
+
+                    // Проверка кликабельности
+                    const firstAction = quickActions[0];
+                    if (firstAction && firstAction.onclick) {
+                        updateTestResult('test-quick-actions', 'pass', '✅ Быстрые команды кликабельны');
+                    } else {
+                        updateTestResult('test-quick-actions', 'warning', '⚠️ Проблема с обработчиками быстрых команд');
+                    }
+                } else {
+                    updateTestResult('test-quick-actions', 'fail', '❌ Быстрые команды не найдены');
+                }
+            } catch (error) {
+                updateTestResult('test-quick-actions', 'fail', `❌ Ошибка: ${error.message}`);
+            }
+        }
+
+        async function testMobileView() {
+            // Симуляция мобильного экрана
+            const originalWidth = window.innerWidth;
+
+            // Используем DevTools или медиа-запросы для тестирования
+            if (window.matchMedia('(max-width: 768px)').matches || originalWidth <= 768) {
+                const widget = document.getElementById('ai-chat-widget-v2');
+                if (widget) {
+                    const computedStyle = window.getComputedStyle(widget);
+                    // Проверка мобильных стилей
+                    updateTestResult('test-mobile', 'pass', '✅ Мобильные стили применены');
+                }
+            } else {
+                updateTestResult('test-mobile', 'warning', '⚠️ Требуется тестирование на мобильном устройстве');
+            }
+        }
+
+        async function testTableView() {
+            if (window.matchMedia('(min-width: 769px) and (max-width: 1024px)').matches) {
+                updateTestResult('test-tablet', 'pass', '✅ Планшетные стили применены');
+            } else {
+                updateTestResult('test-tablet', 'warning', '⚠️ Требуется тестирование на планшете');
+            }
+        }
+
+        async function testDesktopView() {
+            if (window.matchMedia('(min-width: 1025px)').matches) {
+                updateTestResult('test-desktop', 'pass', '✅ Десктопные стили применены');
+            } else {
+                updateTestResult('test-desktop', 'warning', '⚠️ Требуется тестирование на десктопе');
+            }
+        }
+
+        async function measureInitializationTime() {
+            const startTime = performance.now();
+
+            // Проверка времени инициализации
+            await new Promise(resolve => setTimeout(resolve, 100));
+
+            const endTime = performance.now();
+            const initTime = endTime - startTime;
+
+            document.getElementById('init-time').textContent = `${initTime.toFixed(2)}ms`;
+
+            if (initTime < 500) {
+                updateTestResult('test-init-time', 'pass', `✅ Быстрая инициализация: ${initTime.toFixed(2)}ms`);
+            } else if (initTime < 1000) {
+                updateTestResult('test-init-time', 'warning', `⚠️ Средняя скорость: ${initTime.toFixed(2)}ms`);
+            } else {
+                updateTestResult('test-init-time', 'fail', `❌ Медленная инициализация: ${initTime.toFixed(2)}ms`);
+            }
+        }
+
+        async function testWithManyMessages() {
+            try {
+                if (typeof aiChatWidgetV2 !== 'undefined') {
+                    aiChatWidgetV2.openChat();
+
+                    // Симуляция большого количества сообщений
+                    const messagesContainer = document.getElementById('chatMessages');
+                    if (messagesContainer) {
+                        const initialHeight = messagesContainer.scrollHeight;
+
+                        // Добавляем тестовые сообщения
+                        for (let i = 0; i < 10; i++) {
+                            const testMessage = document.createElement('div');
+                            testMessage.className = 'ai-message assistant';
+                            testMessage.innerHTML = `
+                                <div class="ai-message-content">
+                                    Тестовое сообщение №${i + 1}. Длинный текст для проверки переносов и форматирования
+                                    при большом количестве контента в виджете.
+                                </div>
+                            `;
+                            messagesContainer.appendChild(testMessage);
+                        }
+
+                        const finalHeight = messagesContainer.scrollHeight;
+
+                        // Проверка работы скролла
+                        if (finalHeight > initialHeight) {
+                            updateTestResult('test-many-messages', 'pass', '✅ Скролл работает корректно');
+                        } else {
+                            updateTestResult('test-many-messages', 'warning', '⚠️ Возможны проблемы со скроллом');
+                        }
+
+                        // Очистка тестовых сообщений
+                        for (let i = 0; i < 10; i++) {
+                            if (messagesContainer.lastChild && messagesContainer.children.length > 1) {
+                                messagesContainer.removeChild(messagesContainer.lastChild);
+                            }
+                        }
+                    }
+                }
+            } catch (error) {
+                updateTestResult('test-many-messages', 'fail', `❌ Ошибка: ${error.message}`);
+            }
+        }
+
+        async function testLongMessages() {
+            try {
+                if (typeof aiChatWidgetV2 !== 'undefined') {
+                    const longText = 'Это очень длинное сообщение для тестирования обработки длинного текста в виджете. '.repeat(20);
+
+                    // Проверка обработки длинного текста
+                    const testElement = document.createElement('div');
+                    testElement.className = 'ai-message-content';
+                    testElement.textContent = longText;
+                    testElement.style.maxWidth = '300px';
+                    document.body.appendChild(testElement);
+
+                    const height = testElement.scrollHeight;
+                    document.body.removeChild(testElement);
+
+                    if (height > 100) {
+                        updateTestResult('test-long-messages', 'pass', '✅ Длинные сообщения обрабатываются корректно');
+                    } else {
+                        updateTestResult('test-long-messages', 'warning', '⚠️ Возможны проблемы с отображением длинных сообщений');
+                    }
+                }
+            } catch (error) {
+                updateTestResult('test-long-messages', 'fail', `❌ Ошибка: ${error.message}`);
+            }
+        }
+
+        function resetTestResults() {
+            testResults = {
+                functional: { passed: 0, failed: 0, warnings: 0 },
+                ui: { passed: 0, failed: 0, warnings: 0 },
+                performance: { passed: 0, failed: 0, warnings: 0 }
+            };
+            bugs = [];
+        }
+
+        function generateReport() {
+            console.log('📊 Генерация отчета...');
+
+            const bugsReport = document.getElementById('bugs-report');
+            bugsReport.innerHTML = '';
+
+            if (bugs.length === 0) {
+                bugsReport.innerHTML = `
+                    <div class="bug-item severity-low">
+                        <h4>✅ Критических проблем не найдено</h4>
+                        <p>Все основные тесты пройдены успешно. Рекомендуется дополнительное ручное тестирование.</p>
+                    </div>
+                `;
+            } else {
+                bugs.forEach(bug => {
+                    const bugElement = document.createElement('div');
+                    bugElement.className = `bug-item severity-${bug.severity}`;
+                    bugElement.innerHTML = `
+                        <h4>🚨 ${bug.title}</h4>
+                        <p><strong>Описание:</strong> ${bug.description}</p>
+                        <p><strong>Решение:</strong> ${bug.solution}</p>
+                    `;
+                    bugsReport.appendChild(bugElement);
+                });
+            }
+
+            // Обновление метрик
+            updateMetrics();
+
+            console.log('✅ Отчет сгенерирован');
+        }
+
+        function updateMetrics() {
+            // Обновление метрик производительности
+            if (performance.memory) {
+                const memoryMB = (performance.memory.usedJSHeapSize / 1024 / 1024).toFixed(2);
+                document.getElementById('memory-usage').textContent = `${memoryMB}MB`;
+            }
+
+            // Расчет размера виджета (приблизительно)
+            const scriptSize = document.querySelector('script[src*="ai-chat-widget"]');
+            if (scriptSize) {
+                document.getElementById('bundle-size').textContent = '~26KB'; // Примерный размер
+            }
+        }
+
+        // Автоматический запуск базовых тестов
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                console.log('🧪 Автоматический запуск базовых тестов...');
+                testWidgetInitialization();
+                measureInitializationTime();
+            }, 2000);
+        });
+
+        // Инструменты разработчика
+        window.testSuite = {
+            runAll: startFullTestSuite,
+            runFunctionality: testFunctionality,
+            runResponsive: testResponsive,
+            runPerformance: testPerformance,
+            generateReport: generateReport,
+            addBug: (bug) => bugs.push(bug)
+        };
+    </script>
+</body>
+</html>

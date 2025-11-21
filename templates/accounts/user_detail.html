@@ -1,0 +1,285 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block styles %}
+    <link rel="stylesheet" href="{%  static 'css/template_css/linearicons.css' %}">
+    <link rel="stylesheet" href="{%  static 'css/template_css/font-awesome.min.css' %}">
+    <link rel="stylesheet" href="{%  static 'css/template_css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{%  static 'css/template_css/magnific-popup.css' %}">
+    <link rel="stylesheet" href="{%  static 'css/template_css/nice-select.css' %}">
+    <link rel="stylesheet" href="{%  static 'css/template_css/animate.min.css' %}">
+    <link rel="stylesheet" href="{%  static 'css/template_css/owl.carousel.css' %}">
+    <link rel="stylesheet" href="{%  static 'css/template_css/jquery-ui.css' %}">
+    <link rel="stylesheet" href="{%  static 'css/template_css/main.css' %}">
+    <link rel="stylesheet" href="{%  static 'css/our_css/style.css' %}">
+{% endblock %}
+
+{% block header %}
+    {% include 'partial/header.html' %}
+{% endblock %}
+
+{% block content %}
+    {% include 'partial/breadcrumb.html' %}
+    <section class="course-details-area pt-30 pb-60 position-relative">
+    <div class="my-overlay" id="my-overlay" onclick="closeModals(this)"></div>
+        <div class="container">
+            <h3 class="text-center mb-3">Профиль</h3>
+            <div class="row justify-content-center">
+                <div class="col-lg-3">
+                    <div class="main-image">
+                        <img class="img-fluid club-detail-img w-100" src="{% if user.avatar %}{{ user.avatar.url }}{% else %}{% endif %}" alt="">
+                    </div>
+                </div>
+                <div class="col-lg-4 right-contents">
+                    <ul>
+                        <li>
+                            <span class="justify-content-between d-flex" href="#">
+                                <p>Имя</p> 
+                                <span>{{ user.first_name }}</span>
+                            </span>
+                        </li>
+                        <li>
+                            <span class="justify-content-between d-flex" href="#">
+                                <p>Фамилия</p>
+                                <span>{{ user.last_name }}</span>
+                            </span>
+                        </li>
+                        <li>
+                            <span class="justify-content-between d-flex" href="#">
+                                <p>Телефон</p>
+                                <span>
+                                    {{ user.phone }}
+                                </span>
+                            </span>
+                        </li>
+                        <li>
+                            <span class="justify-content-between d-flex" href="#">
+                                <p>Почта</p>
+                                <span>
+                                    {% if user.email %}
+                                    {{ user.email }}
+                                    {% else %}
+                                    Не указано
+                                    {% endif %}
+                                </span>
+                            </span>
+                        </li>
+                        {% if request.user == user %}
+                        <li>
+                            <span class="justify-content-between d-flex" href="#">
+                                <p>Отображать профиль при поиске единомышленников</p>
+                                <span>
+                                    <input type="checkbox" name="" id="display-in-allies" onchange="ProfileToSearchingInAllies(this)" {% if user.is_displayed_in_allies%} checked {% endif %}>
+                                </span>
+                            </span>
+                        </li>
+                        {% endif %}
+                    </ul>
+                    {% if request.user == user %}
+                    <a href="{% url 'user_update' %}" type="submit" class="btn btn-primary d-block w-100">
+                        Редактировать профиль
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 left-contents">
+                    <div class="main-image">
+                        <img class="img-fluid" src="img/m-img.jpg" alt="">
+                    </div>
+                    <div class="jq-tab-wrapper" id="horizontalTab">
+                        <div class="jq-tab-menu mx-auto">
+                            <div class="jq-tab-title active" data-tab="1">О себе</div>
+                            <div class="jq-tab-title" data-tab="2">Цели на жизнь</div>
+                            <div class="jq-tab-title" data-tab="3">Интересы</div>
+                            <div class="jq-tab-title" data-tab="4">Сообщества</div>
+                            <div class="jq-tab-title" data-tab="5">Управляемые сообщества</div>
+                        </div>
+                        <div class="jq-tab-content-wrapper">
+                            <div class="jq-tab-content active mt-1" data-tab="1">
+                                {% if user.profile.about %}
+                                <p class="text-center" id="user-about-field">{{ user.profile.about }}</p>
+                                {% if request.user == user %}
+                                    <div class="col-12 col-md-4 mx-auto">
+                                        <button type="button" class="btn btn-primary d-block mx-auto w-100 text-white" onclick="displayModal(this)" modal="profile-about-form-block">Изменить</button>
+                                    </div>
+                                {% endif %}
+                                {% else %}
+                                <p class="text-center" id="user-about-field">
+                                    Это уникальный случай рассказать о себе. Не упустите шанс проявиться. Указанную вами информацию
+                                    будут читать единомышленники, работодатели, потенциальные бизнес-партнёры, меценаты и другие пользователи сайта.
+                                    Поэтому будьте избирательны к тому что указываете, от этого зависит заинтересованность вами.
+                                </p>
+                                {% if request.user == user %}
+                                    <div class="col-12 col-md-4 mx-auto">
+                                        <button type="button" class="btn btn-primary d-block mx-auto w-100 text-white" onclick="displayModal(this)" modal="profile-about-form-block">Заполнить</button>
+                                    </div>
+                                {% endif %}
+                                {% endif %}
+                            </div>
+                            <div class="jq-tab-content" data-tab="2">
+                                {% if user.profile.goals_for_life %}
+                                <p class="text-center" id="user-goals-field">{{ user.profile.goals_for_life }}</p>
+                                {% if request.user == user %}
+                                    <div class="col-12 col-md-4 mx-auto">
+                                        <button type="button" class="btn btn-primary d-block mx-auto w-100 text-white" onclick="displayModal(this)" modal="profile-goals-form-block">Изменить</button>
+                                    </div>
+                                {% endif %}
+                                {% else %}
+                                <p class="text-center" id="user-goals-field">
+                                    Расскажите о своих целях и мечтах максимально ярко, не ограничивайте себя
+                                в фантазиях. Расскажите обо всём, чтобы вы хотели достигнуть в жизни.
+                                </p>
+                                {% if request.user == user %}
+                                    <div class="col-12 col-md-4 mx-auto">
+                                        <button type="button" class="btn btn-primary d-block mx-auto w-100 text-white" onclick="displayModal(this)" modal="profile-goals-form-block">Заполнить</button>
+                                    </div>
+                                {% endif %}
+                                {% endif %}
+                            </div>
+                            <div class="jq-tab-content" data-tab="3">
+                                {% if user.profile.interests %}
+                                <p class="text-center" id="user-interests-field">{{ user.profile.interests }}</p>
+                                {% if request.user == user %}
+                                    <div class="col-12 col-md-4 mx-auto">
+                                        <a href="#" type="button" class="btn btn-primary d-block mx-auto w-100 text-white" onclick="displayModal(this)" modal="profile-interests-form-block">Изменить</a>
+                                    </div>
+                                {% endif %}
+                                {% else %}
+                                <p class="text-center" id="user-interests-field">
+                                    {% if request.user == user %}
+                                    Информация не заполнена. Напишите свои интересы, чтобы ваш профиль отображался в поиске единомышленников
+                                    Расскажите подробно обо всём что вам нравится и интересно в жизни.
+                                    Это позволит вам легче и быстрее встретить единомышленников.
+
+                                    {% else %}
+                                    Информация не заполнена.
+                                    {% endif %}
+                                </p>
+                                {% if request.user == user %}
+                                    <div class="col-12 col-md-4 mx-auto">
+                                        <a href="#" type="button" class="btn btn-primary d-block mx-auto w-100 text-white" onclick="displayModal(this)" modal="profile-interests-form-block">Заполнить</a>
+                                    </div>
+                                {% endif %}
+                                {% endif %}
+                            </div>
+                            <div class="jq-tab-content" data-tab="4">
+                                <div class="progress-table-wrap">
+                                    <div class="progress-table bg-none d-flex d-lg-block flex-column align-items-center">
+                                    {% for club in user.get_active_membered_clubs %}
+                                        <div class="table-row justify-content-center flex-column align-items-center">
+                                            <div class="country d-flex flex-column pb-3">
+                                                <div class="thumb-wrap relative">
+                                                    <div class="thumb relative image-lk-container">
+                                                        <a href="{{ club.get_absolute_url }}"><div class="overlay overlay-bg"></div></a>
+                                                        <div class="image-container">
+                                                            <img class="img-fluid" src="{{ club.logo.url }}" alt="">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <h6 class="pt-3">{{ club.name }}</h6>
+                                            </div>
+                                            <a class="primary-btn action-btn text-uppercase button-club-lk" href="{{ club.get_absolute_url }}">Страница сообщества</a>
+                                        </div>
+                                    {% empty %}
+                                    <p class="text-center">
+                                        {% if request.user == user %}
+                                            Вы не подписаны ни в одно сообщество
+                                        {% else %}
+                                            Пользователь не подписан ни в одно сообщество
+                                        {% endif %}
+                                    </p>
+                                {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="jq-tab-content" data-tab="5">
+                                <div class="progress-table-wrap">
+                                    <div class="progress-table bg-none d-flex d-lg-block flex-column align-items-center">
+                                    {% for club in user.get_active_managed_clubs %}
+                                        <div class="table-row justify-content-center flex-column align-items-center">
+                                            <div class="country d-flex flex-column pb-3">
+                                                <div class="thumb-wrap relative">
+                                                    <div class="thumb relative image-lk-container">
+                                                        <a href="{{ club.get_absolute_url }}"><div class="overlay overlay-bg"></div></a>
+                                                        <div class="image-container">
+                                                            <img class="img-fluid" src="{{ club.logo.url }}" alt="">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <h6 class="pt-3">{{ club.name }}</h6>
+                                            </div>
+                                            <a class="primary-btn action-btn text-uppercase button-club-lk" href="{{ club.get_absolute_url }}">Страница сообщества</a>
+                                        </div>
+                                    {% empty %}
+                                        Список управляемых сообществ пуст
+                                    {% endfor %}
+                                    {% if request.user == user %}
+                                        <div class="col-12 col-md-4 mx-auto">
+                                        <a href="{% url 'club_create' %}" class="btn btn-primary d-block w-100 mx-auto mt-2">Создать сообщество</a>
+                                        </div>
+                                    {% endif %}
+                                    </div>
+                                </div>
+                            </div>                         
+                        </div>
+                    
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="about-update-modal position-absolute form-card my-modal" id="profile-about-form-block">
+            <form action="" class="about-update-form" id="update-about">
+                {% csrf_token %}
+                <label class="d-block text-center" for="about-input">О себе</label>
+                <input type="text" name="profile" id="profile-id" hidden="hidden" value="{{ request.user.profile.id }}">
+                <textarea class="profile-partial" name="about" rows="10" id="about-input">{{ request.user.profile.about }}</textarea>
+                <button type="submit" class="btn btn-primary d-block w-100">
+                    Сохранить
+                </button>
+            </form>
+        </div>
+        <div class="goals-update-modal position-absolute form-card my-modal" id="profile-goals-form-block">
+            <form action="" class="goals-update-form" id="update-goals">
+                {% csrf_token %}
+                <label class="d-block text-center" for="about-input">Цели на жизнь</label>
+                <textarea class="profile-partial" name="goals" rows="10" id="goals-input">{{ request.user.profile.goals_for_life }}</textarea>
+                <button type="submit" class="btn btn-primary d-block w-100">
+                    Сохранить
+                </button>
+            </form>
+        </div>
+        <div class="interests-update-modal position-absolute form-card my-modal" id="profile-interests-form-block">
+            <form action="" class="interests-update-form" id="update-interests">
+                {% csrf_token %}
+                <label class="d-block text-center" for="interests-input">Интересы</label>
+                <textarea class="profile-partial" name="goals" rows="10" id="interests-input">{{ request.user.profile.interests }}</textarea>
+                <button type="submit" class="btn btn-primary d-block w-100">
+                    Сохранить
+                </button>
+            </form>
+        </div>
+    
+    </section>
+{% endblock %}
+
+{% block footer %}
+    {% include 'partial/footer.html' %}
+{% endblock %}
+
+{% block scripts %}
+    <script src="{%  static 'js/template_js/vendor/jquery-2.2.4.min.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="{%  static 'js/template_js/vendor/bootstrap.min.js' %}"></script>
+{#    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBhOdIF3Y9382fqJYt5I_sswSrEw5eihAA"></script>#}
+    <script src="{%  static 'js/template_js/easing.min.js' %}"></script>
+    <script src="{%  static 'js/template_js/hoverIntent.js' %}"></script>
+    <script src="{%  static 'js/template_js/superfish.min.js' %}"></script>
+    <script src="{%  static 'js/template_js/jquery.ajaxchimp.min.js' %}"></script>
+    <script src="{%  static 'js/template_js/jquery.magnific-popup.min.js' %}"></script>
+    <script src="{%  static 'js/template_js/jquery.tabs.min.js' %}"></script>
+    <script src="{%  static 'js/template_js/jquery.nice-select.min.js' %}"></script>
+    <script src="{%  static 'js/template_js/owl.carousel.min.js' %}"></script>
+    <script src="{%  static 'js/template_js/mail-script.js' %}"></script>
+    <script src="{%  static 'js/template_js/main.js' %}"></script>
+    <script src="{%  static 'js/our_js/user-detail.js' %}"></script>
+{% endblock %}

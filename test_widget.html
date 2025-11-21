@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Widget Test</title>
+    <link rel="stylesheet" href="/static/css/ai-chat-widget-v2.css">
+</head>
+<body>
+    <h1>Тест AI Виджета</h1>
+    <p>Эта страница используется для тестирования AI чат виджета.</p>
+
+    <!-- Отладочная информация -->
+    <div id="debug-info" style="background: #f0f0f0; padding: 10px; margin: 10px 0; font-family: monospace;">
+        <h3>Отладочная информация:</h3>
+        <div id="debug-output">Загрузка...</div>
+    </div>
+
+    <script src="/static/js/ai-chat-widget-v2.js"></script>
+
+    <script>
+        // Функция для вывода отладочной информации
+        function debugLog(message) {
+            const output = document.getElementById('debug-output');
+            if (output) {
+                output.innerHTML += '<br>' + message;
+                console.log(message);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            debugLog('🚀 Страница загружена');
+
+            // Проверяем наличие классов и функций
+            debugLog('1. AIChatWidget класс: ' + (typeof AIChatWidget !== 'undefined' ? '✅' : '❌'));
+            debugLog('2. initAIChatWidgetV2 функция: ' + (typeof initAIChatWidgetV2 === 'function' ? '✅' : '❌'));
+            debugLog('3. window.aiChatWidgetV2: ' + (window.aiChatWidgetV2 ? '✅' : '❌'));
+
+            // Проверяем элемент виджета
+            setTimeout(() => {
+                const widget = document.getElementById('ai-chat-widget');
+                debugLog('4. Элемент виджета: ' + (widget ? '✅' : '❌'));
+
+                const toggleBtn = document.getElementById('chatToggleBtn');
+                debugLog('5. Кнопка виджета: ' + (toggleBtn ? '✅' : '❌'));
+
+                if (widget) {
+                    // Проверяем стили виджета
+                    const styles = window.getComputedStyle(widget);
+                    debugLog('6. Display виджета: ' + styles.display);
+                    debugLog('7. Visibility виджета: ' + styles.visibility);
+                    debugLog('8. Opacity виджета: ' + styles.opacity);
+                    debugLog('9. Z-Index виджета: ' + styles.zIndex);
+
+                    if (toggleBtn) {
+                        const btnStyles = window.getComputedStyle(toggleBtn);
+                        debugLog('10. Display кнопки: ' + btnStyles.display);
+                        debugLog('11. Width кнопки: ' + btnStyles.width);
+                        debugLog('12. Height кнопки: ' + btnStyles.height);
+                    }
+                } else {
+                    debugLog('❌ Виджет не найден в DOM');
+
+                    // Пробуем создать виджет принудительно
+                    if (window.initAIChatWidgetV2) {
+                        debugLog('🔧 Создаем виджет принудительно...');
+                        try {
+                            const widgetInstance = window.initAIChatWidgetV2();
+                            debugLog('✅ Виджет создан: ' + (widgetInstance ? 'да' : 'нет'));
+
+                            setTimeout(() => {
+                                const widgetAfter = document.getElementById('ai-chat-widget');
+                                debugLog('🔄 Элемент виджета после создания: ' + (widgetAfter ? '✅' : '❌'));
+                            }, 1000);
+                        } catch (error) {
+                            debugLog('❌ Ошибка при создании виджета: ' + error.message);
+                        }
+                    }
+                }
+            }, 2000);
+        });
+    </script>
+</body>
+</html>

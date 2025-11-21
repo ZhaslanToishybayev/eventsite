@@ -1,0 +1,84 @@
+# Production Requirements for UnitySphere (fan-club.kz)
+
+# Core Django (более строгие версии для production)
+django>=4.2.0,<5.0.0
+djangorestframework>=3.14.0,<4.0.0
+django-cors-headers>=4.0.0,<5.0.0
+django-filter>=23.0,<24.0
+django-ckeditor>=6.5.0,<7.0.0
+
+# Database
+psycopg2-binary>=2.9.0,<3.0.0
+
+# Image processing
+Pillow>=10.0.0,<11.0.0
+
+# HTML parsing
+beautifulsoup4>=4.12.0,<5.0.0
+
+# Time zones
+pytz>=2023.3,<2024.0
+
+# Email (resend)
+resend>=0.10.0,<1.0.0
+
+# AI Consultant
+openai>=1.0.0,<2.0.0
+python-dotenv>=1.0.0,<2.0.0
+
+# Additional dependencies
+django-js-asset>=2.1.0,<3.0.0
+
+# Authentication
+django-allauth>=0.54.0,<1.0.0
+PyJWT>=2.8.0,<3.0.0
+cryptography>=41.0.0,<42.0.0
+
+# Vector Database
+chromadb>=0.4.0,<1.0.0
+
+# NLP and ML
+sentence-transformers>=2.2.0,<3.0.0
+nltk>=3.8.0,<4.0.0
+scikit-learn>=1.3.0,<2.0.0
+
+# File processing
+python-magic>=0.4.27,<1.0.0
+
+# Rate limiting
+django-ratelimit>=4.1.0,<5.0.0
+
+# Security
+bleach>=6.1.0,<7.0.0
+
+# Web Server
+gunicorn>=21.0.0,<22.0.0
+gevent>=23.0.0,<24.0.0
+
+# Caching
+redis>=4.5.0,<5.0.0
+django-redis>=5.2.0,<6.0.0
+
+# Static files
+whitenoise>=6.5.0,<7.0.0
+
+# Monitoring (опционально)
+# sentry-sdk>=1.28.0,<2.0.0
+
+# Performance
+hiredis>=2.2.0,<3.0.0
+
+# Utilities
+python-dateutil>=2.8.0,<3.0.0
+urllib3>=2.0.0,<3.0.0
+requests>=2.31.0,<3.0.0
+
+# Development (не для production, но полезны для отладки)
+# django-debug-toolbar>=4.2.0,<5.0.0
+# django-silk>=5.0.0,<6.0.0
+
+# Testing (не для production)
+# pytest>=7.4.0,<8.0.0
+# pytest-django>=4.5.0,<5.0.0
+# factory-boy>=3.3.0,<4.0.0
+# coverage>=7.3.0,<8.0.0

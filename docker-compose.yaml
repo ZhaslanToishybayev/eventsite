@@ -1,0 +1,36 @@
+services:
+  fnclub:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: >
+      sh -c "until pg_isready -h fnclub-db -U postgres; do echo waiting for postgres; sleep 2; done &&
+            python /proj/manage.py migrate -v 3 &&
+            mkdir -p /var/log/unitysphere &&
+            gunicorn core.wsgi:application --bind 0.0.0.0:8000 --workers 3 --worker-class sync --error-logfile - --access-logfile - --log-level info"
+    ports:
+      - "8001:8000"          # хост‑порт 8001 → контейнер 8000
+    volumes:
+      - .:/proj
+      - /proj/bin
+      - /home/almalinux/new/unitysphere/static/:/unitysphere/static
+      - /home/almalinux/new/unitysphere/media/:/unitysphere/media
+    environment:
+      POSTGRES_HOST: fnclub-db
+      POSTGRES_PORT: "5432"
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_NAME: postgres
+      RESEND_API_KEY: re_ZXEzr3x6_CZtxHf5RXHCmfYtWjBYpYcfK
+    restart: always
+
+  fnclub-db:                     # <-- ДОБАВЛЕННЫЙ СЕРВИС БАЗЫ ДАННЫХ
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: always
+
+volumes:
+  postgres_data:                 # <-- Внутренний том, будет создан автоматически

@@ -1,0 +1,663 @@
+.custom-container {
+    padding: 0;
+}
+
+.event-description {
+    height: 300px;
+    word-wrap: break-word;
+    overflow-y: scroll;
+}
+
+/*.event-description::-webkit-scrollbar {*/
+/*    width: 1em;*/
+/*}*/
+
+.event-description::-webkit-scrollbar {
+    width: 6px;
+	background-color: #F5F5F5;
+}
+
+.event-description::-webkit-scrollbar {
+    background-color: #f7631b;
+    outline: 1px solid #333333;
+    height: 10px;
+}
+
+.event-description::-webkit-scrollbar-thumb
+{
+	background-color: #f7631b;
+}
+
+.event-description::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	background-color: #F5F5F5;
+}
+
+.event-key {
+    font-weight: bold;
+    color: black;
+}
+
+.event-value {
+    color: black;
+}
+
+.club_members, .club_likes {
+    color: #fff;
+    background: #f7631b;
+    border-radius: 5px;
+    padding: 2px;
+    display: inline-block;
+}
+
+.club-item {
+    border: 1px solid #eee;
+    padding: 5px;
+}
+
+.custom-meta {
+    padding: 0;
+}
+
+.action-btn {
+    border-radius: 5px;
+    text-align: center;
+    border: 1px solid #f7631b;
+    line-height: 21px;
+    color: #f7631b;
+    background: #fff;
+}
+
+.action-btn:hover {
+    background: #f7631b;
+    border: 1px solid #f7631b;
+    color: #fff;
+}
+
+.info-btn {
+    border-radius: 5px;
+    text-align: center;
+    border: 1px solid #0c4bee;
+    background: #fff;
+    line-height: 21px;
+    color: #0c4bee
+}
+
+.info-btn:hover {
+    background: #0c4bee;
+    border: 1px solid #0c4bee;
+    color: #fff;
+}
+
+.y-border-eee {
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+    padding: 20px 0;
+}
+
+
+/*CLUB-DETAIL*/
+.club-detail-img {
+    border: 1px solid #eee;
+}
+
+.event-card {
+    border: 1px solid #eee;
+    padding: 5px;
+}
+
+.event-img img {
+    width: 100%;
+    height: 200px;
+}
+
+.event-title {
+    height: 80px;
+}
+
+.event-startdatetime {
+    display: block;
+    text-align: center;
+    border-bottom: 1px solid #eee;
+    padding: 5px 0;
+}
+
+.event-passed {
+    color: red;
+}
+
+.event-not-passed {
+    color: green;
+}
+
+.custom-search-input {
+    color: #000;
+    padding: 5px 22px;
+    font-size: 14px;
+    border: 1px solid #f7631b;
+    float: left;
+    width: 80%;
+    background: #fff;
+}
+
+.custom-search-button {
+    float: left;
+    width: 15%;
+    padding: 5px 0px;
+    background: #f7631b;
+    color: #fff;
+    font-size: 17px;
+    border: 1px solid #f7631b;
+    cursor: pointer;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+}
+
+.filter-option {
+    padding-left: 20px;
+    word-wrap: break-word;
+}
+
+.club-description {
+    height: 200px;
+    word-wrap: break-word;
+    overflow-y: scroll;
+}
+
+/*.event-description::-webkit-scrollbar {*/
+/*    width: 1em;*/
+/*}*/
+
+.club-description::-webkit-scrollbar {
+    width: 6px;
+	background-color: #F5F5F5;
+}
+
+.club-description::-webkit-scrollbar {
+    background-color: #f7631b;
+    outline: 1px solid #333333;
+    height: 10px;
+}
+
+.club-description::-webkit-scrollbar-thumb
+{
+	background-color: #f7631b;
+}
+
+.club-description::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	background-color: #F5F5F5;
+}
+
+.club-list {
+    row-gap: 30px;
+    margin: 30px 0 10px 0;
+}
+
+.bg-none {
+    background: none;
+}
+
+.your-future-txt {
+    color: #f7631b;
+    font-size: 40px;
+}
+
+.service-description {
+    max-height: 150px;
+    word-wrap: break-word;
+    overflow: auto;
+}
+
+.club-likes, .club-members {
+    color: #f7631b;
+}
+
+.form-card {
+    border: 1px solid #eee;
+    padding: 25px;
+    bottom: 45%;
+    left: 40%;
+    z-index: 1000;
+    background: #fff;
+    border-radius: 15px;
+    display: none;
+}
+
+.profile-partial {
+    border: 1px solid #e3d8d8;
+    background: #eaf7ff;
+    border-radius: 10px;
+    padding: 5px;
+    margin-bottom: 5px;
+}
+
+.profile-partial:focus-visible {
+    outline: blue;
+}
+
+.my-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: none;
+    z-index: 999;
+}
+
+.my-form-section {
+    border: 1px solid #eee;
+    margin: 30px 0;
+    -webkit-box-shadow: 0px -1px 29px 7px rgba(34, 60, 80, 0.2);
+    -moz-box-shadow: 0px -1px 29px 7px rgba(34, 60, 80, 0.2);
+    box-shadow: 0px -1px 29px 7px rgba(34, 60, 80, 0.2);
+}
+
+.errorlist li {
+    color: red;
+}
+
+.without-bg {
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.search-field {
+    padding-left: 5px;
+    background: #f7631b;
+    color:#fff;
+    border: 1px solid #f7631b;
+}
+
+.search-field:focus {
+    outline: none;
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.content-block {
+    flex: 1;
+    margin-bottom: 50px;
+}
+
+.text-wrap {
+    text-wrap: wrap;
+    word-wrap: break-word;
+}
+
+.festival-description {
+    word-wrap: break-word;
+    width: 100%;
+}
+
+.text-danger {
+    color: red;
+}
+
+.service-for-club-description {
+    width: 80%;
+    height: 100px;
+    overflow: auto;
+}
+
+.service-price {
+    font-weight: bold;
+    color: #96d896;
+}
+
+.publication-container {
+    border: 1px solid #ebe1e1;
+    border-radius: 10px;
+}
+
+.blinked-link {
+    background: red;
+    border-radius: 10px;
+}
+
+.blinked-link:hover {
+    color: white !important;
+}
+
+.publication-content p{
+    word-wrap: break-word;
+}
+
+.publication-content img {
+    width: 100% !important;
+}
+
+.single-feature .desc-wrap {
+    background: #ddd;
+}
+.single-feature:hover .desc-wrap a {
+    color: #000000;
+}
+.single-feature:hover .desc-wrap .link {
+    color: #f7631b;
+}
+@media (max-width: 576px) {
+    .row {
+        margin-right: 0;
+        margin-left: 0;
+    }
+}
+.nav-menu .profile, .nav-menu .administration {
+    padding: 0 8px 0 8px;
+    text-decoration: none;
+    display: inline-block;
+    color: #fff;
+    font-weight: 500;
+    font-size: 12px;
+    text-transform: uppercase;
+    outline: none;
+    cursor: pointer;
+}
+.nav-menu .profile:hover, .nav-menu .administration:hover {
+  color: #f7631b;
+}
+#mobile-nav .profile, #mobile-nav .administration {
+    text-transform: uppercase;
+    overflow: hidden;
+    padding: 10px 22px 10px 15px;
+    position: relative;
+    text-decoration: none;
+    width: 100%;
+    display: block;
+    outline: none;
+    font-weight: 400;
+}
+#mobile-nav .profile {
+    color: #f7631b;
+    font-size: 18px;
+}
+#mobile-nav .administration {
+    color: white;
+}
+.single-popular-carusel .image-container img {
+    width: auto;
+    height: auto;
+    max-height:100%;
+    max-width:100%;
+}
+.single-popular-carusel .image-container {
+    height: 200px;
+    /*display: grid;*/
+    /*place-items: center;*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.single-popular-carusel .details .text-center {
+    min-height: 43.2px;
+}
+.event-description {
+    height: 200px;
+}
+.event-card .event-img {
+    height: 200px;
+    /*display: grid;*/
+    /*place-items: center;*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.event-card .event-img img {
+    width: auto;
+    height: auto;
+    max-height: 100%;
+    max-width: 100%;
+}
+.owl-nav {
+    display: flex;
+    position: absolute;
+    left: 0;
+    top: 0;
+    justify-content: space-between;
+    width: 100%;
+}
+.owl-nav div {
+    transform: scale(3);
+}
+.owl-nav .owl-prev {
+    padding-right: 35px;
+}
+.owl-nav .owl-next {
+    padding-left: 35px;
+}
+@media (max-width: 576px) {
+    .owl-nav .owl-prev, .owl-nav .owl-next {
+        padding-left: 0;
+        padding-right: 0;
+    }
+}
+.popular-course-area.clubs .owl-nav {
+    top: 35%;
+}
+.popular-course-area.events .owl-nav {
+    top: 45%;
+}
+.active-popular-carusel-services .owl-nav {
+    top: 38%;
+}
+.active-popular-carusel-services .single-cat-widget {
+ padding: 5px;
+}
+@media (max-width: 576px) {
+  .active-popular-carusel-services .single-cat-widget {
+    margin: 15px;
+  }
+}
+@media (max-width: 576px) {
+    .owl-nav {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+}
+.active-popular-carusel-services .owl-dots {
+    text-align: center;
+    bottom: 5px;
+    margin-top: 40px;
+    width: 100%;
+    -webkit-backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+    -ms-backface-visibility: hidden;
+    backface-visibility: hidden;
+}
+.active-popular-carusel-services .owl-dot {
+    height: 10px;
+    width: 10px;
+    display: inline-block;
+    background: rgba(127,127,127,0.5);
+    margin-left: 5px;
+    margin-right: 5px;
+    -webkit-transition: all 0.3s ease 0s;
+    -moz-transition: all 0.3s ease 0s;
+    -o-transition: all 0.3s ease 0s;
+    transition: all 0.3s ease 0s;
+}
+.active-popular-carusel-services .owl-dot.active {
+    -webkit-transition: all 0.3s ease 0s;
+    -moz-transition: all 0.3s ease 0s;
+    -o-transition: all 0.3s ease 0s;
+    transition: all 0.3s ease 0s;
+    background: #f7631b;
+}
+.top-category-widget-area .single-cat-widget .overlay-bg {
+    z-index: 1;
+}
+.top-category-widget-area .single-cat-widget .content-details {
+    z-index: 2;
+}
+.gallery-photos-container .gallery-photos-container-image {
+    height: 200px;
+    /*display: grid;*/
+    /*place-items: center;*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.gallery-photos-container .gallery-photos-container-image img {
+    width: auto;
+    height: auto;
+    max-height: 100%;
+    max-width: 100%;
+}
+
+@media (max-width: 992px) {
+    .progress-table {
+        min-width: unset;
+    }
+    .progress-table .country {
+        width: 100%;
+    }
+    .progress-table .table-row {
+        gap: 1rem;
+    }
+}
+
+.form-card {
+    position: absolute;
+    margin-left: 0;
+    margin-right: 0;
+    width: 85%;
+    right: 0;
+    text-align: center;
+    bottom: 0;
+    max-height: 380px;
+    max-width: 400px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.profile-partial {
+    width: 100%;
+}
+.fa-chevron-right::before, .fa-chevron-left::before {
+    color: #f7631b;
+}
+.img-gal {
+    height: 100%;
+}
+.button-club-lk {
+    height: 100%;
+}
+.nav-menu ul {
+    border-radius: 10px;
+}
+.banner-content .primary-btn {
+    border-radius: 10px;
+}
+.single-feature .title {
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+}
+.single-feature .desc-wrap {
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+.top-category-widget-area .single-cat-widget img {
+    border-radius: 20px;
+}
+.top-category-widget-area .single-cat-widget .overlay-bg {
+    border-radius: 20px;
+}
+.primary-btn, .btn-primary, .btn-secondary, .btn-danger, .btn-success {
+    border-radius: 10px;
+}
+.club-item {
+    border-radius: 20px;
+}
+.single-popular-carusel .image-container img {
+    border-radius: 20px;
+}
+.single-popular-carusel .thumb img {
+    border: none;
+}
+.video-container video {
+    border-radius: 20px;
+}
+.accordion dt a {
+    border-radius: 20px;
+}
+.info-area .info-area-left img {
+    border-bottom-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+}
+.my-form-section {
+    border-radius: 20px;
+}
+.form-control {
+    border-radius: 10px;
+}
+.club-detail-img {
+    border-radius: 20px;
+}
+.course-details-area .right-contents ul li {
+    border-radius: 10px;
+}
+.auth-base .wrap {
+    border-radius: 20px;
+}
+.auth-base .wrap .text-wrap {
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+.auth-base .wrap .login-wrap {
+    border-bottom-left-radius: 20px;
+    border-top-left-radius: 20px;
+}
+@media (max-width: 768px) {
+    .auth-base {
+        padding: 0;
+    }
+    .auth-base .wrap .text-wrap {
+        border-bottom-right-radius: unset;
+        border-top-left-radius: 20px;
+    }
+    .auth-base .wrap .login-wrap {
+        border-top-left-radius: unset;
+        border-bottom-right-radius: 20px;
+    }
+}
+.jq-tab-content-wrapper {
+    border-radius: 20px;
+}
+.image-lk-container img, .club-gallery-image {
+    border-radius: 20px;
+}
+.event-card {
+    border-radius: 20px;
+}
+.event-card img {
+    border-radius: 20px;
+}
+.event-details-area img {
+    border-radius: 20px;
+}
+.event-details-area .event-details-right .single-event-details {
+    border-radius: 20px;
+}
+.flag-kz {
+    height: 20px;
+    border-radius: 5px;
+}
+.search-form .custom-search-input {
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+.events-list-area img {
+    border-radius: 20px;
+}
+.sf-with-ul {
+    padding-right: 30px !important;
+}

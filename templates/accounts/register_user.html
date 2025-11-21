@@ -1,0 +1,53 @@
+{% extends 'accounts/auth_base.html' %}
+{% load static %}
+{% load socialaccount %}
+{% block content %}
+
+<div class="wrap d-md-flex">
+    <div class="text-wrap p-4 p-lg-5 text-center d-flex align-items-center order-md-last">
+        <div class="text w-100">
+            <h2>Добро пожаловать!</h2>
+            <p>Уже есть аккаунт?</p>
+            <a href="{% url 'login' %}" class="btn btn-white btn-outline-white">Войти</a>
+        </div>
+    </div>
+    <div class="login-wrap p-4 p-lg-5" id="auth-form-block">
+        <div class="w-100">
+            <h3 class="mb-4 text-center" id="form-title">Регистрация</h3>
+        </div>
+        {% include 'partial/form.html' with btn_text="Зарегистрироваться" form_method="post"
+        form_id="register_user_form" %}
+
+        <div class="text-center mt-4 mb-3">
+            <span class="text-muted">или</span>
+        </div>
+
+        <a href="{% provider_login_url 'google' %}"
+            class="btn btn-block btn-outline-primary d-flex align-items-center justify-content-center"
+            style="gap: 10px; border-color: #ddd; color: #333;">
+            <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google"
+                style="width: 20px; height: 20px;">
+            Войти через Google
+        </a>
+        <form action="" method="post" id="verify_user_form" style="display: none">
+            <div class="mb-2 text-center">
+                {% csrf_token %}
+                <p class="verify-message" id="verify-message"></p>
+                <p class="sms-code" id="email-code"></p>
+                <label class="d-inline-block mx-auto">Код</label>
+                <span style="color: red" class="required">*</span>
+                <input type="text" name="email_code" class="form-control text-center" maxlength="6" autofocus=""
+                    required id="id_email_code" />
+                <div class="block-errors" id="errors_sms_code"></div>
+            </div>
+            <button type="submit" class="btn btn-primary my-3 d-block mx-auto">Отправить</button>
+        </form>
+        <div class="block-errors" id="errors_detail"></div>
+        <p class="text-center">При регистрации вы соглашаетесь с <a href="{% url 'policy' %}">правилами сайта</a></p>
+    </div>
+</div>
+
+{% endblock %}
+{% block extra_scripts %}
+<script src="{% static 'js/our_js/register.js' %}"></script>
+{% endblock %}

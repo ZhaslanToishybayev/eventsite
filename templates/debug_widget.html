@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Widget Debug Test</title>
+    <link rel="stylesheet" href="/static/css/ai-chat-widget-v2.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .debug-panel {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .log-entry {
+            padding: 5px 0;
+            border-bottom: 1px solid #eee;
+            font-family: monospace;
+            font-size: 12px;
+        }
+        .log-entry.error { color: red; }
+        .log-entry.success { color: green; }
+        .log-entry.info { color: blue; }
+        .force-create-btn {
+            background: #6366f1;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px 5px;
+        }
+        .force-create-btn:hover {
+            background: #4f46e5;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔍 Отладка AI Виджета</h1>
+
+    <div class="debug-panel">
+        <h3>📋 Статус системы</h3>
+        <div id="system-status">Проверка...</div>
+        <div id="debug-log"></div>
+
+        <h3>🔧 Управление</h3>
+        <button class="force-create-btn" onclick="forceCreateWidget()">Принудительно создать виджет</button>
+        <button class="force-create-btn" onclick="forceShowWidget()">Принудительно показать кнопку</button>
+        <button class="force-create-btn" onclick="checkDOMElements()">Проверить DOM элементы</button>
+        <button class="force-create-btn" onclick="clearLog()">Очистить лог</button>
+    </div>
+
+    <script src="/static/js/ai-chat-widget-v2.js"></script>
+
+    <script>
+        let logCounter = 0;
+
+        function addLog(message, type = 'info') {
+            const logDiv = document.getElementById('debug-log');
+            const entry = document.createElement('div');
+            entry.className = `log-entry ${type}`;
+            entry.textContent = `${++logCounter}. ${new Date().toLocaleTimeString()}: ${message}`;
+            logDiv.appendChild(entry);
+            logDiv.scrollTop = logDiv.scrollHeight;
+            console.log(`[${type.toUpperCase()}] ${message}`);
+        }
+
+        function checkSystemStatus() {
+            const status = document.getElementById('system-status');
+            let statusHTML = '<ul>';
+
+            statusHTML += `<li>AIChatWidget класс: ${typeof AIChatWidget !== 'undefined' ? '✅ Доступен' : '❌ Не найден'}</li>`;
+            statusHTML += `<li>initAIChatWidgetV2 функция: ${typeof initAIChatWidgetV2 === 'function' ? '✅ Доступна' : '❌ Не найдена'}</li>`;
+            statusHTML += `<li>window.aiChatWidgetV2: ${window.aiChatWidgetV2 ? '✅ Доступен' : '❌ Не найден'}</li>`;
+            statusHTML += `<li>window.aiChat: ${window.aiChat ? '✅ Доступен' : '❌ Не найден'}</li>`;
+            statusHTML += `<li>CSS файл: ${document.querySelector('link[href*="ai-chat-widget"]') ? '✅ Загружен' : '❌ Не найден'}</li>`;
+            statusHTML += `<li>JS файл: ${document.querySelector('script[src*="ai-chat-widget"]') ? '✅ Загружен' : '❌ Не найден'}</li>`;
+
+            statusHTML += '</ul>';
+            status.innerHTML = statusHTML;
+
+            // Check DOM elements
+            setTimeout(checkDOMElements, 1000);
+        }
+
+        function checkDOMElements() {
+            const widget = document.getElementById('ai-chat-widget');
+            const button = document.getElementById('chatToggleBtn');
+            const container = document.getElementById('chatContainer');
+
+            addLog(`🔍 Проверка DOM элементов:`);
+            addLog(`  - Виджет (#ai-chat-widget): ${widget ? '✅ Найден' : '❌ Не найден'}`, widget ? 'success' : 'error');
+            addLog(`  - Кнопка (#chatToggleBtn): ${button ? '✅ Найдена' : '❌ Не найдена'}`, button ? 'success' : 'error');
+            addLog(`  - Контейнер (#chatContainer): ${container ? '✅ Найден' : '❌ Не найден'}`, container ? 'success' : 'error');
+
+            if (widget) {
+                const styles = window.getComputedStyle(widget);
+                addLog(`🎨 Стили виджета:`, 'info');
+                addLog(`  - Display: ${styles.display}`, 'info');
+                addLog(`  - Visibility: ${styles.visibility}`, 'info');
+                addLog(`  - Opacity: ${styles.opacity}`, 'info');
+                addLog(`  - Position: ${styles.position}`, 'info');
+                addLog(`  - Bottom: ${styles.bottom}`, 'info');
+                addLog(`  - Right: ${styles.right}`, 'info');
+                addLog(`  - Z-Index: ${styles.zIndex}`, 'info');
+                addLog(`  - Width: ${styles.width}`, 'info');
+                addLog(`  - Height: ${styles.height}`, 'info');
+
+                // Check bounding rect
+                const rect = widget.getBoundingClientRect();
+                addLog(`📐 Позиция и размер:`, 'info');
+                addLog(`  - Top: ${rect.top}`, 'info');
+                addLog(`  - Left: ${rect.left}`, 'info');
+                addLog(`  - Width: ${rect.width}`, 'info');
+                addLog(`  - Height: ${rect.height}`, 'info');
+                addLog(`  - Видим: ${rect.width > 0 && rect.height > 0 ? '✅ Да' : '❌ Нет'}`, rect.width > 0 && rect.height > 0 ? 'success' : 'error');
+            }
+
+            if (button) {
+                const styles = window.getComputedStyle(button);
+                addLog(`🎨 Стили кнопки:`, 'info');
+                addLog(`  - Display: ${styles.display}`, 'info');
+                addLog(`  - Visibility: ${styles.visibility}`, 'info');
+                addLog(`  - Opacity: ${styles.opacity}`, 'info');
+                addLog(`  - Position: ${styles.position}`, 'info');
+                addLog(`  - Width: ${styles.width}`, 'info');
+                addLog(`  - Height: ${styles.height}`, 'info');
+                addLog(`  - Background: ${styles.background}`, 'info');
+
+                const rect = button.getBoundingClientRect();
+                addLog(`📐 Позиция кнопки:`, 'info');
+                addLog(`  - Top: ${rect.top}`, 'info');
+                addLog(`  - Left: ${rect.left}`, 'info');
+                addLog(`  - Width: ${rect.width}`, 'info');
+                addLog(`  - Height: ${rect.height}`, 'info');
+                addLog(`  - Видима: ${rect.width > 0 && rect.height > 0 ? '✅ Да' : '❌ Нет'}`, rect.width > 0 && rect.height > 0 ? 'success' : 'error');
+            }
+        }
+
+        function forceCreateWidget() {
+            addLog('🔧 Попытка принудительного создания виджета...', 'info');
+
+            try {
+                if (typeof initAIChatWidgetV2 === 'function') {
+                    const widget = initAIChatWidgetV2();
+                    addLog(`✅ Виджет создан: ${widget ? 'Да' : 'Нет'}`, widget ? 'success' : 'error');
+
+                    setTimeout(() => {
+                        checkDOMElements();
+                    }, 1000);
+                } else {
+                    addLog('❌ Функция initAIChatWidgetV2 не найдена', 'error');
+                }
+            } catch (error) {
+                addLog(`❌ Ошибка при создании виджета: ${error.message}`, 'error');
+            }
+        }
+
+        function forceShowWidget() {
+            addLog('👁️ Попытка принудительного отображения кнопки...', 'info');
+
+            const button = document.getElementById('chatToggleBtn');
+            if (button) {
+                button.style.cssText = `
+                    display: flex !important;
+                    visibility: visible !important;
+                    opacity: 1 !important;
+                    position: fixed !important;
+                    bottom: 30px !important;
+                    right: 30px !important;
+                    width: 64px !important;
+                    height: 64px !important;
+                    z-index: 9999 !important;
+                    background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%) !important;
+                    border-radius: 50% !important;
+                    border: none !important;
+                    color: white !important;
+                    font-size: 28px !important;
+                    cursor: pointer !important;
+                    box-shadow: 0 10px 30px rgba(99, 102, 241, 0.4) !important;
+                    align-items: center !important;
+                    justify-content: center !important;
+                `;
+                addLog('✅ Кнопка принудительно отображена', 'success');
+            } else {
+                addLog('❌ Кнопка не найдена в DOM', 'error');
+            }
+        }
+
+        function clearLog() {
+            document.getElementById('debug-log').innerHTML = '';
+            logCounter = 0;
+        }
+
+        // Инициализация при загрузке страницы
+        document.addEventListener('DOMContentLoaded', function() {
+            addLog('🚀 Страница загружена', 'success');
+
+            // Проверяем системный статус через 1 секунду
+            setTimeout(() => {
+                checkSystemStatus();
+                addLog('🔍 Начальная проверка завершена', 'info');
+            }, 1000);
+
+            // Автоматическая проверка каждые 5 секунд
+            setInterval(() => {
+                addLog('⏰ Автоматическая проверка...', 'info');
+                checkDOMElements();
+            }, 5000);
+        });
+
+        // Отслеживание ошибок
+        window.addEventListener('error', function(event) {
+            addLog(`❌ JavaScript ошибка: ${event.error.message} в ${event.filename}:${event.lineno}`, 'error');
+        });
+
+        // Отслеживание предупреждений
+        window.addEventListener('unhandledrejection', function(event) {
+            addLog(`⚠️ Неправильный Promise: ${event.reason}`, 'error');
+        });
+    </script>
+</body>
+</html>
