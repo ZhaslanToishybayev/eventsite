@@ -1,0 +1,21 @@
+[Unit]
+Description=UnitySphere Django Application
+After=network.target
+
+[Service]
+Type=exec
+User=admin
+Group=admin
+WorkingDirectory=/var/www/myapp/eventsite
+Environment="PATH=/var/www/myapp/eventsite/venv/bin"
+EnvironmentFile=/var/www/myapp/eventsite/.env
+ExecStart=/var/www/myapp/eventsite/venv/bin/python manage.py runserver 0.0.0.0:8000
+ExecReload=/bin/kill -HUP $MAINPID
+Restart=always
+RestartSec=3
+KillMode=mixed
+TimeoutStopSec=5
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

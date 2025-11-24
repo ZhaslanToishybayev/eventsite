@@ -1,0 +1,7 @@
+{
+  "anthropic": {
+    "auth_token": "sk-shDCfXVFcAy6QBFKinYxyrcAV6NMy31CaoVM9CVEt1MYEwm9sk-shDCfXVFcAy6QBFKinYxyrcAV6NMy31CaoVM9CVEt1MYEwm9",
+    "base_url": "https://agentrouter.org/",
+    "model": "claude-haiku-4-5-20251001"
+  }
+}
