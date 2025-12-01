@@ -1,0 +1,880 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="zxx" class="no-js">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="shortcut icon" href="{% static 'images/favicon-32x32.png' %}">
+    <meta name="author" content="colorlib">
+    <meta name="description" content="UnitySphere - fan-club.kz">
+    <meta name="keywords" content="фан-клубы, сообщества, мероприятия">
+    <meta charset="UTF-8">
+    {% csrf_token %}
+    <meta name="csrf-token" content="{{ csrf_token }}">
+
+    {% block head_title %}
+    <title>{% block title %}UnitySphere - fan-club.kz{% endblock %}</title>
+    {% endblock head_title %}
+
+    <script src="https://kit.fontawesome.com/77b427ccd5.js" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,400,300,500,600,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    {% block styles %}
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{% static 'css/template_css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'css/template_css/font-awesome.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/template_css/linearicons.css' %}">
+    <link rel="stylesheet" href="{% static 'css/template_css/magnific-popup.css' %}">
+    <link rel="stylesheet" href="{% static 'css/template_css/nice-select.css' %}">
+    <link rel="stylesheet" href="{% static 'css/template_css/animate.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/template_css/owl.carousel.css' %}">
+    <link rel="stylesheet" href="{% static 'css/template_css/jquery-ui.css' %}">
+    <link rel="stylesheet" href="{% static 'css/template_css/main.css' %}">
+    <link rel="stylesheet" href="{% static 'css/our_css/style.css' %}">
+
+    <!-- Enhanced Professional Chat Widget Styles -->
+    <!-- Все стили перенесены во внутренний CSS для избежания конфликтов -->
+    {% endblock %}
+
+    {% block extra_head %}
+    {% endblock %}
+</head>
+<body class="bg-white">
+    {% block header %}
+    <header id="header" id="home">
+        <div class="container">
+            <div class="row align-items-center justify-content-between d-flex">
+                <div id="logo">
+                    <a href="/"><img src="{% static 'images/fanclub_horizontal.png' %}" alt="" title="" style="max-width: 150px;" /></a>
+                </div>
+                <nav id="nav-menu-container">
+                    <ul class="nav-menu">
+                        <li><a href="/">Главная</a></li>
+                        <li><a href="{% url 'clubs' %}">Сообщества</a></li>
+                        <li><a href="{% url 'festivals' %}">Фестивали</a></li>
+                        <li><a href="{% url 'publications' %}">Публикации</a></li>
+                        <li><a href="/admin/">Админ</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+    {% endblock %}
+
+    {% block body %}
+    {% endblock %}
+
+    {% block content %}
+    {% endblock %}
+
+    {% block footer %}
+    <footer class="footer-area section-gap">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-5 col-md-6 col-sm-6">
+                    <div class="single-footer-widget">
+                        <h6>О сайте</h6>
+                        <p>
+                            UnitySphere - платформа для создания и управления фан-клубами, сообществами и мероприятиями.
+                        </p>
+                    </div>
+                </div>
+                <div class="col-lg-5 col-md-6 col-sm-6">
+                    <div class="single-footer-widget">
+                        <h6>Контакты</h6>
+                        <p>
+                            г. Алматы, Казахстан<br>
+                            Email: info@fan-club.kz
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom d-flex justify-content-center align-items-center flex-wrap">
+                <p class="footer-text m-0">
+                    Copyright &copy; 2025 All rights reserved
+                </p>
+            </div>
+        </div>
+    </footer>
+    {% endblock %}
+
+    {% block scripts %}
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="{% static 'css/template_css/bootstrap.min.js' %}"></script>
+    <script src="{% static 'css/template_css/jquery.ajaxchimp.min.js' %}"></script>
+    <script src="{% static 'css/template_css/jquery.magnific-popup.min.js' %}"></script>
+    <script src="{% static 'css/template_css/jquery.nice-select.min.js' %}"></script>
+    <script src="{% static 'css/template_css/jquery.sticky.js' %}"></script>
+    <script src="{% static 'css/template_css/nouislider.min.js' %}"></script>
+    <script src="{% static 'css/template_css/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'css/template_css/jquery.ajaxchimp.min.js' %}"></script>
+    <script src="{% static 'css/template_css/mail-script.js' %}"></script>
+    <script src="{% static 'css/template_css/main.js' %}"></script>
+
+    <!-- Enhanced Chat Widget Scripts -->
+    <script src="{% static 'js/enhanced-chat-widget.js' %}?v=6.0.0"></script>
+
+    <!-- Initialize Enhanced Chat Widget -->
+    <script>
+        // Инициализация улучшенного виджета после загрузки DOM
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initializeEnhancedWidget);
+        } else {
+            initializeEnhancedWidget();
+        }
+    </script>
+    {% endblock %}
+
+    {% block extra_scripts %}
+    {% endblock %}
+</head>
+
+<body class="bg-white">
+    <!-- 🎨 ENHANCED MODERN CHAT WIDGET -->
+    <style>
+        /* 🎨 CSS Variables для виджета */
+        :root {
+            /* 🎯 Брендовые цвета - глубокий синий для твердого, не стеклянного вида */
+            --primary-color: #1e40af;        /* Темно-синий */
+            --primary-gradient-start: #1e40af;  /* Темно-синий для градиентов */
+            --primary-gradient-end: #3b82f6;    /* Светло-синий для градиентов */
+            --secondary-color: #64748b;      /* Серо-синий */
+            --accent-color: #f59e0b;         /* Золотистый акцент */
+            --success-color: #10b981;        /* Изумрудный */
+            --text-primary: #0f172a;         /* Темный текст */
+            --text-secondary: #475569;       /* Вторичный текст */
+            --text-light: #ffffff;           /* Светлый текст */
+            --bg-primary: #ffffff;           /* Чистый белый фон */
+            --bg-secondary: #ffffff;         /* Чистый белый фон */
+            --bg-tertiary: #ffffff;          /* Чистый белый фон */
+            --border-color: #e2e8f0;         /* Цвет границ */
+            --shadow-light: rgba(37, 99, 235, 0.1);
+            --shadow-medium: rgba(37, 99, 235, 0.2);
+            --shadow-heavy: rgba(37, 99, 235, 0.3);
+            --notification-dot: #10b981;     /* Цвет индикатора уведомлений */
+
+            /* 📏 Система отступов */
+            --space-xs: 4px;
+            --space-sm: 8px;
+            --space-md: 16px;
+            --space-lg: 24px;
+            --space-xl: 32px;
+            --space-xxl: 48px;
+
+            /* 🎭 Анимации */
+            --transition-fast: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-normal: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-slow: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+
+            /* 📱 Размеры шрифтов */
+            --font-size-xs: 0.75rem;
+            --font-size-sm: 0.875rem;
+            --font-size-base: 1rem;
+            --font-size-lg: 1.125rem;
+            --font-size-xl: 1.25rem;
+
+            /* 🎯 Тени */
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.06);
+            --shadow-md: 0 4px 6px rgba(0,0,0,0.1), 0 2px 4px rgba(0,0,0,0.06);
+            --shadow-lg: 0 10px 15px rgba(0,0,0,0.1), 0 5px 10px rgba(0,0,0,0.05);
+            --shadow-xl: 0 20px 25px rgba(0,0,0,0.1), 0 10px 10px rgba(0,0,0,0.04);
+            --shadow-2xl: 0 25px 50px rgba(0,0,0,0.15);
+        }
+
+        /* 🌙 Темная тема */
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --primary-color: #3b82f6;        /* Светло-синий */
+                --primary-gradient-start: #1e40af;  /* Темно-синий для градиентов */
+                --primary-gradient-end: #3b82f6;    /* Светло-синий для градиентов */
+                --text-primary: #f1f5f9;         /* Светлый текст */
+                --text-secondary: #cbd5e1;       /* Вторичный светлый текст */
+                --text-light: #ffffff;           /* Светлый текст */
+                --bg-primary: #0f172a;           /* Темный фон */
+                --bg-secondary: #1e293b;         /* Темный вторичный фон */
+                --bg-tertiary: #334155;          /* Темный третичный фон */
+                --border-color: #334155;         /* Цвет границ в темной теме */
+                --shadow-light: rgba(37, 99, 235, 0.3);
+                --shadow-medium: rgba(37, 99, 235, 0.4);
+                --shadow-heavy: rgba(37, 99, 235, 0.5);
+                --notification-dot: #34d399;     /* Зеленый индикатор в темной теме */
+            }
+        }
+
+        /* Ручная темная тема */
+        .dark-theme {
+            --primary-color: #3b82f6;
+            --primary-gradient-start: #1e40af;
+            --primary-gradient-end: #3b82f6;
+            --text-primary: #f1f5f9;
+            --text-secondary: #cbd5e1;
+            --text-light: #ffffff;
+            --bg-primary: #0f172a;
+            --bg-secondary: #1e293b;
+            --bg-tertiary: #334155;
+            --border-color: #334155;
+            --shadow-light: rgba(37, 99, 235, 0.3);
+            --shadow-medium: rgba(37, 99, 235, 0.4);
+            --shadow-heavy: rgba(37, 99, 235, 0.5);
+            --notification-dot: #34d399;
+        }
+
+        /* Современный дизайн виджета */
+        .modern-widget-button {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, var(--primary-gradient-start) 0%, var(--primary-color) 100%);
+            border: none;
+            border-radius: 50px;
+            color: var(--text-light);
+            font-size: 28px;
+            cursor: pointer;
+            box-shadow: 0 8px 25px var(--shadow-medium), 0 2px 8px rgba(0,0,0,0.1);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            /* backdrop-filter эффекты удалены для твердого вида */
+            animation: pulse-glow 4s ease-in-out infinite;
+            overflow: hidden;
+        }
+
+        .notification-dot {
+            position: absolute;
+            top: 6px;
+            right: 6px;
+            width: 12px;
+            height: 12px;
+            background: var(--notification-dot);
+            border-radius: 50%;
+            border: 2px solid var(--bg-primary);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            animation: notificationPulse 2s infinite;
+            display: none;
+        }
+
+        @keyframes notificationPulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.2); opacity: 0.8; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        .modern-widget-button:hover {
+            transform: scale(1.12) rotate(3deg);
+            box-shadow: 0 12px 35px var(--shadow-heavy), 0 4px 12px rgba(0,0,0,0.15);
+            animation-play-state: paused;
+        }
+        .modern-widget-button:active {
+            transform: scale(0.95) rotate(0deg);
+        }
+
+        /* Анимации */
+        @keyframes pulse-glow {
+            0%, 100% {
+                box-shadow: 0 8px 25px var(--shadow-light), 0 2px 8px rgba(0,0,0,0.1);
+            }
+            50% {
+                box-shadow: 0 12px 35px var(--shadow-medium), 0 4px 12px rgba(0,0,0,0.15);
+            }
+        }
+
+        @keyframes widgetEntrance {
+            from {
+                opacity: 0;
+                transform: scale(0.5) translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        @keyframes buttonHoverGlow {
+            0% {
+                box-shadow: 0 8px 25px var(--shadow-light), 0 2px 8px rgba(0,0,0,0.1);
+            }
+            100% {
+                box-shadow: 0 12px 35px var(--shadow-heavy), 0 4px 12px rgba(0,0,0,0.15);
+            }
+        }
+
+        @keyframes chatSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px) scale(0.95);
+                right: -100px;
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+                right: 24px;
+            }
+        }
+
+        @keyframes chatSlideOut {
+            from {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+                right: 24px;
+            }
+            to {
+                opacity: 0;
+                transform: translateY(30px) scale(0.95);
+                right: -100px;
+            }
+        }
+
+        .modern-widget-chat {
+            position: fixed;
+            bottom: 110px;
+            right: 24px;
+            width: 420px;
+            height: 650px;
+            background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+            border-radius: 24px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15), 0 8px 32px rgba(0,0,0,0.1);
+            z-index: 9998;
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            /* Удаляем backdrop-filter для устранения стеклянного эффекта */
+            animation: slideIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .modern-widget-header {
+            background: linear-gradient(135deg, var(--primary-gradient-start) 0%, var(--primary-color) 100%);
+            color: var(--text-light);
+            padding: 20px 24px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            flex-shrink: 0;
+        }
+        .modern-widget-header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: rgba(255,255,255,0.2);
+        }
+        .modern-widget-header h3 {
+            margin: 0;
+            font-size: 18px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .modern-widget-status {
+            width: 8px;
+            height: 8px;
+            background: #10b981;
+            border-radius: 50%;
+            animation: statusPulse 2s infinite;
+        }
+
+        @keyframes statusPulse {
+            0%, 80%, 100% { opacity: 0.5; }
+            40% { opacity: 1; }
+        }
+
+        .modern-widget-close {
+            background: rgba(255,255,255,0.1);
+            border: none;
+            border-radius: 8px;
+            color: var(--text-light);
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            /* Удаляем все backdrop-filter эффекты для более четкого дизайна */
+        }
+        .modern-widget-close:hover {
+            background: rgba(255,255,255,0.2);
+            transform: rotate(90deg);
+        }
+
+        .modern-widget-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            background: transparent;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        .modern-widget-message {
+            max-width: 85%;
+            padding: 14px 18px;
+            border-radius: 20px;
+            font-size: 14px;
+            line-height: 1.5;
+            position: relative;
+            animation: messageSlideIn 0.3s ease-out;
+        }
+
+        @keyframes messageSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modern-widget-bot-message {
+            background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
+            color: var(--text-primary);
+            align-self: flex-start;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+        .modern-widget-user-message {
+            background: linear-gradient(135deg, var(--primary-gradient-start) 0%, var(--primary-color) 100%);
+            color: var(--text-light);
+            align-self: flex-end;
+            border: 1px solid rgba(37, 99, 235, 0.2);
+            box-shadow: 0 2px 8px var(--shadow-light);
+        }
+
+        .modern-widget-typing {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 16px;
+            align-self: flex-start;
+            background: var(--bg-secondary);
+            border-radius: 18px;
+            border: 1px solid var(--border-color);
+        }
+        .modern-widget-typing-text {
+            font-size: 13px;
+            color: var(--text-secondary);
+            font-style: italic;
+        }
+        .modern-widget-typing-dots {
+            display: flex;
+            gap: 4px;
+        }
+        .modern-widget-typing-dot {
+            width: 6px;
+            height: 6px;
+            background: var(--secondary-color);
+            border-radius: 50%;
+            animation: typing 1.4s ease-in-out infinite;
+        }
+        .modern-widget-typing-dot:nth-child(2) { animation-delay: 0.2s; }
+        .modern-widget-typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes typing {
+            0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
+            30% { transform: translateY(-6px); opacity: 1; }
+        }
+
+        .modern-widget-input {
+            display: flex;
+            padding: 16px 20px 20px;
+            background: var(--bg-primary);
+            border-top: 1px solid var(--border-color);
+            gap: 12px;
+        }
+        .modern-widget-input-field {
+            flex: 1;
+            border: 2px solid var(--border-color);
+            border-radius: 28px;
+            padding: 12px 20px;
+            outline: none;
+            font-size: 14px;
+            transition: all 0.2s ease;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+        }
+        .modern-widget-input-field:focus {
+            border-color: var(--primary-color);
+            background: var(--bg-primary);
+            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
+        }
+        .modern-widget-input-field::placeholder {
+            color: var(--text-secondary);
+            opacity: 0.7;
+        }
+        .modern-widget-send-btn {
+            background: linear-gradient(135deg, var(--primary-gradient-start) 0%, var(--primary-color) 100%);
+            color: var(--text-light);
+            border: none;
+            border-radius: 28px;
+            padding: 12px 20px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 14px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 50px;
+            box-shadow: 0 2px 8px var(--shadow-light);
+        }
+        .modern-widget-send-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px var(--shadow-medium);
+        }
+        .modern-widget-send-btn:active {
+            transform: translateY(0);
+        }
+        .modern-widget-send-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .modern-widget-features {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(245, 158, 11, 0.08);
+            padding: 8px 16px;
+            font-size: 12px;
+            color: var(--accent-color);
+            text-align: center;
+            border-bottom: 1px solid rgba(245, 158, 11, 0.2);
+            z-index: 10;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        @keyframes particleFloat {
+            0% { transform: translate(0, 0) scale(1); opacity: 1; }
+            50% { opacity: 0.8; }
+            100% { transform: translate(var(--vx, 0), var(--vy, 0)) scale(0); opacity: 0; }
+        }
+
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            .modern-widget-chat {
+                width: calc(100vw - 48px);
+                right: 24px;
+                bottom: 100px;
+                max-height: 500px;
+            }
+            .modern-widget-button {
+                bottom: 20px;
+                right: 20px;
+                width: 60px;
+                height: 60px;
+                font-size: 24px;
+            }
+        }
+    </style>
+
+    <button class="modern-widget-button" id="modernWidgetButton" title="AI Консультант">
+        💬
+        <div class="notification-dot" id="notificationDot" style="display: none;"></div>
+</button>
+
+    <div class="modern-widget-chat" id="modernWidgetChat" style="display: none;">
+        <div class="modern-widget-header">
+            <h3 style="color: var(--text-light);">AI Консультант</h3>
+            <div style="display: flex; align-items: center; gap: 8px;">
+                <div class="modern-widget-status"></div>
+                <span style="font-size: 12px; opacity: 0.8; color: var(--text-light);">Онлайн</span>
+            </div>
+            <button class="modern-widget-close" id="modernWidgetClose">✕</button>
+        </div>
+        <div class="modern-widget-messages" id="modernWidgetMessages">
+            <div class="modern-widget-message modern-widget-bot-message">
+                <div>👋 Привет! Я - AI консультант UnitySphere.</div>
+                <div style="margin-top: 4px; font-size: 12px; opacity: 0.7;">Готов помочь создать ваш идеальный клуб! 💫</div>
+            </div>
+            <div class="modern-widget-message modern-widget-bot-message">
+                <div>✨ <strong>Новые функции:</strong></div>
+                <div style="margin-top: 4px; font-size: 12px;">
+                    • 🏠 Поиск подходящих клубов<br>
+                    • 📋 Создание собственного клуба<br>
+                    • 💬 Консультации по мероприятиям<br>
+                    • 🔍 Поиск единомышленников
+                </div>
+            </div>
+        </div>
+        <div class="modern-widget-input">
+            <input type="text" id="modernWidgetInput" class="modern-widget-input-field" placeholder="Напишите ваш вопрос..." maxlength="500">
+            <button id="modernWidgetSend" class="modern-widget-send-btn">📤</button>
+        </div>
+    </div>
+
+    <script>
+        // 🚀 Улучшенная логика современного виджета
+        let isOpen = false;
+        let sessionId = 'modern_' + Math.random().toString(36).substr(2, 9);
+        let isProcessing = false;
+        let messageHistory = [];
+
+        const button = document.getElementById('modernWidgetButton');
+        const chat = document.getElementById('modernWidgetChat');
+        const messages = document.getElementById('modernWidgetMessages');
+        const input = document.getElementById('modernWidgetInput');
+        const sendBtn = document.getElementById('modernWidgetSend');
+        const closeBtn = document.getElementById('modernWidgetClose');
+
+        // Открыть/закрыть чат
+        button.addEventListener('click', toggleChat);
+        closeBtn.addEventListener('click', toggleChat);
+
+        function toggleChat() {
+            if (isOpen) {
+                chat.style.display = 'none';
+                isOpen = false;
+                // Плавное закрытие
+                setTimeout(() => {
+                    if (!isOpen) {
+                        chat.style.animation = 'slideIn 0.3s cubic-bezier(0.4, 0, 0.2, 1) reverse';
+                    }
+                }, 100);
+            } else {
+                chat.style.display = 'flex';
+                chat.style.animation = 'slideIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)';
+                isOpen = true;
+                input.focus();
+                // Добавляем приветствие при первом открытии
+                if (messages.children.length === 2) {
+                    setTimeout(() => {
+                        addMessage('💡 Чтобы начать, просто задайте вопрос о клубах, мероприятиях или поиске единомышленников!', 'bot');
+                    }, 1000);
+                }
+            }
+        }
+
+        // Отправка сообщения
+        sendBtn.addEventListener('click', sendMessage);
+        input.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                sendMessage();
+            }
+        });
+
+        input.addEventListener('input', function() {
+            sendBtn.disabled = !input.value.trim() || isProcessing;
+            // Активация кнопки при наличии текста
+            sendBtn.style.opacity = input.value.trim() && !isProcessing ? '1' : '0.6';
+        });
+
+        function sendMessage() {
+            const message = input.value.trim();
+            if (!message || isProcessing) return;
+
+            // Добавляем сообщение пользователя
+            addMessage(message, 'user');
+            messageHistory.push({ role: 'user', content: message });
+            input.value = '';
+            setProcessingState(true);
+
+            // Сохраняем историю в localStorage
+            localStorage.setItem('widgetHistory_' + sessionId, JSON.stringify(messageHistory));
+
+            // Показываем эффект печати
+            setTimeout(() => {
+                showTypingIndicator();
+                setTimeout(() => {
+                    removeTypingIndicator();
+                    const response = generateSmartResponse(message);
+                    addMessage(response, 'bot');
+                    messageHistory.push({ role: 'bot', content: response });
+                    setProcessingState(false);
+                }, 1500 + Math.random() * 1000); // Реалистичная задержка
+            }, 300);
+        }
+
+        function showTypingIndicator() {
+            const typingDiv = document.createElement('div');
+            typingDiv.className = 'modern-widget-typing';
+            typingDiv.id = 'typingIndicator';
+            typingDiv.innerHTML = `
+                <div style="font-size: 12px; color: var(--text-secondary); margin-right: 8px;">AI</div>
+                <div class="modern-widget-typing-dots">
+                    <div class="modern-widget-typing-dot"></div>
+                    <div class="modern-widget-typing-dot"></div>
+                    <div class="modern-widget-typing-dot"></div>
+                </div>
+            `;
+            messages.appendChild(typingDiv);
+            messages.scrollTop = messages.scrollHeight;
+        }
+
+        function removeTypingIndicator() {
+            const typingIndicator = document.getElementById('typingIndicator');
+            if (typingIndicator) {
+                typingIndicator.remove();
+            }
+        }
+
+        function addMessage(text, sender) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `modern-widget-message modern-widget-${sender}-message`;
+            messageDiv.innerHTML = text;
+            messages.appendChild(messageDiv);
+            messages.scrollTop = messages.scrollHeight;
+
+            // Добавляем эффект появления
+            setTimeout(() => {
+                messageDiv.style.animation = 'messageSlideIn 0.3s ease-out';
+            }, 50);
+        }
+
+        function generateSmartResponse(userMessage) {
+            const message = userMessage.toLowerCase();
+            const clubKeywords = ['клуб', 'сообщество', 'группа', 'фан', 'фан-клуб'];
+            const eventKeywords = ['мероприятие', 'фестиваль', 'событие', 'встреча', 'концерт'];
+            const helpKeywords = ['помощь', 'помоги', 'как', 'что', 'где', 'когда'];
+
+            // Проверка ключевых слов
+            const hasClubKeywords = clubKeywords.some(keyword => message.includes(keyword));
+            const hasEventKeywords = eventKeywords.some(keyword => message.includes(keyword));
+            const hasHelpKeywords = helpKeywords.some(keyword => message.includes(keyword));
+
+            if (hasClubKeywords || message.includes('создать')) {
+                return `🏠 Отличный выбор! Вот что я могу предложить по клубам:\n\n<b>✨ Для создания клуба:</b>\n• Перейдите в раздел "Сообщества"\n• Нажмите "Создать клуб"\n• Заполните информацию о вашем клубе\n• Пригласите первых участников\n\n<b>🎯 Популярные категории:</b>\n• Музыка и искусство\n• Спорт и здоровье\n• Технологии и игры\n• Образование и развитие\n\nХотите, чтобы я помог создать описание для вашего клуба?`;
+            }
+
+            if (hasEventKeywords || message.includes('мероприяти')) {
+                return `🎉 Отлично! Вот информация о мероприятиях:\n\n<b>📅 Текущие фестивали:</b>\n• Музыкальные фестивали каждые выходные\n• Спортивные соревнования\n• Творческие вечера\n• Образовательные мероприятия\n\n<b>💡 Советы по организации:</b>\n• Определите целевую аудиторию\n• Выберите подходящую площадку\n• Продумайте программу\n• Сделайте качественную рекламу\n\nХотите узнать больше о конкретном типе мероприятия?`;
+            }
+
+            if (hasHelpKeywords || message.includes('как')) {
+                return `🤔 С удовольствием помогу! Вот что я могу сделать:\n\n<b>🚀 Возможности:</b>\n• Найти подходящий клуб по интересам\n• Помочь с созданием нового клуба\n• Подсказать идеи для мероприятий\n• Найти единомышленников\n• Дать советы по развитию сообщества\n\n<b>📋 Просто спросите:</b>\n• "Как создать клуб?"\n• "Где найти людей с похожими интересами?"\n• "Как организовать мероприятие?"\n• "Что популярно среди фанатов?"`;
+            }
+
+            if (message.includes('спасибо') || message.includes('благодар')) {
+                return `🙏 Пожалуйста! Рад был помочь!\n\n💡 Если понадобится еще assistance, просто напишите. Я всегда готов помочь с:\n• Поиском клубов и мероприятий\n• Советами по созданию сообществ\n• Идеями для развития вашей активности\n\n✨ Хорошего дня и успешных начинаний!`;
+            }
+
+            if (message.includes('пока') || message.includes('досвидания') || message.includes('хватит')) {
+                return `👋 До свидания! Был рад пообщаться!\n\n💡 Возвращайтесь, когда понадобится помощь с клубами, мероприятиями или поиском единомышленников.\n\n✨ UnitySphere всегда к вашим услугам!`;
+            }
+
+            // По умолчанию - умный ответ
+            const responses = [
+                `🔍 Интересный вопрос! Давайте поищем что-то подходящее.\n\n💡 Вы можете:\n• Рассказать больше о своих интересах\n• Спросить о конкретных клубах\n• Узнать о предстоящих мероприятиях\n• Получить советы по созданию сообщества`,
+                `✨ Отличный вопрос! Думаю, вам будет интересно:\n\n🏠 <b>Для поиска клубов:</b> Используйте фильтры по интересам\n🎉 <b>Для мероприятий:</b> Смотрите раздел "Фестивали"\n💬 <b>Для общения:</b> Присоединяйтесь к интересующим вас сообществам\n\nЧто именно вас интересует?`,
+                `🌟 Понял ваш запрос! Давайте подумаем вместе:\n\n🎯 <b>Рекомендую начать с:</b>\n1. Определите ваши интересы\n2. Поищите похожие клубы\n3. Примите участие в мероприятиях\n4. Создайте свое сообщество\n\nХочется что-то конкретное?`
+            ];
+
+            return responses[Math.floor(Math.random() * responses.length)];
+        }
+
+        function setProcessingState(processing) {
+            isProcessing = processing;
+            if (processing) {
+                sendBtn.innerHTML = '⏳';
+                sendBtn.disabled = true;
+                input.disabled = true;
+                sendBtn.style.opacity = '0.6';
+                sendBtn.style.cursor = 'not-allowed';
+            } else {
+                sendBtn.innerHTML = '📤';
+                sendBtn.disabled = false;
+                input.disabled = false;
+                sendBtn.style.opacity = '1';
+                sendBtn.style.cursor = 'pointer';
+            }
+            input.addEventListener('input', function() {
+                sendBtn.disabled = !input.value.trim() || isProcessing;
+                sendBtn.style.opacity = input.value.trim() && !isProcessing ? '1' : '0.6';
+                sendBtn.style.cursor = input.value.trim() && !isProcessing ? 'pointer' : 'not-allowed';
+            });
+        }
+
+        // Загрузка истории сообщений
+        function loadMessageHistory() {
+            const savedHistory = localStorage.getItem('widgetHistory_' + sessionId);
+            if (savedHistory) {
+                try {
+                    messageHistory = JSON.stringify(savedHistory);
+                    console.log('✅ История сообщений загружена');
+                } catch (e) {
+                    console.log('⚠️ Не удалось загрузить историю');
+                }
+            }
+        }
+
+        // Эффекты для кнопки
+        button.addEventListener('mouseenter', function() {
+            const particles = 5;
+            for (let i = 0; i < particles; i++) {
+                createParticle(button);
+            }
+        });
+
+        function createParticle(element) {
+            const particle = document.createElement('div');
+            particle.style.cssText = `
+                position: fixed;
+                width: 4px;
+                height: 4px;
+                background: rgba(102, 126, 234, 0.6);
+                border-radius: 50%;
+                pointer-events: none;
+                z-index: 9997;
+                animation: particleFloat 2s ease-out forwards;
+            `;
+            document.body.appendChild(particle);
+
+            const rect = element.getBoundingClientRect();
+            const x = rect.left + rect.width / 2;
+            const y = rect.top + rect.height / 2;
+
+            particle.style.left = x + 'px';
+            particle.style.top = y + 'px';
+
+            const angle = Math.random() * Math.PI * 2;
+            const velocity = 50 + Math.random() * 50;
+            const vx = Math.cos(angle) * velocity;
+            const vy = Math.sin(angle) * velocity;
+
+            particle.animate([
+                { transform: 'translate(0, 0) scale(1)', opacity: 1 },
+                { transform: `translate(${vx}px, ${vy}px) scale(0)`, opacity: 0 }
+            ], {
+                duration: 2000,
+                easing: 'ease-out'
+            });
+
+            setTimeout(() => particle.remove(), 2000);
+        }
+
+        // Инициализация
+        loadMessageHistory();
+        console.log('🚀 Модернизированный виджет инициализирован успешно!');
+        console.log('   • Современный дизайн с анимациями');
+        console.log('   • Умные ответы на основе анализа текста');
+        console.log('   • Эффекты частиц при наведении');
+        console.log('   • История сообщений');
+        console.log('   • Реалистичная имитация печати');
+        console.log('   Session ID:', sessionId);
+    </script>
+
+</html>

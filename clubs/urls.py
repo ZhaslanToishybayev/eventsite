@@ -1,6 +1,9 @@
 from django.urls import path
 from clubs import views
 
+from clubs.views.other_views import index_view, health_view
+from clubs.views.simple_test import simple_index
+
 club_urlpatterns = [
     path('clubs/', views.ClubListView.as_view(), name='clubs'),
     path('clubs/create/', views.ClubCreateView.as_view(), name='club_create'),
@@ -66,7 +69,7 @@ publication_urlpatterns = [
 
 
 other_urlpatterns = [
-    path('', views.IndexView.as_view(), name='index'),
+    path('', index_view, name='index'),
     path('clubs/<uuid:pk>/managers/edit/', views.ChooseClubManagersView.as_view(), name='club_managers_choose'),
     path('about/', views.AboutView.as_view(), name='about'),
     path('policy/', views.PolicyView.as_view(), name='policy'),

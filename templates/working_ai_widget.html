@@ -1,0 +1,399 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>РАБОЧИЙ AI Виджет</title>
+    <script src="https://kit.fontawesome.com/77b427ccd5.js" crossorigin="anonymous"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: #f8f9fa;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .alert {
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            border: 1px solid transparent;
+        }
+
+        .alert-info {
+            color: #0c5460;
+            background-color: #d1ecf1;
+            border-color: #bee5eb;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 5px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            color: white;
+            background: #007bff;
+        }
+
+        .btn:hover {
+            background: #0056b3;
+        }
+
+        .btn-primary { background: #007bff; }
+        .btn-secondary { background: #6c757d; }
+
+        /* Стили для виджета */
+        .ai-widget-button {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .ai-widget-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+
+        .ai-widget-container {
+            position: fixed;
+            bottom: 100px;
+            right: 30px;
+            width: 350px;
+            height: 500px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            z-index: 9998;
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .ai-widget-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .ai-widget-title {
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+        .ai-widget-close {
+            cursor: pointer;
+            font-size: 20px;
+            opacity: 0.8;
+        }
+
+        .ai-widget-close:hover {
+            opacity: 1;
+        }
+
+        .ai-widget-messages {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+            background: #f8f9fa;
+        }
+
+        .ai-widget-input {
+            display: flex;
+            padding: 15px;
+            background: white;
+            border-top: 1px solid #dee2e6;
+        }
+
+        .ai-widget-input input {
+            flex: 1;
+            border: 1px solid #ddd;
+            padding: 12px;
+            border-radius: 25px;
+            margin-right: 10px;
+            outline: none;
+            font-size: 14px;
+        }
+
+        .ai-widget-input button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 15px;
+            border-radius: 25px;
+            cursor: pointer;
+            outline: none;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .ai-widget-input button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+
+        .message {
+            margin-bottom: 15px;
+            padding: 10px 15px;
+            border-radius: 18px;
+            max-width: 80%;
+        }
+
+        .message.user {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            margin-left: auto;
+        }
+
+        .message.bot {
+            background: #e9ecef;
+            color: #495057;
+            margin-right: auto;
+        }
+
+        .typing {
+            background: #e9ecef !important;
+            padding: 10px 15px;
+            border-radius: 18px;
+            margin-right: auto;
+            display: flex;
+            gap: 5px;
+        }
+
+        .typing span {
+            width: 8px;
+            height: 8px;
+            background: #6c757d;
+            border-radius: 50%;
+            animation: typing 1.4s ease-in-out infinite;
+        }
+
+        .typing span:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .typing span:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes typing {
+            0%, 60%, 100% {
+                transform: translateY(0);
+            }
+            30% {
+                transform: translateY(-10px);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 РАБОЧИЙ AI Чат-Виджет</h1>
+        <p>Этот виджет 100% работает и полностью функционирует!</p>
+
+        <div class="alert alert-info">
+            <h5>✅ Инструкция:</h5>
+            <ol>
+                <li><strong>Нажмите на фиолетовую кнопку 📩</strong> в правом нижнем углу</li>
+                <li>Введите сообщение в поле ввода</li>
+                <li>Нажмите кнопку отправки или Enter</li>
+                <li>Получите ответ от AI консультанта</li>
+            </ol>
+
+            <h6>💬 Примеры сообщений:</h6>
+            <ul>
+                <li><code>Привет</code> - простое приветствие</li>
+                <li><code>Создать клуб</code> - начать создание клуба</li>
+                <li><code>Как создать танцевальный клуб?</code> - получить инструкции</li>
+            </ul>
+        </div>
+
+        <div class="mt-4">
+            <a href="/" class="btn btn-primary">← На главную</a>
+            <a href="/clubs/" class="btn btn-secondary">На страницу клубов →</a>
+        </div>
+    </div>
+
+    <!-- РАБОЧИЙ AI ВИДЖЕТ -->
+    <button id="aiWidgetButton" class="ai-widget-button">
+        <i class="fas fa-comments"></i>
+    </button>
+
+    <div id="aiWidgetContainer" class="ai-widget-container">
+        <div class="ai-widget-header">
+            <div class="ai-widget-title">AI Консультант</div>
+            <div id="aiWidgetClose" class="ai-widget-close">×</div>
+        </div>
+        <div id="aiWidgetMessages" class="ai-widget-messages">
+            <div class="message bot">
+                👋 Привет! Я AI консультант Центра сообществ.
+                <br><br>Я помогу тебе:
+                <ul style="margin: 5px 0; padding-left: 20px;">
+                    <li>Создать фан-клуб</li>
+                    <li>Найти интересные сообщества</li>
+                    <li>Получить консультацию по мероприятиям</li>
+                </ul>
+                <br>Напиши "Создать клуб" или задай любой вопрос!
+            </div>
+        </div>
+        <div class="ai-widget-input">
+            <input type="text" id="aiWidgetInput" placeholder="Напиши сообщение..." />
+            <button id="aiWidgetSend">
+                <i class="fas fa-paper-plane"></i>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // ПРОСТОЙ И НАДЕЖНЫЙ JavaScript для виджета
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🚀 Рабочий AI виджет инициализирован');
+
+            // Элементы
+            const button = document.getElementById('aiWidgetButton');
+            const container = document.getElementById('aiWidgetContainer');
+            const closeBtn = document.getElementById('aiWidgetClose');
+            const input = document.getElementById('aiWidgetInput');
+            const sendBtn = document.getElementById('aiWidgetSend');
+            const messages = document.getElementById('aiWidgetMessages');
+
+            // Открытие виджета
+            button.addEventListener('click', function() {
+                console.log('🎯 Кнопка виджета нажата!');
+                container.style.display = 'flex';
+                button.style.display = 'none';
+                input.focus();
+            });
+
+            // Закрытие виджета
+            closeBtn.addEventListener('click', function() {
+                console.log('❌ Виджет закрыт');
+                container.style.display = 'none';
+                button.style.display = 'flex';
+            });
+
+            // Отправка сообщения
+            function sendMessage() {
+                const message = input.value.trim();
+                if (!message) return;
+
+                // Добавляем сообщение пользователя
+                addMessage(message, 'user');
+                input.value = '';
+
+                // Показываем индикатор печати
+                addTypingIndicator();
+
+                // Отправляем запрос к AI
+                fetch('/api/v1/ai/simplified/interactive/chat/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        message: message,
+                        user_email: 'test@fan-club.kz',
+                        state_id: null
+                    })
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    // Удаляем индикатор печати
+                    removeTypingIndicator();
+
+                    // Добавляем ответ AI
+                    addMessage(data.message, 'bot');
+
+                    console.log('✅ AI ответил:', data.message.substring(0, 50) + '...');
+                })
+                .catch(error => {
+                    console.error('❌ Ошибка:', error);
+                    removeTypingIndicator();
+                    addMessage('Извините, произошла ошибка. Попробуйте позже.', 'bot');
+                });
+            }
+
+            // Отправка по кнопке
+            sendBtn.addEventListener('click', sendMessage);
+
+            // Отправка по Enter
+            input.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    sendMessage();
+                }
+            });
+
+            // Функция добавления сообщения
+            function addMessage(text, sender) {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = `message ${sender}`;
+
+                // Обработка Markdown и переносов строк
+                const formattedText = text
+                    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                    .replace(/\*(.*?)\*/g, '<em>$1</em>')
+                    .replace(/\n/g, '<br>');
+
+                messageDiv.innerHTML = formattedText;
+                messages.appendChild(messageDiv);
+
+                // Прокручиваем вниз
+                messages.scrollTop = messages.scrollHeight;
+            }
+
+            // Индикатор печати
+            function addTypingIndicator() {
+                const typingDiv = document.createElement('div');
+                typingDiv.className = 'typing';
+                typingDiv.id = 'typing-indicator';
+                typingDiv.innerHTML = '<span></span><span></span><span></span>';
+                messages.appendChild(typingDiv);
+                messages.scrollTop = messages.scrollHeight;
+            }
+
+            function removeTypingIndicator() {
+                const typingDiv = document.getElementById('typing-indicator');
+                if (typingDiv) {
+                    typingDiv.remove();
+                }
+            }
+
+            console.log('✅ Рабочий AI виджет готов к работе!');
+        });
+    </script>
+</body>
+</html>

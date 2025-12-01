@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Widget Test - What Do You See?</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background: #f0f0f0;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .test-section {
+            margin: 20px 0;
+            padding: 15px;
+            border: 2px solid #ccc;
+            background: white;
+            border-radius: 10px;
+        }
+        .widget-examples {
+            display: flex;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .widget-example {
+            text-align: center;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background: #f9f9f9;
+        }
+        .correct-widget {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 10px auto;
+        }
+        .black-widget {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background: #333;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 10px auto;
+        }
+        .purple-star {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%);
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(139, 92, 246, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 10px auto;
+        }
+        .info {
+            color: blue;
+            font-weight: bold;
+        }
+        .warning {
+            color: orange;
+            font-weight: bold;
+        }
+        .success {
+            color: green;
+            font-weight: bold;
+        }
+        .error {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔍 Widget Test - Что вы видите на сайте?</h1>
+
+        <div class="test-section">
+            <h2>🎯 Ожидаемый виджет (правильный):</h2>
+            <div class="widget-examples">
+                <div class="widget-example">
+                    <p>Градиентный (сине-фиолетовый)</p>
+                    <button class="correct-widget">💬</button>
+                    <p>Это должен быть ваш виджет</p>
+                </div>
+                <div class="widget-example">
+                    <p>Черный</p>
+                    <button class="black-widget">💬</button>
+                    <p>Если видите это - проблема с CSS</p>
+                </div>
+                <div class="widget-example">
+                    <p>Фиолетовый со звездочкой</p>
+                    <button class="purple-star">⭐</button>
+                    <p>Если видите это - другой виджет</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h2>📊 Текущий статус сайта:</h2>
+            <div id="current-status"></div>
+            <button onclick="checkCurrentStatus()">🔍 Проверить текущий статус</button>
+        </div>
+
+        <div class="test-section">
+            <h2>🎯 Что делать:</h2>
+            <p class="info">1. Сравните что вы видите на сайте с примерами выше</p>
+            <p class="info">2. Сообщите мне какой из вариантов вы видите</p>
+            <p class="warning">3. Если видите черный или фиолетовый со звездочкой - это ошибка</p>
+            <p class="success">4. Если видите градиентный (сине-фиолетовый) - все работает правильно!</p>
+        </div>
+
+        <div class="test-section">
+            <h2>🛠️ Возможные решения:</h2>
+            <div id="solutions"></div>
+        </div>
+    </div>
+
+    <script>
+        function checkCurrentStatus() {
+            const statusDiv = document.getElementById('current-status');
+            statusDiv.innerHTML = '<p>Проверка...</p>';
+
+            // Check if widget button exists
+            fetch('http://localhost:8000/')
+                .then(response => response.text())
+                .then(html => {
+                    const hasCorrectButton = html.includes('ai-chat-trigger-button');
+                    const hasCorrectIcon = html.includes('fas fa-comments');
+                    const hasCorrectPosition = html.includes('AI Chat Widget Button - Fixed Position');
+
+                    statusDiv.innerHTML = `
+                        <p><strong>Кнопка виджета найдена:</strong> ${hasCorrectButton ? '✅ Да' : '❌ Нет'}</p>
+                        <p><strong>Иконка найдена:</strong> ${hasCorrectIcon ? '✅ Да' : '❌ Нет'}</p>
+                        <p><strong>Правильная позиция:</strong> ${hasCorrectPosition ? '✅ Да' : '❌ Нет'}</p>
+                    `;
+
+                    if (hasCorrectButton && hasCorrectIcon && hasCorrectPosition) {
+                        statusDiv.innerHTML += '<p class="success">✅ Виджет правильно установлен на сайте!</p>';
+                        document.getElementById('solutions').innerHTML = `
+                            <p class="success">✅ Виджет работает правильно!</p>
+                            <p>Если вы видите не тот виджет:</p>
+                            <p>1. Очистите кэш браузера (Ctrl+F5)</p>
+                            <p>2. Проверьте, не блокирует ли что-то CSS</p>
+                            <p>3. Сообщите мне что именно вы видите</p>
+                        `;
+                    } else {
+                        statusDiv.innerHTML += '<p class="error">❌ Проблемы с установкой виджета</p>';
+                    }
+                })
+                .catch(error => {
+                    statusDiv.innerHTML = `<p class="error">❌ Ошибка проверки: ${error.message}</p>`;
+                });
+        }
+
+        // Auto-check on load
+        window.addEventListener('load', checkCurrentStatus);
+    </script>
+</body>
+</html>

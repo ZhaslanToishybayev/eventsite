@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Widget Diagnostic</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background: #f0f0f0;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .test-section {
+            margin: 20px 0;
+            padding: 15px;
+            border: 2px solid #ccc;
+            background: white;
+            border-radius: 10px;
+        }
+        .error { color: red; font-weight: bold; }
+        .success { color: green; font-weight: bold; }
+        .info { color: blue; font-weight: bold; }
+        .warning { color: orange; font-weight: bold; }
+
+        /* Widget styles for testing */
+        .ai-chat-trigger-button {
+            position: fixed !important;
+            bottom: 30px !important;
+            right: 30px !important;
+            z-index: 9999 !important;
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+            border: none;
+            color: white;
+            font-size: 28px;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.4);
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            display: flex !important;
+            align-items: center;
+            justify-content: center;
+            overflow: visible !important;
+            opacity: 1 !important;
+            visibility: visible !important;
+        }
+
+        .ai-chat-trigger-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(255, 255, 255, 0) 40%, rgba(255, 255, 255, 0.2) 50%, rgba(255, 255, 255, 0) 60%);
+            transform: translateX(-100%);
+            transition: transform 0.6s;
+        }
+
+        .ai-chat-trigger-button:hover::before {
+            transform: translateX(100%);
+        }
+
+        .ai-chat-trigger-button::after {
+            content: '';
+            position: absolute;
+            bottom: 4px;
+            right: 4px;
+            width: 16px;
+            height: 16px;
+            background: #10b981;
+            border: 3px solid white;
+            border-radius: 50%;
+            animation: pulseOnline 2s infinite;
+        }
+
+        @keyframes pulseOnline {
+            0% {
+                box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(16, 185, 129, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+            }
+        }
+
+        .test-button {
+            margin: 20px;
+            padding: 10px 20px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔍 Widget Diagnostic Analysis</h1>
+
+        <!-- Test widget button -->
+        <div class="test-section">
+            <h2>🎯 Test Widget Button</h2>
+            <p>This is how the widget button should look:</p>
+            <button id="testButton" class="ai-chat-trigger-button">
+                <i class="fas fa-comments" style="font-size: 24px;">💬</i>
+            </button>
+        </div>
+
+        <!-- Current site analysis -->
+        <div class="test-section">
+            <h2>📊 Current Site Analysis</h2>
+            <div id="site-analysis"></div>
+            <button class="test-button" onclick="analyzeSite()">🔍 Analyze Current Site</button>
+        </div>
+
+        <!-- Widget status check -->
+        <div class="test-section">
+            <h2>🔍 Widget Status Check</h2>
+            <div id="widget-status"></div>
+            <button class="test-button" onclick="checkWidgetStatus()">✅ Check Widget Status</button>
+        </div>
+
+        <!-- CSS Analysis -->
+        <div class="test-section">
+            <h2>🎨 CSS Analysis</h2>
+            <div id="css-analysis"></div>
+            <button class="test-button" onclick="analyzeCSS()">🔍 Analyze CSS</button>
+        </div>
+    </div>
+
+    <!-- FontAwesome for icons -->
+    <script src="https://kit.fontawesome.com/77b427ccd5.js" crossorigin="anonymous"></script>
+
+    <script>
+        function analyzeSite() {
+            const analysisDiv = document.getElementById('site-analysis');
+            analysisDiv.innerHTML = '<h3>🔍 Site Analysis Results:</h3>';
+
+            // Check if we can access the main site
+            fetch('http://localhost:8000/')
+                .then(response => response.text())
+                .then(html => {
+                    const hasWidgetButton = html.includes('chatToggleBtn');
+                    const hasTriggerClass = html.includes('ai-chat-trigger-button');
+                    const hasCommentsIcon = html.includes('fas fa-comments');
+
+                    analysisDiv.innerHTML += `<p><strong>Widget button found:</strong> ${hasWidgetButton ? '✅ YES' : '❌ NO'}</p>`;
+                    analysisDiv.innerHTML += `<p><strong>Trigger class found:</strong> ${hasTriggerClass ? '✅ YES' : '❌ NO'}</p>`;
+                    analysisDiv.innerHTML += `<p><strong>Comments icon found:</strong> ${hasCommentsIcon ? '✅ YES' : '❌ NO'}</p>`;
+
+                    if (hasWidgetButton) {
+                        analysisDiv.innerHTML += '<p class="success">✅ Widget button exists in HTML!</p>';
+                    } else {
+                        analysisDiv.innerHTML += '<p class="error">❌ Widget button NOT found in HTML</p>';
+                    }
+                })
+                .catch(error => {
+                    analysisDiv.innerHTML += `<p class="error">❌ Error analyzing site: ${error.message}</p>`;
+                });
+        }
+
+        function checkWidgetStatus() {
+            const statusDiv = document.getElementById('widget-status');
+            statusDiv.innerHTML = '<h3>🔍 Widget Status:</h3>';
+
+            const testButton = document.getElementById('testButton');
+            const styles = window.getComputedStyle(testButton);
+
+            statusDiv.innerHTML += `<p><strong>Display:</strong> ${styles.display}</p>`;
+            statusDiv.innerHTML += `<p><strong>Position:</strong> ${styles.position}</p>`;
+            statusDiv.innerHTML += `<p><strong>Visibility:</strong> ${styles.visibility}</p>`;
+            statusDiv.innerHTML += `<p><strong>Opacity:</strong> ${styles.opacity}</p>`;
+            statusDiv.innerHTML += `<p><strong>Width:</strong> ${styles.width}</p>`;
+            statusDiv.innerHTML += `<p><strong>Height:</strong> ${styles.height}</p>`;
+            statusDiv.innerHTML += `<p><strong>Z-index:</strong> ${styles.zIndex}</p>`;
+            statusDiv.innerHTML += `<p><strong>Background:</strong> ${styles.background}</p>`;
+
+            if (styles.display !== 'none' && styles.visibility !== 'hidden') {
+                statusDiv.innerHTML += '<p class="success">✅ Test button is visible!</p>';
+            } else {
+                statusDiv.innerHTML += '<p class="error">❌ Test button is hidden!</p>';
+            }
+        }
+
+        function analyzeCSS() {
+            const cssDiv = document.getElementById('css-analysis');
+            cssDiv.innerHTML = '<h3>🎨 CSS Analysis:</h3>';
+
+            // Check if our CSS is loaded
+            const testButton = document.getElementById('testButton');
+            const styles = window.getComputedStyle(testButton);
+
+            cssDiv.innerHTML += `<p><strong>Background gradient:</strong> ${styles.background.includes('linear-gradient') ? '✅ YES' : '❌ NO'}</p>`;
+            cssDiv.innerHTML += `<p><strong>Box shadow:</strong> ${styles.boxShadow !== 'none' ? '✅ YES' : '❌ NO'}</p>`;
+            cssDiv.innerHTML += `<p><strong>Border radius:</strong> ${styles.borderRadius}</p>`;
+            cssDiv.innerHTML += `<p><strong>Transition:</strong> ${styles.transition}</p>`;
+
+            // Check pseudo-elements
+            cssDiv.innerHTML += '<h4>Pseudo-element analysis:</h4>';
+            cssDiv.innerHTML += '<p>✅ The ::before pseudo-element creates the "glowing stick" effect with 45deg gradient</p>';
+            cssDiv.innerHTML += '<p>✅ The ::after pseudo-element creates the green online indicator</p>';
+            cssDiv.innerHTML += '<p>🎯 The "glowing stick" is actually the hover effect animation!</p>';
+
+            cssDiv.innerHTML += '<h4>💡 Solution:</h4>';
+            cssDiv.innerHTML += '<p>1. The widget button exists in HTML but might be hidden by CSS</p>';
+            cssDiv.innerHTML += '<p>2. The "glowing stick" is the ::before pseudo-element gradient</p>';
+            cssDiv.innerHTML += '<p>3. Check if the button has proper positioning and visibility</p>';
+        }
+
+        // Auto-analyze when page loads
+        window.addEventListener('load', function() {
+            console.log('=== WIDGET DIAGNOSTIC START ===');
+            console.log('Test button:', document.getElementById('testButton'));
+            console.log('=== WIDGET DIAGNOSTIC END ===');
+        });
+    </script>
+</body>
+</html>

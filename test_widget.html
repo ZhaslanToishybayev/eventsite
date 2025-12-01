@@ -3,82 +3,170 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Widget Test</title>
-    <link rel="stylesheet" href="/static/css/ai-chat-widget-v2.css">
+    <title>Тест AI Виджета</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background: #f5f5f5;
+        }
+        .test-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .test-form {
+            margin-bottom: 30px;
+        }
+        textarea {
+            width: 100%;
+            height: 200px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            font-family: monospace;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 5px;
+            border-left: 4px solid #007bff;
+        }
+        .club-info {
+            background: #e8f5e8;
+            border-left-color: #28a745;
+        }
+    </style>
 </head>
 <body>
-    <h1>Тест AI Виджета</h1>
-    <p>Эта страница используется для тестирования AI чат виджета.</p>
+    <div class="test-container">
+        <h1>🔧 Тест AI Виджета</h1>
+        <p>Введите форму для создания клуба и проверьте, как виджет обрабатывает сообщение:</p>
 
-    <!-- Отладочная информация -->
-    <div id="debug-info" style="background: #f0f0f0; padding: 10px; margin: 10px 0; font-family: monospace;">
-        <h3>Отладочная информация:</h3>
-        <div id="debug-output">Загрузка...</div>
+        <div class="test-form">
+            <textarea id="testMessage" placeholder="Введите сообщение...">Название клуба: Тестовый AI Клуб Пробный
+
+Описание клуба (200+ символов): Это тестовый клуб для проверки работы AI системы. Мы тестируем создание клубов через искусственного интеллекта. Клуб объединяет всех, кто интересуется технологиями и инновациями. Мы проводим регулярные встречи, семинары и обсуждения последних достижений в области AI и machine learning. Присоединяйтесь к нашему передовому технологическому сообществу и будьте в курсе последних трендов!
+
+Категория: Технологии
+
+Город: Алматы
+
+Email клуба: test.ai@gmail.com</textarea>
+            <button onclick="testWidget()">🚀 Отправить через виджет</button>
+            <button onclick="testDirect()">🔗 Отправить напрямую</button>
+        </div>
+
+        <div id="result" class="result">
+            <h3>Результат:</h3>
+            <p>Нажмите кнопку для тестирования...</p>
+        </div>
     </div>
 
-    <script src="/static/js/ai-chat-widget-v2.js"></script>
-
     <script>
-        // Функция для вывода отладочной информации
-        function debugLog(message) {
-            const output = document.getElementById('debug-output');
-            if (output) {
-                output.innerHTML += '<br>' + message;
-                console.log(message);
+        async function testWidget() {
+            const message = document.getElementById('testMessage').value;
+            const resultDiv = document.getElementById('result');
+
+            resultDiv.innerHTML = '<p>🚀 Отправка сообщения через виджет...</p>';
+
+            try {
+                const response = await fetch('/api/v1/ai/simplified/interactive/chat/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        message: message,
+                        user_email: 'test@fan-club.kz',
+                        state_id: null
+                    })
+                });
+
+                const json = await response.json();
+                displayResult(json, 'widget');
+            } catch (e) {
+                displayResult({error: e.message}, 'widget');
             }
         }
 
-        document.addEventListener('DOMContentLoaded', function () {
-            debugLog('🚀 Страница загружена');
+        async function testDirect() {
+            const message = document.getElementById('testMessage').value;
+            const resultDiv = document.getElementById('result');
 
-            // Проверяем наличие классов и функций
-            debugLog('1. AIChatWidget класс: ' + (typeof AIChatWidget !== 'undefined' ? '✅' : '❌'));
-            debugLog('2. initAIChatWidgetV2 функция: ' + (typeof initAIChatWidgetV2 === 'function' ? '✅' : '❌'));
-            debugLog('3. window.aiChatWidgetV2: ' + (window.aiChatWidgetV2 ? '✅' : '❌'));
+            resultDiv.innerHTML = '<p>🔗 Отправка сообщения напрямую...</p>';
 
-            // Проверяем элемент виджета
-            setTimeout(() => {
-                const widget = document.getElementById('ai-chat-widget');
-                debugLog('4. Элемент виджета: ' + (widget ? '✅' : '❌'));
+            try {
+                const response = await fetch('/api/v1/ai/simplified/interactive/chat/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        message: message,
+                        user_email: 'test@fan-club.kz',
+                        state_id: null
+                    })
+                });
 
-                const toggleBtn = document.getElementById('chatToggleBtn');
-                debugLog('5. Кнопка виджета: ' + (toggleBtn ? '✅' : '❌'));
+                const json = await response.json();
+                displayResult(json, 'direct');
+            } catch (e) {
+                displayResult({error: e.message}, 'direct');
+            }
+        }
 
-                if (widget) {
-                    // Проверяем стили виджета
-                    const styles = window.getComputedStyle(widget);
-                    debugLog('6. Display виджета: ' + styles.display);
-                    debugLog('7. Visibility виджета: ' + styles.visibility);
-                    debugLog('8. Opacity виджета: ' + styles.opacity);
-                    debugLog('9. Z-Index виджета: ' + styles.zIndex);
+        function displayResult(json, method) {
+            const resultDiv = document.getElementById('result');
+            let content = '<h3>Результат ' + (method === 'widget' ? 'через виджет' : 'прямого вызова') + ':</h3>';
 
-                    if (toggleBtn) {
-                        const btnStyles = window.getComputedStyle(toggleBtn);
-                        debugLog('10. Display кнопки: ' + btnStyles.display);
-                        debugLog('11. Width кнопки: ' + btnStyles.width);
-                        debugLog('12. Height кнопки: ' + btnStyles.height);
-                    }
-                } else {
-                    debugLog('❌ Виджет не найден в DOM');
+            if (json.message) {
+                content += '<div class="club-info">';
+                content += '<strong>Сообщение:</strong><br>';
+                content += formatMessage(json.message);
+                content += '</div>';
 
-                    // Пробуем создать виджет принудительно
-                    if (window.initAIChatWidgetV2) {
-                        debugLog('🔧 Создаем виджет принудительно...');
-                        try {
-                            const widgetInstance = window.initAIChatWidgetV2();
-                            debugLog('✅ Виджет создан: ' + (widgetInstance ? 'да' : 'нет'));
-
-                            setTimeout(() => {
-                                const widgetAfter = document.getElementById('ai-chat-widget');
-                                debugLog('🔄 Элемент виджета после создания: ' + (widgetAfter ? '✅' : '❌'));
-                            }, 1000);
-                        } catch (error) {
-                            debugLog('❌ Ошибка при создании виджета: ' + error.message);
-                        }
-                    }
+                if (json.state_id) {
+                    content += '<p><strong>ID состояния:</strong> ' + json.state_id + '</p>';
                 }
-            }, 2000);
-        });
+            } else if (json.error) {
+                content += '<p style="color: red;"><strong>Ошибка:</strong> ' + json.error + '</p>';
+            } else {
+                content += '<p><strong>Неизвестный формат ответа:</strong></p>';
+                content += '<pre>' + JSON.stringify(json, null, 2) + '</pre>';
+            }
+
+            resultDiv.innerHTML = content;
+        }
+
+        function formatMessage(message) {
+            if (typeof message === 'string') {
+                return message.replace(/\n/g, '<br>');
+            } else if (Array.isArray(message)) {
+                return '<strong>Это массив (успешное создание клуба):</strong><br>' + JSON.stringify(message, null, 2);
+            } else if (typeof message === 'object') {
+                return '<strong>Это объект:</strong><br>' + JSON.stringify(message, null, 2);
+            }
+            return String(message);
+        }
     </script>
 </body>
 </html>

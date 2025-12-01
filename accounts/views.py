@@ -348,15 +348,102 @@ class UserUpdateView(LoginRequiredMixin, generic.FormView):
 
 
 @login_required
+def find_allies_view(request):
+    """
+    View для страницы "Единомышленники" - поиска и фильтрации пользователей.
+
+    Позволяет искать пользователей по:
+    - Интересам
+    - Городу
+    - Возрасту
+    - Имени
+
+    Параметры:
+        request (HttpRequest): Объект запроса
+
+    Возвращает:
+        HttpResponse: Страницу с результатами поиска
+    """
+    # Начинаем с пользователей, которые отображаются в списке
+    users = User.objects.filter(is_displayed_in_allies=True).exclude(id=request.user.id)
+
+    # Параметры поиска из GET запроса
+    search_query = request.GET.get('search', '').strip()
+    search_field = request.GET.get('search_field', 'all')
+    city_filter = request.GET.get('city', '').strip()
+    min_age = request.GET.get('min_age', '').strip()
+    max_age = request.GET.get('max_age', '').strip()
+    gender_filter = request.GET.get('gender', '').strip()
+
+    # Поиск по интересам и другим полям профиля
+    if search_query:
+        if search_field == 'interests':
+            users = users.filter(
+                Q(profile__interests__icontains=search_query) |
+                Q(profile__about__icontains=search_query) |
+                Q(profile__goals_for_life__icontains=search_query)
+            )
+        elif search_field == 'city':
+            users = users.filter(profile__city__icontains=search_query)
+        elif search_field == 'name':
+            users = users.filter(
+                Q(first_name__icontains=search_query) |
+                Q(last_name__icontains=search_query)
+            )
+        else:  # all fields
+            users = users.filter(
+                Q(profile__interests__icontains=search_query) |
+                Q(profile__about__icontains=search_query) |
+                Q(profile__goals_for_life__icontains=search_query) |
+                Q(profile__city__icontains=search_query) |
+                Q(first_name__icontains=search_query) |
+                Q(last_name__icontains=search_query)
+            )
+
+    # Фильтрация по городу
+    if city_filter:
+        users = users.filter(profile__city__icontains=city_filter)
+
+    # Фильтрация по возрасту (если есть поле age в Profile)
+    # Пока пропустим, так как в модели Profile нет поля age
+
+    # Фильтрация по полу (если есть поле gender в Profile)
+    # Пока пропустим, так как в модели Profile нет поля gender
+
+    # Сортировка
+    users = users.order_by('first_name', 'last_name')
+
+    # Пагинация
+    from django.core.paginator import Paginator
+
+    paginator = Paginator(users, 12)  # 12 пользователей на странице
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    context = {
+        'page_obj': page_obj,
+        'search_query': search_query,
+        'search_field': search_field,
+        'city_filter': city_filter,
+        'min_age': min_age,
+        'max_age': max_age,
+        'gender_filter': gender_filter,
+        'page_title': 'Единомышленники',
+    }
+
+    return render(request, 'accounts/find_allies.html', context)
+
+
+@login_required
 def set_phone_view(request):
     if request.method == 'POST':
         phone = request.POST.get('phone')
-        
+
         # Basic validation
         if not phone:
             messages.error(request, "Пожалуйста, введите номер телефона.")
             return render(request, 'accounts/set_phone.html')
-            
+
         # Check if phone is already taken
         if User.objects.filter(phone=phone).exclude(pk=request.user.pk).exists():
             messages.error(request, "Этот номер телефона уже используется другим пользователем.")
@@ -365,16 +452,16 @@ def set_phone_view(request):
         try:
             # Validate format
             phone_regex_validator(phone)
-            
+
             # Save
             request.user.phone = phone
             request.user.save()
-            
+
             messages.success(request, "Номер телефона успешно сохранен!")
             return redirect('index') # Or wherever you want them to go
-            
+
         except ValidationError as e:
             messages.error(request, e.message)
             return render(request, 'accounts/set_phone.html')
-            
+
     return render(request, 'accounts/set_phone.html')

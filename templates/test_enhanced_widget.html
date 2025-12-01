@@ -1,0 +1,287 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Enhanced Widget</title>
+    <!-- Enhanced Chat Widget Styles -->
+    <link rel="stylesheet" href="{% static 'css/enhanced-chat-widget.css' %}?v=6.0.0">
+    <!-- Enhanced Chat Widget Scripts -->
+    <script src="{% static 'js/enhanced-chat-widget.js' %}?v=6.0.0"></script>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        .test-content {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .status {
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+            font-weight: bold;
+        }
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .status.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .status.warning {
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeaa7;
+        }
+        .test-buttons {
+            display: flex;
+            gap: 10px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        .test-btn {
+            padding: 10px 20px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .test-btn:hover {
+            background: #0056b3;
+            transform: translateY(-2px);
+        }
+        .test-btn.secondary {
+            background: #28a745;
+        }
+        .test-btn.secondary:hover {
+            background: #1e7e34;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-content">
+        <h1>🧪 Enhanced Chat Widget Test</h1>
+        <div id="statusArea">
+            <div class="status warning">🔄 Проверка компонентов...</div>
+        </div>
+
+        <div class="test-buttons">
+            <button onclick="checkWidget()" class="test-btn">🔍 Проверить виджет</button>
+            <button onclick="toggleWidget()" class="test-btn secondary">💬 Открыть виджет</button>
+            <button onclick="testFeatures()" class="test-btn">⚡ Тест функций</button>
+            <button onclick="clearHistory()" class="test-btn">🗑️ Очистить историю</button>
+        </div>
+
+        <div class="status success">
+            <strong>✅ Ожидаемый результат:</strong> Улучшенный виджет с "симпатичными и классными цветами"
+        </div>
+
+        <div class="status success">
+            <strong>🎯 Улучшения:</strong>
+            <ul>
+                <li>🔹 Элегантная цветовая гамма - глубокий синий (#2563eb) с градиентами</li>
+                <li>🔹 Профессиональные иконки вместо "дешевых" эмодзи</li>
+                <li>🔹 Исправленное позиционирование текста в хедере</li>
+                <li>🔹 Улучшенные эффекты и анимации</li>
+                <li>🔹 Более плавные переходы и взаимодействия</li>
+                <li>🔹 Профессиональный дизайн с использованием CSS-переменных</li>
+            </ul>
+        </div>
+
+        <div class="status warning">
+            <strong>📋 Что проверяем:</strong>
+            <ul>
+                <li>• Кнопка виджета появляется в правом нижнем углу</li>
+                <li>• Цвета соответствуют "симпатичной и классной" палитре</li>
+                <li>• Текст не "висит" неправильно</li>
+                <li>• Эмодзи заменены на профессиональные иконки</li>
+                <li>• Все функции работают корректно</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Enhanced Chat Widget -->
+    <button class="modern-widget-button" id="modernWidgetButton" title="🤖 AI Консультант">
+        🤖
+    </button>
+
+    <div class="modern-widget-chat" id="modernWidgetChat" style="display: none;">
+        <div class="modern-widget-features">
+            Быстрые ответы • Умные подсказки • Поиск клубов
+        </div>
+        <div class="modern-widget-header">
+            <h3>🤖 AI Консультант</h3>
+            <div style="display: flex; align-items: center; gap: 8px;">
+                <div class="modern-widget-status"></div>
+                <span style="font-size: 12px; opacity: 0.8;">Онлайн</span>
+            </div>
+            <button class="modern-widget-close" id="modernWidgetClose">✕</button>
+        </div>
+        <div class="modern-widget-messages" id="modernWidgetMessages">
+            <div class="modern-widget-message modern-widget-bot-message">
+                <div>👋 Привет! Я - AI консультант UnitySphere.</div>
+                <div style="margin-top: 4px; font-size: 12px; opacity: 0.7;">Готов помочь создать ваш идеальный клуб! 💫</div>
+            </div>
+            <div class="modern-widget-message modern-widget-bot-message">
+                <div>✨ <strong>Новые функции:</strong></div>
+                <div style="margin-top: 4px; font-size: 12px;">
+                    • 🏠 Поиск подходящих клубов<br>
+                    • 📋 Создание собственного клуба<br>
+                    • 💬 Консультации по мероприятиям<br>
+                    • 🔍 Поиск единомышленников
+                </div>
+            </div>
+        </div>
+        <div class="modern-widget-input">
+            <input type="text" id="modernWidgetInput" class="modern-widget-input-field" placeholder="Напишите ваш вопрос..." maxlength="500">
+            <button id="modernWidgetSend" class="modern-widget-send-btn">📤</button>
+        </div>
+    </div>
+
+    <script>
+        function updateStatus(message, type = 'info') {
+            const statusArea = document.getElementById('statusArea');
+            const statusClass = type === 'success' ? 'success' : type === 'error' ? 'error' : 'warning';
+            statusArea.innerHTML = `<div class="status ${statusClass}">${message}</div>`;
+        }
+
+        function checkWidget() {
+            let checks = [];
+
+            // Check EnhancedChatWidget class
+            if (typeof EnhancedChatWidget === 'function') {
+                checks.push('✅ EnhancedChatWidget class: Доступен');
+            } else {
+                checks.push('❌ EnhancedChatWidget class: Не найден');
+            }
+
+            // Check widget elements
+            const widgetBtn = document.getElementById('modernWidgetButton');
+            const widgetChat = document.getElementById('modernWidgetChat');
+
+            if (widgetBtn) {
+                checks.push('✅ Widget button: Найден');
+                const styles = getComputedStyle(widgetBtn);
+                checks.push(`   - Position: ${styles.position}`);
+                checks.push(`   - Background: ${styles.background}`);
+                checks.push(`   - Display: ${styles.display}`);
+            } else {
+                checks.push('❌ Widget button: Не найден');
+            }
+
+            if (widgetChat) {
+                checks.push('✅ Widget chat: Найден');
+                const styles = getComputedStyle(widgetChat);
+                checks.push(`   - Display: ${styles.display}`);
+                checks.push(`   - Position: ${styles.position}`);
+                checks.push(`   - Background: ${styles.background}`);
+            } else {
+                checks.push('❌ Widget chat: Не найден');
+            }
+
+            // Check CSS variables
+            const rootStyles = getComputedStyle(document.documentElement);
+            const primaryColor = rootStyles.getPropertyValue('--primary-color');
+            if (primaryColor) {
+                checks.push('✅ CSS variables: Доступны');
+                checks.push(`   - Primary color: ${primaryColor}`);
+            } else {
+                checks.push('❌ CSS variables: Не найдены');
+            }
+
+            updateStatus(checks.join('<br>'), 'info');
+        }
+
+        function toggleWidget() {
+            if (window.enhancedChatWidget) {
+                window.enhancedChatWidget.toggleChat();
+            } else {
+                // Fallback to manual toggle
+                const chat = document.getElementById('modernWidgetChat');
+                if (chat) {
+                    if (chat.style.display === 'none' || !chat.style.display) {
+                        chat.style.display = 'flex';
+                        chat.style.animation = 'slideIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)';
+                    } else {
+                        chat.style.display = 'none';
+                    }
+                }
+            }
+        }
+
+        function testFeatures() {
+            updateStatus('🧪 Тестирование функций...', 'warning');
+
+            // Test color scheme
+            setTimeout(() => {
+                const rootStyles = getComputedStyle(document.documentElement);
+                const primaryColor = rootStyles.getPropertyValue('--primary-color');
+                const bgColor = rootStyles.getPropertyValue('--bg-primary');
+
+                let results = ['<strong>🎨 Цветовая схема:</strong>'];
+                results.push(`• Primary: ${primaryColor || '#2563eb (default)'}`);
+                results.push(`• Background: ${bgColor || '#ffffff (default)'}`);
+
+                if (primaryColor.includes('#2563eb')) {
+                    results.push('✅ Цвета соответствуют улучшенной палитре');
+                } else {
+                    results.push('⚠️ Цвета могут не соответствовать ожиданиям');
+                }
+
+                updateStatus(results.join('<br>'), 'success');
+            }, 500);
+        }
+
+        function clearHistory() {
+            // Clear local storage
+            Object.keys(localStorage).forEach(key => {
+                if (key.includes('widgetHistory')) {
+                    localStorage.removeItem(key);
+                }
+            });
+
+            // Clear messages
+            const messages = document.getElementById('modernWidgetMessages');
+            if (messages) {
+                messages.innerHTML = `
+                    <div class="modern-widget-message modern-widget-bot-message">
+                        <div>👋 Привет! Я - AI консультант UnitySphere.</div>
+                        <div style="margin-top: 4px; font-size: 12px; opacity: 0.7;">Готов помочь создать ваш идеальный клуб! 💫</div>
+                    </div>
+                `;
+            }
+
+            updateStatus('🗑️ История сообщений очищена', 'success');
+        }
+
+        // Auto-check when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(checkWidget, 1000);
+        });
+
+        // Initialize enhanced widget
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof EnhancedChatWidget !== 'undefined') {
+                window.enhancedChatWidget = new EnhancedChatWidget();
+                console.log('✅ Enhanced Chat Widget инициализирован!');
+            }
+        });
+    </script>
+</body>
+</html>

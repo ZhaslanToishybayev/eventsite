@@ -1,0 +1,24 @@
+[Unit]
+Description=UnitySphere Django Application
+After=network.target
+Requires=network.target
+
+[Service]
+Type=notify
+User=admin
+Group=admin
+WorkingDirectory=/var/www/myapp/eventsite
+Environment="PATH=/var/www/myapp/eventsite/venv/bin"
+Environment="DJANGO_SETTINGS_MODULE=core.settings"
+ExecStart=/var/www/myapp/eventsite/venv/bin/gunicorn --bind 127.0.0.1:8001 --workers 2 --timeout 30 --keep-alive 5 --max-requests 1000 --max-requests-jitter 100 --worker-class sync --worker-connections 100 core.wsgi:application
+ExecReload=/bin/kill -s HUP $MAINPID
+Restart=always
+RestartSec=3
+StandardOutput=journal
+StandardError=journal
+KillMode=mixed
+TimeoutStopSec=5
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

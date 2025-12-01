@@ -97,5 +97,6 @@ class Profile(models.Model):
     about = models.TextField(null=True, blank=True, verbose_name='О себе')
     goals_for_life = models.TextField(null=True, blank=True, verbose_name='Цели на жизнь')
     interests = models.TextField(null=True, blank=True, verbose_name='Интересы')
+    city = models.CharField(max_length=100, null=True, blank=True, verbose_name='Город')
     first_visit_completed = models.BooleanField(default=False, verbose_name='Первый визит завершен')
     welcome_chat_session_created = models.BooleanField(default=False, verbose_name='Приветственная сессия создана')

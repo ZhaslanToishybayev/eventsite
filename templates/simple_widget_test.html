@@ -1,0 +1,265 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Простой тест AI виджета</title>
+    <script src="https://kit.fontawesome.com/77b427ccd5.js" crossorigin="anonymous"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 20px;
+        }
+
+        /* Простые стили для виджета */
+        .ai-chat-trigger-button {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .ai-chat-trigger-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+
+        .ai-chat-widget {
+            position: fixed;
+            bottom: 100px;
+            right: 30px;
+            width: 350px;
+            height: 500px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            z-index: 9998;
+            display: none;
+            flex-direction: column;
+        }
+
+        .ai-chat-widget-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            border-radius: 10px 10px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .ai-chat-widget-title {
+            font-weight: bold;
+        }
+
+        .ai-chat-widget-close {
+            cursor: pointer;
+            font-size: 20px;
+        }
+
+        .ai-chat-messages {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+            background: #f8f9fa;
+        }
+
+        .ai-chat-input-area {
+            display: flex;
+            padding: 10px;
+            background: white;
+            border-top: 1px solid #dee2e6;
+        }
+
+        .ai-chat-input-area input {
+            flex: 1;
+            border: 1px solid #ddd;
+            padding: 10px;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+
+        .ai-chat-input-area button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .ai-chat-input-area button:hover {
+            background: #5a6fd8;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧪 Простой тест AI виджета</h1>
+        <p>Эта страница содержит упрощенный AI виджет для тестирования.</p>
+
+        <div class="alert alert-info">
+            <h5>📋 Инструкция:</h5>
+            <ol>
+                <li>Нажмите на кнопку 📩 в правом нижнем углу</li>
+                <li>Введите сообщение в поле ввода</li>
+                <li>Нажмите кнопку отправки</li>
+                <li>Проверьте ответ AI</li>
+            </ol>
+        </div>
+
+        <div class="mt-4">
+            <a href="/" class="btn btn-primary">← На главную</a>
+            <a href="/widget-diagnosis/" class="btn btn-secondary">Диагностика →</a>
+        </div>
+    </div>
+
+    <!-- Простой AI виджет -->
+    <div id="chatContainer" style="display: none;">
+        <div class="ai-chat-widget">
+            <div class="ai-chat-widget-header">
+                <div class="ai-chat-widget-title">AI Консультант</div>
+                <div class="ai-chat-widget-close" id="aiCloseBtn">×</div>
+            </div>
+            <div class="ai-chat-messages" id="chatMessages">
+                <div class="message bot">👋 Привет! Я помогу тебе создать клуб. С чего начнем?</div>
+            </div>
+            <div class="ai-chat-input-area">
+                <input type="text" id="chatInput" placeholder="Напиши сообщение..." />
+                <button id="chatSendBtn">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <button id="chatToggleBtn" class="ai-chat-trigger-button">
+        <i class="fas fa-comments"></i>
+    </button>
+
+    <script>
+        // Простая инициализация виджета
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🚀 Простой AI виджет инициализирован');
+
+            const toggleBtn = document.getElementById('chatToggleBtn');
+            const container = document.getElementById('chatContainer');
+            const closeBtn = document.getElementById('aiCloseBtn');
+            const input = document.getElementById('chatInput');
+            const sendBtn = document.getElementById('chatSendBtn');
+            const messages = document.getElementById('chatMessages');
+
+            // Открытие виджета
+            toggleBtn.addEventListener('click', function() {
+                console.log('🎯 Кнопка виджета нажата');
+                container.style.display = 'flex';
+                toggleBtn.style.display = 'none';
+
+                // Фокус на поле ввода
+                setTimeout(() => input.focus(), 300);
+            });
+
+            // Закрытие виджета
+            closeBtn.addEventListener('click', function() {
+                console.log('❌ Виджет закрыт');
+                container.style.display = 'none';
+                toggleBtn.style.display = 'flex';
+            });
+
+            // Отправка сообщения
+            function sendMessage() {
+                const message = input.value.trim();
+                if (!message) return;
+
+                // Добавляем сообщение пользователя
+                addMessage(message, 'user');
+                input.value = '';
+
+                // Показываем индикатор печати
+                addTypingIndicator();
+
+                // Отправляем запрос к AI
+                fetch('/api/v1/ai/simplified/interactive/chat/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        message: message,
+                        user_email: 'test@fan-club.kz',
+                        state_id: null
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    // Удаляем индикатор печати
+                    removeTypingIndicator();
+
+                    // Добавляем ответ AI
+                    addMessage(data.message, 'bot');
+                })
+                .catch(error => {
+                    console.error('❌ Ошибка:', error);
+                    removeTypingIndicator();
+                    addMessage('Извините, произошла ошибка. Попробуйте позже.', 'bot');
+                });
+            }
+
+            // Отправка по кнопке
+            sendBtn.addEventListener('click', sendMessage);
+
+            // Отправка по Enter
+            input.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    sendMessage();
+                }
+            });
+
+            // Функция добавления сообщения
+            function addMessage(text, sender) {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = `message ${sender}`;
+                messageDiv.textContent = text;
+                messages.appendChild(messageDiv);
+
+                // Прокручиваем вниз
+                messages.scrollTop = messages.scrollHeight;
+            }
+
+            // Индикатор печати
+            function addTypingIndicator() {
+                const typingDiv = document.createElement('div');
+                typingDiv.className = 'message typing';
+                typingDiv.innerHTML = '<span></span><span></span><span></span>';
+                typingDiv.id = 'typing-indicator';
+                messages.appendChild(typingDiv);
+                messages.scrollTop = messages.scrollHeight;
+            }
+
+            function removeTypingIndicator() {
+                const typingDiv = document.getElementById('typing-indicator');
+                if (typingDiv) {
+                    typingDiv.remove();
+                }
+            }
+
+            console.log('✅ Простой AI виджет готов к работе');
+        });
+    </script>
+</body>
+</html>

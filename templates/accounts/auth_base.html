@@ -16,6 +16,78 @@
 
 </head>
 <body class="bg-white">
+    <header id="header" class="site-header" style="background: #ffffff; border-bottom: 1px solid #e0e0e0;">
+        <!-- Header-top: контакты и соцсети -->
+        <div class="header-top">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6 col-sm-6 col-8 header-top-left no-padding">
+                        <ul>
+                            <li><a href="https://www.instagram.com/fan_club.kz/" target="_blank" style="color: #666;">fan-club.kz<i class="fa-brands fa-instagram ml-1"></i></a></li>
+                            <li><a href="https://scena.kz/" target="_blank" style="color: #666;">scena.kz<i class="fa-solid fa-globe ml-1"></i></a></li>
+                            <li><a href="https://nurospan.kz/" target="_blank" style="color: #666;">nurospan.kz<i class="fa-solid fa-globe ml-1"></i></a></li>
+                            <li><a href="tel:+77087722405" style="color: #666;">+77087722405</a></li>
+                            <li><img src="{% static 'images/Flag-Kazakhstan.webp' %}" alt="" class="flag-kz"></li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-6 col-sm-6 col-4 header-top-right no-padding">
+                        <!-- Динамические действия будут здесь -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main-menu: основная навигация -->
+        <div class="container main-menu">
+            <div class="row align-items-center justify-content-between d-flex">
+                <div id="logo">
+                    <a href="/"><img src="{% static 'images/logo_v2.png' %}" alt="" title="" style="max-width: 150px;" /></a>
+                </div>
+                <nav id="nav-menu-container">
+                    <ul class="nav-menu" style="flex-direction: column; align-items: center; gap: 10px;">
+                        <li><a href="/" style="color: #333;">Главная</a></li>
+                        <li><a href="{% url 'clubs' %}" style="color: #333;">Сообщества</a></li>
+                        <li><a href="/find-people/" style="color: #333;">🔍 Единомышленники</a></li>
+                        <li><a href="{% url 'publications' %}" style="color: #333;">Новости для сообществ</a></li>
+                        <li><a href="{% url 'club_events' %}" style="color: #333;">События</a></li>
+                        <li><a href="{% url 'festivals' %}" style="color: #333;">Фестивали</a></li>
+                        <li><a href="{% url 'about' %}" style="color: #333;">О нас</a></li>
+
+                        {% if request.user.is_superuser %}
+                        <li class="menu-has-children">
+                            <span class="administration sf-with-ul" style="color: #333;">Администрирование</span>
+                            <ul>
+                                <li><a href="{% url 'festival_create' %}" style="color: #333;">Организовать фестиваль</a></li>
+                                <li><a href="{% url 'service_for_club_create' %}" style="color: #333;">Добавить услугу</a></li>
+                                <li><a href="{% url 'publication_create' %}" style="color: #333;">Добавить новость</a></li>
+                                <li><a href="/admin/" style="color: #333;">Панель управления</a></li>
+                            </ul>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </nav>
+
+                <!-- User-actions: профиль пользователя -->
+                <div class="user-actions">
+                    {% if request.user.is_authenticated %}
+                        <div class="user-menu">
+                            <span class="username" style="color: #333;">{{ user.username|default:user.email }}</span>
+                            <ul class="dropdown">
+                                <li><a href="{{ request.user.get_absolute_url }}" style="color: #333;">Личный кабинет</a></li>
+                                <li><a href="{% url 'user_update' %}" style="color: #333;">Настройки</a></li>
+                                <li><a href="{% url 'account_logout' %}" id="logout-btn" style="color: #333;">Выход</a></li>
+                            </ul>
+                        </div>
+                    {% else %}
+                        <div class="guest-actions">
+                            <a href="{% url 'register' %}" class="btn-register">Регистрация</a>
+                            <a href="{% url 'login' %}" class="btn-login">Вход</a>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </header>
     <section class="ftco-section">
         <div class="container">
         <img src="{% static 'images/fanclub_horizontal.png' %}" alt="" class="d-block mx-auto mb-2">
@@ -28,6 +100,14 @@
             </div>
         </div>
     </section>
+
+    <footer class="footer-area section-gap">
+        <div class="container">
+            <div class="row">
+                <h4 class="text-center mx-auto text-white">Центр сообществ. 2024</h4>
+            </div>
+        </div>
+    </footer>
 
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/jquery.maskedinput@1.4.1/src/jquery.maskedinput.min.js" crossorigin="anonymous"></script>

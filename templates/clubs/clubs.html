@@ -16,7 +16,7 @@
 {% endblock %}
 
 {% block header %}
-    {% include 'partial/header.html' %}
+    {% include 'partial/site-header.html' %}
 {% endblock %}
 
 {% block content %}
@@ -24,7 +24,7 @@
     <section class="club-filter my-4">
         <div class="container">
             <div class="row">
-                <div class="col-lg-6">
+                <div class="col-lg-3">
                     <div class="default-select" id="default-select">
                         <select class="club-filter-select" onchange="redirectToPage(this)">
                             <option value="/clubs" class="filter-option {% if not category %}selected{% endif %}">Все сообщества</option>
@@ -35,8 +35,8 @@
                         </select>
                     </div>
                 </div>
-                <div class="col-lg-6">
-                    <form class="search-form" action="#">
+                <div class="col-lg-9">
+                    <form class="search-form" action="{% url 'clubs' %}">
                         <input  class="custom-search-input" placeholder="Найти сообщества..." name="search" type="text" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Найти сообщества...'"value="{% if search %}{{ search }}{% endif %}">
                         <button type="submit" class="custom-search-button"><i class="fa fa-search"></i></button>
                     </form>

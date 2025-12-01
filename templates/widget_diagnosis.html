@@ -1,0 +1,266 @@
+{% extends 'base.html' %}
+
+{% block title %}Диагностика AI Виджета{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-12">
+            <h1>🔍 Диагностика AI Чат-Виджета</h1>
+            <p>Эта страница поможет выявить проблемы с AI виджетом.</p>
+
+            <div class="alert alert-info">
+                <h5>📋 Инструкция:</h5>
+                <ol>
+                    <li>Откройте консоль браузера (F12 → Console)</li>
+                    <li>Попробуйте нажать на кнопку виджета</li>
+                    <li>Проверьте сообщения в консоли</li>
+                    <li>Используйте кнопки диагностики ниже</li>
+                </ol>
+            </div>
+
+            <!-- Кнопки диагностики -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5>🔧 Тесты диагностики</h5>
+                </div>
+                <div class="card-body">
+                    <button class="btn btn-primary" onclick="checkWidgetElements()">1. Проверить элементы</button>
+                    <button class="btn btn-secondary" onclick="checkWidgetJS()">2. Проверить JavaScript</button>
+                    <button class="btn btn-info" onclick="checkWidgetStyles()">3. Проверить стили</button>
+                    <button class="btn btn-warning" onclick="openWidgetManually()">4. Открыть вручную</button>
+                    <button class="btn btn-danger" onclick="testAPI()">5. Тест API</button>
+                </div>
+            </div>
+
+            <!-- Результаты диагностики -->
+            <div class="card">
+                <div class="card-header">
+                    <h5>📊 Результаты диагностики</h5>
+                </div>
+                <div class="card-body">
+                    <div id="diagnosis-results" style="font-family: monospace; background: #f8f9fa; padding: 15px; border-radius: 5px;">
+                        <p>Нажмите на кнопки диагностики выше...</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Инструкции для пользователя -->
+            <div class="mt-4">
+                <div class="alert alert-warning">
+                    <h6>🚨 Если виджет не открывается:</h6>
+                    <ul>
+                        <li><strong>Проверьте консоль браузера</strong> - F12 → Console</li>
+                        <li><strong>Попробуйте перезагрузить страницу</strong> - Ctrl+F5</li>
+                        <li><strong>Проверьте JavaScript</strong> - Должен быть включен</li>
+                        <li><strong>Попробуйте другой браузер</strong> - Chrome, Firefox, Safari</li>
+                    </ul>
+                </div>
+
+                <a href="/" class="btn btn-primary">← На главную</a>
+                <a href="/clubs/" class="btn btn-secondary">На страницу клубов →</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+// Функции диагностики виджета
+function checkWidgetElements() {
+    const results = [];
+    results.push('🔍 Проверка HTML элементов виджета:');
+    results.push('=====================================');
+
+    const elements = [
+        { id: 'chatContainer', name: 'Контейнер чата' },
+        { id: 'chatToggleBtn', name: 'Кнопка виджета' },
+        { id: 'chatMessages', name: 'Область сообщений' },
+        { id: 'chatInput', name: 'Поле ввода' },
+        { id: 'chatSendBtn', name: 'Кнопка отправки' }
+    ];
+
+    elements.forEach(el => {
+        const element = document.getElementById(el.id);
+        if (element) {
+            const styles = window.getComputedStyle(element);
+            results.push(`✅ ${el.name} (${el.id}): Найден`);
+            results.push(`   - display: ${styles.display}`);
+            results.push(`   - visibility: ${styles.visibility}`);
+            results.push(`   - position: ${styles.position}`);
+            if (el.id === 'chatToggleBtn') {
+                results.push(`   - onclick: ${element.onclick ? 'есть' : 'нет'}`);
+                results.push(`   - classList: ${element.className}`);
+            }
+        } else {
+            results.push(`❌ ${el.name} (${el.id}): Не найден`);
+        }
+        results.push('');
+    });
+
+    showResults(results.join('\n'));
+    console.log('Результаты проверки элементов:', results);
+}
+
+function checkWidgetJS() {
+    const results = [];
+    results.push('🔍 Проверка JavaScript виджета:');
+    results.push('==================================');
+
+    // Проверяем глобальные переменные
+    results.push('Глобальные переменные:');
+    results.push(`- window.AIChatWidget: ${window.AIChatWidget ? '✅ найден' : '❌ не найден'}`);
+    results.push(`- window.aiChatWidget: ${window.aiChatWidget ? '✅ найден' : '❌ не найден'}`);
+    results.push(`- window.aiChatWidgetV2: ${window.aiChatWidgetV2 ? '✅ найден' : '❌ не найден'}`);
+    results.push('');
+
+    // Проверяем функции
+    results.push('Функции:');
+    results.push(`- checkWidgetElements: ${typeof checkWidgetElements === 'function' ? '✅ найдена' : '❌ не найдена'}`);
+    results.push(`- checkWidgetJS: ${typeof checkWidgetJS === 'function' ? '✅ найдена' : '❌ не найдена'}`);
+    results.push('');
+
+    // Проверяем наличие скриптов
+    const scripts = document.getElementsByTagName('script');
+    results.push('Загруженные скрипты:');
+    for (let script of scripts) {
+        if (script.src && script.src.includes('ai-chat-widget')) {
+            results.push(`✅ ${script.src}`);
+        }
+    }
+    results.push('');
+
+    showResults(results.join('\n'));
+    console.log('Результаты проверки JavaScript:', results);
+}
+
+function checkWidgetStyles() {
+    const results = [];
+    results.push('🔍 Проверка CSS стилей виджета:');
+    results.push('==================================');
+
+    const button = document.getElementById('chatToggleBtn');
+    if (button) {
+        const styles = window.getComputedStyle(button);
+        results.push('Стили кнопки виджета:');
+        results.push(`- position: ${styles.position}`);
+        results.push(`- bottom: ${styles.bottom}`);
+        results.push(`- right: ${styles.right}`);
+        results.push(`- width: ${styles.width}`);
+        results.push(`- height: ${styles.height}`);
+        results.push(`- background: ${styles.background}`);
+        results.push(`- z-index: ${styles.zIndex}`);
+        results.push(`- display: ${styles.display}`);
+        results.push(`- visibility: ${styles.visibility}`);
+    } else {
+        results.push('❌ Кнопка виджета не найдена');
+    }
+
+    const container = document.getElementById('chatContainer');
+    if (container) {
+        const containerStyles = window.getComputedStyle(container);
+        results.push('');
+        results.push('Стили контейнера виджета:');
+        results.push(`- display: ${containerStyles.display}`);
+        results.push(`- position: ${containerStyles.position}`);
+        results.push(`- z-index: ${containerStyles.zIndex}`);
+    }
+
+    showResults(results.join('\n'));
+    console.log('Результаты проверки стилей:', results);
+}
+
+function openWidgetManually() {
+    const results = [];
+    results.push('🔍 Попытка ручного открытия виджета:');
+    results.push('======================================');
+
+    const button = document.getElementById('chatToggleBtn');
+    if (button) {
+        results.push('✅ Кнопка найдена, имитируем клик...');
+
+        // Имитируем клик
+        button.click();
+
+        // Проверяем состояние через 1 секунду
+        setTimeout(() => {
+            const container = document.getElementById('chatContainer');
+            if (container) {
+                const styles = window.getComputedStyle(container);
+                results.push(`- Состояние контейнера: display=${styles.display}`);
+                if (styles.display !== 'none') {
+                    results.push('✅ Виджет открыт!');
+                } else {
+                    results.push('❌ Виджет не открылся');
+                }
+            }
+            showResults(results.join('\n'));
+        }, 1000);
+    } else {
+        results.push('❌ Кнопка не найдена');
+        showResults(results.join('\n'));
+    }
+
+    console.log('Результаты ручного открытия:', results);
+}
+
+function testAPI() {
+    const results = [];
+    results.push('🔍 Тестирование AI API:');
+    results.push('==========================');
+
+    results.push('Отправка тестового запроса...');
+
+    fetch('/api/v1/ai/simplified/interactive/chat/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            message: 'Привет',
+            user_email: 'test@fan-club.kz',
+            state_id: null
+        })
+    })
+    .then(response => {
+        results.push(`✅ API ответил: ${response.status}`);
+        return response.json();
+    })
+    .then(data => {
+        results.push(`✅ AI ответил: "${data.message.substring(0, 50)}..."`);
+        results.push('✅ API работает нормально');
+        showResults(results.join('\n'));
+    })
+    .catch(error => {
+        results.push(`❌ Ошибка API: ${error.message}`);
+        showResults(results.join('\n'));
+    });
+
+    console.log('Результаты тестирования API:', results);
+}
+
+function showResults(results) {
+    const resultsDiv = document.getElementById('diagnosis-results');
+    resultsDiv.textContent = results;
+
+    // Прокручиваем вниз
+    resultsDiv.scrollTop = resultsDiv.scrollHeight;
+}
+
+// Автоматическая проверка при загрузке
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('🔍 Страница диагностики загружена');
+    console.log('💡 Откройте консоль браузера для просмотра деталей');
+
+    // Проверяем, есть ли AI виджет
+    setTimeout(() => {
+        if (document.getElementById('chatContainer')) {
+            console.log('✅ AI виджет найден в DOM');
+        } else {
+            console.log('❌ AI виджет не найден в DOM');
+        }
+    }, 1000);
+});
+</script>
+{% endblock %}

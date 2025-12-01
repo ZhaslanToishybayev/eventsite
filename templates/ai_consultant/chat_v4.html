@@ -1,0 +1,590 @@
+<!-- 🤖 УЛУЧШЕННЫЙ AI ЧАТ С ФУНКЦИЯМИ -->
+
+<div class="ai-chat-widget-v4" id="ai-chat-widget-v4">
+    <!-- Кнопка чата -->
+    <button class="ai-chat-button-v4" id="chatToggleBtnV4">
+        <div class="ai-btn-pulse">
+            <span class="ai-btn-icon">🤖</span>
+        </div>
+        <div class="ai-online-indicator"></div>
+    </button>
+
+    <!-- Улучшенный контейнер чата -->
+    <div class="ai-chat-container-v4" id="chatContainerV4">
+        <!-- Шапка -->
+        <div class="ai-chat-header-v4">
+            <div class="ai-header-info-v4">
+                <div class="ai-avatar-container">
+                    <div class="ai-avatar-bot-v4">🤖</div>
+                    <div class="ai-avatar-glow"></div>
+                </div>
+                <div class="ai-header-text-v4">
+                    <h3>Action AI Консультант</h3>
+                    <div class="ai-chat-status-v4">
+                        <span class="ai-status-dot-v4"></span>
+                        <span class="ai-status-text">Готов к действиям</span>
+                        <span class="ai-response-time">1-2 сек</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ai-controls-v4">
+                <button class="ai-control-btn-v4" id="aiActionsBtn" title="Быстрые действия">
+                    ⚡
+                </button>
+                <button class="ai-control-btn-v4" id="aiThemeBtnV4" title="Сменить тему">
+                    🌙
+                </button>
+                <button class="ai-control-btn-v4 ai-close-btn-v4" id="aiCloseBtnV4" title="Закрыть">
+                    ✕
+                </button>
+            </div>
+        </div>
+
+        <!-- Блок быстрых действий -->
+        <div class="ai-actions-block" id="aiActionsBlock" style="display: none;">
+            <div class="ai-actions-header">
+                <h4>⚡ Быстрые действия</h4>
+                <button class="ai-actions-close" id="aiActionsClose">×</button>
+            </div>
+            <div class="ai-actions-grid">
+                <button class="ai-action-btn" data-action="create_club" title="Создать клуб">
+                    <span class="ai-action-icon">🏆</span>
+                    <span class="ai-action-text">Создать клуб</span>
+                </button>
+                <button class="ai-action-btn" data-action="create_event" title="Создать мероприятие">
+                    <span class="ai-action-icon">📅</span>
+                    <span class="ai-action-text">Создать мероприятие</span>
+                </button>
+                <button class="ai-action-btn" data-action="manage_clubs" title="Управление клубами">
+                    <span class="ai-action-icon">🛠️</span>
+                    <span class="ai-action-text">Управление клубами</span>
+                </button>
+                <button class="ai-action-btn" data-action="monetization" title="Монетизация">
+                    <span class="ai-action-icon">💰</span>
+                    <span class="ai-action-text">Монетизация</span>
+                </button>
+                <button class="ai-action-btn" data-action="promotion" title="Продвижение">
+                    <span class="ai-action-icon">📢</span>
+                    <span class="ai-action-text">Продвижение</span>
+                </button>
+                <button class="ai-action-btn" data-action="analytics" title="Аналитика">
+                    <span class="ai-action-icon">📊</span>
+                    <span class="ai-action-text">Аналитика</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Форма создания клуба -->
+        <div class="ai-club-form" id="aiClubForm" style="display: none;">
+            <div class="ai-form-header">
+                <h4>🏆 Создание клуба</h4>
+                <button class="ai-form-close" id="aiClubFormClose">×</button>
+            </div>
+            <form id="clubCreationForm" class="ai-form">
+                <div class="ai-form-group">
+                    <label for="clubName">Название клуба *</label>
+                    <input type="text" id="clubName" name="name" required
+                           placeholder="Например: Шахматная Академия 'Гамбит Про'">
+                </div>
+
+                <div class="ai-form-group">
+                    <label for="clubDescription">Описание клуба (200+ символов) *</label>
+                    <textarea id="clubDescription" name="description" required
+                              placeholder="Опишите, чем будет заниматься ваш клуб..."
+                              rows="4" maxlength="1000"></textarea>
+                    <div class="ai-char-count">
+                        <span id="descCharCount">0</span>/1000
+                    </div>
+                </div>
+
+                <div class="ai-form-group">
+                    <label for="clubCategory">Категория *</label>
+                    <select id="clubCategory" name="category" required>
+                        <option value="">Выберите категорию</option>
+                        <option value="Музыка">Музыка</option>
+                        <option value="Спорт">Спорт</option>
+                        <option value="Игры">Игры</option>
+                        <option value="Кино">Кино</option>
+                        <option value="Книги">Книги</option>
+                        <option value="Технологии">Технологии</option>
+                        <option value="Искусство">Искусство</option>
+                        <option value="Образование">Образование</option>
+                        <option value="Еда">Еда</option>
+                        <option value="Путешествия">Путешествия</option>
+                        <option value="Хобби">Хобби</option>
+                        <option value="Здоровье">Здоровье</option>
+                    </select>
+                </div>
+
+                <div class="ai-form-group">
+                    <label for="clubCity">Город *</label>
+                    <input type="text" id="clubCity" name="city" required
+                           placeholder="Например: Алматы">
+                </div>
+
+                <div class="ai-form-group">
+                    <label for="clubEmail">Email клуба *</label>
+                    <input type="email" id="clubEmail" name="email" required
+                           placeholder="gambitpro.club@gmail.com">
+                </div>
+
+                <div class="ai-form-group">
+                    <label for="clubPhone">Телефон</label>
+                    <input type="tel" id="clubPhone" name="phone"
+                           placeholder="+7 (701) 123-45-67">
+                </div>
+
+                <div class="ai-form-group">
+                    <label for="clubAddress">Адрес</label>
+                    <input type="text" id="clubAddress" name="address"
+                           placeholder="Алматы, проспект Абая 89">
+                </div>
+
+                <div class="ai-form-group">
+                    <label for="clubActivities">Направления деятельности</label>
+                    <textarea id="clubActivities" name="activities"
+                              placeholder="Тренировки, турниры, мастер-классы..."
+                              rows="2"></textarea>
+                </div>
+
+                <div class="ai-form-group">
+                    <label for="clubTarget">Целевая аудитория</label>
+                    <input type="text" id="clubTarget" name="target_audience"
+                           placeholder="16-45 лет, любители интеллектуальных игр">
+                </div>
+
+                <div class="ai-form-actions">
+                    <button type="button" id="aiClubFormCancel" class="ai-form-btn ai-btn-secondary">
+                        Отмена
+                    </button>
+                    <button type="submit" class="ai-form-btn ai-btn-primary">
+                        Создать клуб
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Область сообщений -->
+        <div class="ai-chat-messages-v4" id="chatMessagesV4">
+            <!-- Приветственное сообщение -->
+            <div class="ai-message-v4 assistant-v4">
+                <div class="ai-message-row-v4">
+                    <div class="ai-message-avatar-v4">🤖</div>
+                    <div class="ai-message-content-v4">
+                        <div class="ai-greeting">
+                            <h4>Привет! 👋</h4>
+                            <p>Я Action AI консультант - твой помощник в создании и развитии фан-клубов!</p>
+                        </div>
+
+                        <div class="ai-intro-features">
+                            <div class="ai-feature-card">
+                                <div class="ai-feature-icon">🏆</div>
+                                <div class="ai-feature-content">
+                                    <h5>Создать клуб</h5>
+                                    <p>Помогу создать твой клуб с нуля</p>
+                                </div>
+                            </div>
+
+                            <div class="ai-feature-card">
+                                <div class="ai-feature-icon">📅</div>
+                                <div class="ai-feature-content">
+                                    <h5>Организовать мероприятие</h5>
+                                    <p>Спланируем любое событие для твоего клуба</p>
+                                </div>
+                            </div>
+
+                            <div class="ai-feature-card">
+                                <div class="ai-feature-icon">🛠️</div>
+                                <div class="ai-feature-content">
+                                    <h5>Управление клубом</h5>
+                                    <p>Помогу в управлении и развитии</p>
+                                </div>
+                            </div>
+
+                            <div class="ai-feature-card">
+                                <div class="ai-feature-icon">💰</div>
+                                <div class="ai-feature-content">
+                                    <h5>Монетизация</h5>
+                                    <p>Подберу лучшие способы заработка</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="ai-quick-actions">
+                            <button class="ai-quick-btn" data-action="create_club">🏆 Создать клуб</button>
+                            <button class="ai-quick-btn" data-action="create_event">📅 Мероприятие</button>
+                            <button class="ai-quick-btn" data-action="manage_clubs">🛠️ Управление</button>
+                            <button class="ai-quick-btn" data-action="get_advice"> 💡 Совет</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Typing indicator -->
+        <div class="ai-typing-v4" id="chatTypingV4" style="display: none;">
+            <div class="ai-typing-avatar">
+                <div class="ai-typing-icon">🤖</div>
+            </div>
+            <div class="ai-typing-content">
+                <div class="ai-typing-text">Action AI печатает</div>
+                <div class="ai-typing-dots">
+                    <div class="ai-typing-dot-v4"></div>
+                    <div class="ai-typing-dot-v4"></div>
+                    <div class="ai-typing-dot-v4"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Поле ввода -->
+        <div class="ai-chat-input-container-v4">
+            <div class="ai-input-wrapper-v4" id="chatInputWrapperV4">
+                <div class="ai-input-left-controls">
+                    <button class="ai-input-btn" id="aiEmojiBtnV4" title="Эмодзи">
+                        😊
+                    </button>
+                    <button class="ai-input-btn" id="aiActionsQuickBtn" title="Быстрые действия">
+                        ⚡
+                    </button>
+                </div>
+
+                <div class="ai-input-main">
+                    <textarea
+                        class="ai-chat-input-v4"
+                        id="chatInputV4"
+                        placeholder="Напиши, что хочешь сделать..."
+                        rows="1"
+                        maxlength="1000"
+                    ></textarea>
+
+                    <div class="ai-input-char-count">
+                        <span id="charCountV4">0</span>/1000
+                    </div>
+                </div>
+
+                <div class="ai-input-right-controls">
+                    <button class="ai-send-btn-v4" id="chatSendBtnV4" disabled>
+                        <span class="ai-send-icon">➤</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="ai-input-footer">
+                <div class="ai-input-hint">
+                    💡 Напиши: "Создай клуб", "Помоги с мероприятием" или выбери действие ⚡
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Стили для улучшенного виджета -->
+<style>
+/* 🎨 Action AI Chat Widget v4.0 */
+.ai-chat-widget-v4 {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    z-index: 9999;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* Кнопка чата */
+.ai-chat-button-v4 {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+    border: none;
+    color: white;
+    font-size: 28px;
+    cursor: pointer;
+    box-shadow: 0 12px 30px rgba(255, 107, 107, 0.4);
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    animation: pulseButton 3s infinite;
+}
+
+.ai-chat-container-v4 {
+    position: absolute;
+    bottom: 85px;
+    right: 0;
+    width: 500px;
+    height: 800px;
+    max-height: 95vh;
+    background: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(30px);
+    border: 1px solid rgba(255, 107, 107, 0.6);
+    border-radius: 32px;
+    box-shadow: 0 30px 80px -20px rgba(255, 107, 107, 0.3);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    transform-origin: bottom right;
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: scale(0.9) translateY(20px);
+}
+
+.ai-chat-container-v4.active {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: all;
+    transform: scale(1) translateY(0);
+}
+
+/* Блок быстрых действий */
+.ai-actions-block {
+    padding: 20px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    background: rgba(255, 248, 248, 0.8);
+}
+
+.ai-actions-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+}
+
+.ai-action-btn {
+    padding: 12px 16px;
+    border: 1px solid #ffddd2;
+    border-radius: 16px;
+    background: white;
+    color: #e74c3c;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.ai-action-btn:hover {
+    background: #fff5f5;
+    border-color: #ff6b6b;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255, 107, 107, 0.2);
+}
+
+/* Форма создания клуба */
+.ai-club-form {
+    padding: 20px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    background: rgba(248, 255, 248, 0.8);
+    max-height: 70vh;
+    overflow-y: auto;
+}
+
+.ai-form-group {
+    margin-bottom: 16px;
+}
+
+.ai-form-group label {
+    display: block;
+    margin-bottom: 4px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+.ai-form-group input,
+.ai-form-group select,
+.ai-form-group textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: border-color 0.2s;
+}
+
+.ai-form-group input:focus,
+.ai-form-group select:focus,
+.ai-form-group textarea:focus {
+    outline: none;
+    border-color: #ff6b6b;
+    box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.1);
+}
+
+.ai-form-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.ai-form-btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.ai-btn-primary {
+    background: #ff6b6b;
+    color: white;
+}
+
+.ai-btn-primary:hover {
+    background: #ee5a24;
+    transform: translateY(-2px);
+}
+
+.ai-btn-secondary {
+    background: #ecf0f1;
+    color: #7f8c8d;
+}
+
+.ai-btn-secondary:hover {
+    background: #d5dbdb;
+}
+
+/* Сообщения */
+.ai-message-v4 {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.ai-message-v4 .ai-message-content-v4 {
+    max-width: 85%;
+    padding: 16px 20px;
+    border-radius: 20px;
+    font-size: 14px;
+    line-height: 1.6;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+}
+
+.ai-message-v4.assistant-v4 .ai-message-content-v4 {
+    background: white;
+    color: #374151;
+    border-bottom-left-radius: 6px;
+}
+
+.ai-message-v4.user-v4 .ai-message-content-v4 {
+    background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+    color: white;
+    border-bottom-right-radius: 6px;
+    box-shadow: 0 6px 20px rgba(255, 107, 107, 0.3);
+}
+
+/* Quick actions */
+.ai-quick-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 16px;
+}
+
+.ai-quick-btn {
+    padding: 6px 12px;
+    border: 1px solid #ffddd2;
+    border-radius: 20px;
+    background: white;
+    color: #e74c3c;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.ai-quick-btn:hover {
+    background: #fff5f5;
+    border-color: #ff6b6b;
+    color: #ff6b6b;
+    transform: translateY(-1px);
+}
+
+/* Поле ввода */
+.ai-chat-input-container-v4 {
+    flex-shrink: 0;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.9);
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.ai-input-wrapper-v4 {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    background: #f8f9fa;
+    border-radius: 20px;
+    padding: 8px;
+    transition: all 0.3s;
+    border: 2px solid transparent;
+}
+
+.ai-input-wrapper-v4:focus-within {
+    background: white;
+    border-color: #ff6b6b;
+    box-shadow: 0 0 0 4px rgba(255, 107, 107, 0.1);
+}
+
+.ai-send-btn-v4 {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    border: none;
+    background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    opacity: 0.5;
+    transform: scale(0.9);
+    pointer-events: none;
+}
+
+.ai-input-wrapper-v4.has-text .ai-send-btn-v4 {
+    opacity: 1;
+    transform: scale(1);
+    pointer-events: all;
+}
+
+.ai-send-btn-v4:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(255, 107, 107, 0.3);
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+    .ai-chat-widget-v4 {
+        bottom: 16px;
+        right: 16px;
+    }
+
+    .ai-chat-container-v4 {
+        width: 100vw;
+        height: 100vh;
+        max-height: 100vh;
+        bottom: 0;
+        right: 0;
+        border-radius: 0;
+    }
+
+    .ai-actions-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .ai-club-form {
+        padding: 16px;
+    }
+
+    .ai-form-actions {
+        flex-direction: column;
+    }
+}
+</style>

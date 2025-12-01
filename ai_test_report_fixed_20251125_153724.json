@@ -1,0 +1,195 @@
+{
+  "test_session": {
+    "total_tests": 26,
+    "passed_tests": 23,
+    "failed_tests": 3,
+    "success_rate": 88.46153846153845,
+    "failed_test_names": [],
+    "test_duration": "0:00:17.203946"
+  },
+  "test_results": [
+    {
+      "test_name": "Безопасность: Пустое сообщение",
+      "status": "PASS",
+      "details": "Вредоносный ввод заблокирован",
+      "error": null,
+      "timestamp": "2025-11-25T15:37:06.981212"
+    },
+    {
+      "test_name": "Безопасность: Только пробелы",
+      "status": "PASS",
+      "details": "Вредоносный ввод заблокирован",
+      "error": null,
+      "timestamp": "2025-11-25T15:37:06.981240"
+    },
+    {
+      "test_name": "Безопасность: Слишком длинное сообщение",
+      "status": "FAIL",
+      "details": "Вредоносный ввод не заблокирован: ⚠️ Сообщение слишком длинное (максимум 1000 символов). Пожалуйста, сократите текст....",
+      "error": null,
+      "timestamp": "2025-11-25T15:37:06.981253"
+    },
+    {
+      "test_name": "Безопасность: XSS атака",
+      "status": "PASS",
+      "details": "Вредоносный ввод заблокирован",
+      "error": null,
+      "timestamp": "2025-11-25T15:37:06.981467"
+    },
+    {
+      "test_name": "Безопасность: SQL инъекция",
+      "status": "PASS",
+      "details": "Вредоносный ввод заблокирован",
+      "error": null,
+      "timestamp": "2025-11-25T15:37:06.981714"
+    },
+    {
+      "test_name": "Безопасность: JavaScript инъекция",
+      "status": "PASS",
+      "details": "Вредоносный ввод заблокирован",
+      "error": null,
+      "timestamp": "2025-11-25T15:37:06.981733"
+    },
+    {
+      "test_name": "Безопасность: Опасная SQL команда",
+      "status": "PASS",
+      "details": "Вредоносный ввод заблокирован",
+      "error": null,
+      "timestamp": "2025-11-25T15:37:06.981806"
+    },
+    {
+      "test_name": "Безопасность: SQL инъекция",
+      "status": "FAIL",
+      "details": "Вредоносный ввод не заблокирован: Похоже, что вы ввели SQL-инъекцию. Если у вас есть вопросы о создании или управлении фан-клубами, по...",
+      "error": null,
+      "timestamp": "2025-11-25T15:37:09.669644"
+    },
+    {
+      "test_name": "Безопасность и валидация",
+      "status": "PASS",
+      "details": "Безопасность: 6/8 тестов пройдено",
+      "error": null,
+      "timestamp": "2025-11-25T15:37:09.669695"
+    },
+    {
+      "test_name": "Парсинг формы: Полная форма",
+      "status": "PASS",
+      "details": "Найдено 11/11 полей",
+      "error": null,
+      "timestamp": "2025-11-25T15:37:09.677606"
+    },
+    {
+      "test_name": "Парсинг формы: Короткая форма",
+      "status": "PASS",
+      "details": "Найдено 5/5 полей",
+      "error": null,
+      "timestamp": "2025-11-25T15:37:09.677753"
+    },
+    {
+      "test_name": "Точность парсинга форм",
+      "status": "PASS",
+      "details": "Парсинг форм: 2/2 тестов пройдено",
+      "error": null,
+      "timestamp": "2025-11-25T15:37:09.677775"
+    },
+    {
+      "test_name": "Проверка в базе данных",
+      "status": "PASS",
+      "details": "Клуб найден: 935d7a13-f598-429f-988b-a62a4dcd5ed1",
+      "error": null,
+      "timestamp": "2025-11-25T15:37:09.758644"
+    },
+    {
+      "test_name": "Workflow создания клуба",
+      "status": "PASS",
+      "details": "Workflow создания клуба: 3/3 шагов пройдено",
+      "error": null,
+      "timestamp": "2025-11-25T15:37:09.758682"
+    },
+    {
+      "test_name": "Mobile: Короткое приветствие",
+      "status": "PASS",
+      "details": "Ответ получен: 163 символов",
+      "error": null,
+      "timestamp": "2025-11-25T15:37:11.032977"
+    },
+    {
+      "test_name": "Mobile: Короткий запрос",
+      "status": "PASS",
+      "details": "Ответ получен: 581 символов",
+      "error": null,
+      "timestamp": "2025-11-25T15:37:16.303532"
+    },
+    {
+      "test_name": "Mobile: Короткий запрос помощи",
+      "status": "PASS",
+      "details": "Ответ получен: 147 символов",
+      "error": null,
+      "timestamp": "2025-11-25T15:37:17.818146"
+    },
+    {
+      "test_name": "Mobile: Сообщение с emoji",
+      "status": "PASS",
+      "details": "Ответ получен: 1053 символов",
+      "error": null,
+      "timestamp": "2025-11-25T15:37:17.818223"
+    },
+    {
+      "test_name": "Mobile: Вопрос с emoji",
+      "status": "PASS",
+      "details": "Ответ получен: 725 символов",
+      "error": null,
+      "timestamp": "2025-11-25T15:37:17.823343"
+    },
+    {
+      "test_name": "Mobile адаптивность",
+      "status": "PASS",
+      "details": "Mobile адаптивность: 5/5 тестов пройдено",
+      "error": null,
+      "timestamp": "2025-11-25T15:37:17.823408"
+    },
+    {
+      "test_name": "Проверка базы данных",
+      "status": "PASS",
+      "details": "Пользователей: 2, Категорий: 10, Городов: 10, Клубов: 6",
+      "error": null,
+      "timestamp": "2025-11-25T15:37:17.843096"
+    },
+    {
+      "test_name": "Операции с базой данных",
+      "status": "PASS",
+      "details": "База данных: все сущности доступны",
+      "error": null,
+      "timestamp": "2025-11-25T15:37:17.843135"
+    },
+    {
+      "test_name": "Время ответа: Привет",
+      "status": "PASS",
+      "details": "1381.1ms",
+      "error": null,
+      "timestamp": "2025-11-25T15:37:19.224241"
+    },
+    {
+      "test_name": "Время ответа: Создай клуб",
+      "status": "PASS",
+      "details": "0.1ms",
+      "error": null,
+      "timestamp": "2025-11-25T15:37:19.224335"
+    },
+    {
+      "test_name": "Время ответа: Что умеет этот AI?",
+      "status": "FAIL",
+      "details": "4960.7ms (слишком медленно)",
+      "error": null,
+      "timestamp": "2025-11-25T15:37:24.185037"
+    },
+    {
+      "test_name": "Производительность",
+      "status": "PASS",
+      "details": "Производительность: среднее время 2113.9ms",
+      "error": null,
+      "timestamp": "2025-11-25T15:37:24.185077"
+    }
+  ],
+  "execution_time": "2025-11-25T15:37:24.185332"
+}

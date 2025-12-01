@@ -1,0 +1,866 @@
+<!-- 🎨 УЛУЧШЕННЫЙ AI ЧАТ ВИДЖЕТ С ПЕРСОНАЛИЗАЦИЕЙ -->
+
+<div class="ai-chat-widget-v3" id="ai-chat-widget-v3">
+    <!-- Кнопка чата с улучшенным дизайном -->
+    <button class="ai-chat-button-v3" id="chatToggleBtnV3">
+        <div class="ai-btn-pulse">
+            <span class="ai-btn-icon">🤖</span>
+        </div>
+        <div class="ai-online-indicator"></div>
+    </button>
+
+    <!-- Улучшенный контейнер чата -->
+    <div class="ai-chat-container-v3" id="chatContainerV3">
+        <!-- Улучшенная шапка -->
+        <div class="ai-chat-header-v3">
+            <div class="ai-header-info-v3">
+                <div class="ai-avatar-container">
+                    <div class="ai-avatar-bot-v3">🤖</div>
+                    <div class="ai-avatar-glow"></div>
+                </div>
+                <div class="ai-header-text-v3">
+                    <h3>Центр сообществ AI Консультант</h3>
+                    <div class="ai-chat-status-v3">
+                        <span class="ai-status-dot-v3"></span>
+                        <span class="ai-status-text">Онлайн</span>
+                        <span class="ai-response-time">2-3 сек</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ai-controls-v3">
+                <button class="ai-control-btn-v3" id="aiVoiceBtn" title="Голосовой ввод">
+                    🎤
+                </button>
+                <button class="ai-control-btn-v3" id="aiSuggestionsBtn" title="Предложения">
+                    💡
+                </button>
+                <button class="ai-control-btn-v3" id="aiThemeBtnV3" title="Сменить тему">
+                    🌙
+                </button>
+                <button class="ai-control-btn-v3 ai-close-btn-v3" id="aiCloseBtnV3" title="Закрыть">
+                    ✕
+                </button>
+            </div>
+        </div>
+
+        <!-- Блок предложений -->
+        <div class="ai-suggestions-block" id="aiSuggestionsBlock" style="display: none;">
+            <div class="ai-suggestions-header">
+                <h4>Чем могу помочь?</h4>
+                <button class="ai-suggestions-close" id="aiSuggestionsClose">×</button>
+            </div>
+            <div class="ai-suggestions-grid">
+                <button class="ai-suggestion-btn" data-suggestion="Как создать фан-клуб?">Создать клуб</button>
+                <button class="ai-suggestion-btn" data-suggestion="Рекомендуй мне клубы">Найти клубы</button>
+                <button class="ai-suggestion-btn" data-suggestion="Как привлечь участников?">Привлечь участников</button>
+                <button class="ai-suggestion-btn" data-suggestion="Идеи для мероприятий">Мероприятия</button>
+                <button class="ai-suggestion-btn" data-suggestion="Как монетизировать клуб?">Монетизация</button>
+                <button class="ai-suggestion-btn" data-suggestion="Советы по развитию">Развитие</button>
+            </div>
+        </div>
+
+        <!-- Область сообщений с улучшенной структурой -->
+        <div class="ai-chat-messages-v3" id="chatMessagesV3">
+            <!-- Приветственное сообщение с персонализацией -->
+            <div class="ai-message-v3 assistant-v3 personalized-intro">
+                <div class="ai-message-row-v3">
+                    <div class="ai-message-avatar-v3">🤖</div>
+                    <div class="ai-message-content-v3">
+                        <div class="ai-greeting">
+                            <h4>Здравствуйте! 👋</h4>
+                            <p>Я ваш персональный AI консультант по фан-клубам и сообществам!</p>
+                        </div>
+
+                        <div class="ai-intro-features">
+                            <div class="ai-feature-card">
+                                <div class="ai-feature-icon">🎯</div>
+                                <div class="ai-feature-content">
+                                    <h5>Создание клубов</h5>
+                                    <p>Пошаговая инструкция по созданию успешного фан-клуба</p>
+                                </div>
+                            </div>
+
+                            <div class="ai-feature-card">
+                                <div class="ai-feature-icon">💡</div>
+                                <div class="ai-feature-content">
+                                    <h5>Идеи и вдохновение</h5>
+                                    <p>Топ идей для разных типов фан-клубов в 2025 году</p>
+                                </div>
+                            </div>
+
+                            <div class="ai-feature-card">
+                                <div class="ai-feature-icon">📅</div>
+                                <div class="ai-feature-content">
+                                    <h5>Мероприятия</h5>
+                                    <p>Организация офлайн и онлайн событий для клуба</p>
+                                </div>
+                            </div>
+
+                            <div class="ai-feature-card">
+                                <div class="ai-feature-icon">💰</div>
+                                <div class="ai-feature-content">
+                                    <h5>Монетизация</h5>
+                                    <p>Способы заработка и финансирования клуба</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="ai-user-context" id="aiUserContext" style="display: none;">
+                            <div class="ai-context-header">
+                                <h5>Ваш контекст:</h5>
+                            </div>
+                            <div class="ai-context-content" id="aiContextContent">
+                                <!-- Здесь будет информация о пользователе -->
+                            </div>
+                        </div>
+
+                        <div class="ai-quick-actions">
+                            <button class="ai-quick-btn" data-action="find_clubs">🔍 Найти клубы</button>
+                            <button class="ai-quick-btn" data-action="create_club">➕ Создать клуб</button>
+                            <button class="ai-quick-btn" data-action="event_ideas">📅 Идеи мероприятий</button>
+                            <button class="ai-quick-btn" data-action="get_advice"> 💡 Получить совет</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Улучшенный typing indicator -->
+        <div class="ai-typing-v3" id="chatTypingV3" style="display: none;">
+            <div class="ai-typing-avatar">
+                <div class="ai-typing-icon">🤖</div>
+            </div>
+            <div class="ai-typing-content">
+                <div class="ai-typing-text">Центр сообществ AI печатает</div>
+                <div class="ai-typing-dots">
+                    <div class="ai-typing-dot-v3"></div>
+                    <div class="ai-typing-dot-v3"></div>
+                    <div class="ai-typing-dot-v3"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Улучшенное поле ввода -->
+        <div class="ai-chat-input-container-v3">
+            <div class="ai-input-wrapper-v3" id="chatInputWrapperV3">
+                <div class="ai-input-left-controls">
+                    <button class="ai-input-btn" id="aiEmojiBtn" title="Эмодзи">
+                        😊
+                    </button>
+                    <button class="ai-input-btn" id="aiAttachBtn" title="Прикрепить">
+                        📎
+                    </button>
+                </div>
+
+                <div class="ai-input-main">
+                    <textarea
+                        class="ai-chat-input-v3"
+                        id="chatInputV3"
+                        placeholder="Напишите ваш вопрос или выберите из предложенных..."
+                        rows="1"
+                        maxlength="1000"
+                    ></textarea>
+
+                    <div class="ai-input-char-count">
+                        <span id="charCount">0</span>/1000
+                    </div>
+                </div>
+
+                <div class="ai-input-right-controls">
+                    <button class="ai-send-btn-v3" id="chatSendBtnV3" disabled>
+                        <span class="ai-send-icon">➤</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="ai-input-footer">
+                <div class="ai-input-hint">
+                    💡 Нажмите Shift+Enter для новой строки
+                </div>
+                <div class="ai-input-shortcuts">
+                    <span class="ai-shortcut">/club</span>
+                    <span class="ai-shortcut">/event</span>
+                    <span class="ai-shortcut">/help</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Стили для улучшенного виджета -->
+<style>
+/* 🎨 Улучшенный AI Chat Widget v3.0 */
+
+.ai-chat-widget-v3 {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    z-index: 9999;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* Кнопка чата с улучшенным дизайном */
+.ai-chat-button-v3 {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+    color: white;
+    font-size: 28px;
+    cursor: pointer;
+    box-shadow: 0 12px 30px rgba(102, 126, 234, 0.4);
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    animation: pulseButton 3s infinite;
+}
+
+.ai-btn-pulse {
+    position: relative;
+    z-index: 1;
+}
+
+.ai-online-indicator {
+    position: absolute;
+    bottom: 4px;
+    right: 4px;
+    width: 16px;
+    height: 16px;
+    background: #10b981;
+    border: 3px solid white;
+    border-radius: 50%;
+    animation: pulseOnline 2s infinite;
+}
+
+/* Контейнер чата */
+.ai-chat-container-v3 {
+    position: absolute;
+    bottom: 85px;
+    right: 0;
+    width: 450px;
+    height: 750px;
+    max-height: 90vh;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(25px);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    border-radius: 28px;
+    box-shadow: 0 25px 75px -15px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    transform-origin: bottom right;
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: scale(0.9) translateY(20px);
+}
+
+.ai-chat-container-v3.active {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: all;
+    transform: scale(1) translateY(0);
+}
+
+/* Улучшенная шапка */
+.ai-chat-header-v3 {
+    flex-shrink: 0;
+    padding: 24px 28px 20px;
+    background: rgba(255, 255, 255, 0.9);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.ai-header-info-v3 {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.ai-avatar-container {
+    position: relative;
+}
+
+.ai-avatar-bot-v3 {
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    color: white;
+    box-shadow: 0 6px 16px rgba(102, 126, 234, 0.3);
+    position: relative;
+    z-index: 2;
+}
+
+.ai-avatar-glow {
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    right: -5px;
+    bottom: -5px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 16px;
+    opacity: 0.3;
+    filter: blur(10px);
+    z-index: 1;
+}
+
+.ai-header-text-v3 h3 {
+    margin: 0 0 4px 0;
+    font-size: 18px;
+    font-weight: 700;
+    color: #1f2937;
+}
+
+.ai-chat-status-v3 {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    color: #10b981;
+    font-weight: 500;
+}
+
+.ai-status-dot-v3 {
+    width: 8px;
+    height: 8px;
+    background: #10b981;
+    border-radius: 50%;
+    animation: pulseOnline 2s infinite;
+}
+
+.ai-response-time {
+    color: #6b7280;
+    font-size: 11px;
+    font-weight: 400;
+}
+
+/* Контроли в шапке */
+.ai-controls-v3 {
+    display: flex;
+    gap: 6px;
+}
+
+.ai-control-btn-v3 {
+    width: 36px;
+    height: 36px;
+    border-radius: 12px;
+    border: none;
+    background: transparent;
+    color: #6b7280;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+}
+
+.ai-control-btn-v3:hover {
+    background: rgba(0, 0, 0, 0.05);
+    color: #1f2937;
+    transform: scale(1.1);
+}
+
+.ai-close-btn-v3:hover {
+    background: #fee2e2;
+    color: #ef4444;
+}
+
+/* Блок предложений */
+.ai-suggestions-block {
+    padding: 20px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    background: rgba(255, 255, 255, 0.8);
+}
+
+.ai-suggestions-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.ai-suggestions-header h4 {
+    margin: 0;
+    color: #374151;
+    font-size: 16px;
+}
+
+.ai-suggestions-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+}
+
+.ai-suggestion-btn {
+    padding: 8px 12px;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    background: white;
+    color: #374151;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: left;
+}
+
+.ai-suggestion-btn:hover {
+    background: #f3f4f6;
+    border-color: #667eea;
+    color: #667eea;
+}
+
+/* Сообщения */
+.ai-chat-messages-v3 {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+    scroll-behavior: smooth;
+    background: transparent;
+}
+
+.ai-message-v3 {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    animation: messageSlideIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.ai-message-row-v3 {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+}
+
+.ai-message-v3.user-v3 .ai-message-row-v3 {
+    flex-direction: row-reverse;
+}
+
+.ai-message-avatar-v3 {
+    width: 36px;
+    height: 36px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+}
+
+.ai-message-v3.assistant-v3 .ai-message-avatar-v3 {
+    background: white;
+    color: #667eea;
+}
+
+.ai-message-v3.user-v3 .ai-message-avatar-v3 {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+.ai-message-content-v3 {
+    max-width: 85%;
+    padding: 16px 20px;
+    border-radius: 20px;
+    font-size: 14px;
+    line-height: 1.6;
+    position: relative;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+}
+
+.ai-message-v3.assistant-v3 .ai-message-content-v3 {
+    background: white;
+    color: #374151;
+    border-bottom-left-radius: 6px;
+}
+
+.ai-message-v3.user-v3 .ai-message-content-v3 {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-bottom-right-radius: 6px;
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.3);
+}
+
+/* Контент сообщений */
+.ai-greeting h4 {
+    margin: 0 0 8px 0;
+    color: #1f2937;
+}
+
+.ai-greeting p {
+    margin: 0 0 16px 0;
+    color: #6b7280;
+}
+
+.ai-intro-features {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin: 16px 0;
+}
+
+.ai-feature-card {
+    display: flex;
+    gap: 10px;
+    padding: 12px;
+    background: #f9fafb;
+    border-radius: 12px;
+    border: 1px solid #f3f4f6;
+    transition: all 0.2s;
+}
+
+.ai-feature-card:hover {
+    background: #f3f4f6;
+    border-color: #e5e7eb;
+    transform: translateY(-2px);
+}
+
+.ai-feature-icon {
+    font-size: 20px;
+    flex-shrink: 0;
+}
+
+.ai-feature-content h5 {
+    margin: 0 0 4px 0;
+    font-size: 14px;
+    font-weight: 600;
+    color: #1f2937;
+}
+
+.ai-feature-content p {
+    margin: 0;
+    font-size: 12px;
+    color: #6b7280;
+    line-height: 1.4;
+}
+
+.ai-quick-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 16px;
+}
+
+.ai-quick-btn {
+    padding: 6px 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 20px;
+    background: white;
+    color: #374151;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.ai-quick-btn:hover {
+    background: #f3f4f6;
+    border-color: #667eea;
+    color: #667eea;
+}
+
+/* Typing indicator */
+.ai-typing-v3 {
+    display: flex;
+    gap: 12px;
+    padding: 0 20px 20px;
+    align-items: center;
+}
+
+.ai-typing-avatar {
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
+}
+
+.ai-typing-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 12px;
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+}
+
+.ai-typing-content {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #f9fafb;
+    padding: 8px 12px;
+    border-radius: 16px;
+    font-size: 13px;
+    color: #6b7280;
+}
+
+.ai-typing-dots {
+    display: flex;
+    gap: 4px;
+}
+
+.ai-typing-dot-v3 {
+    width: 6px;
+    height: 6px;
+    background: #9ca3af;
+    border-radius: 50%;
+    animation: typingBounce 1.4s infinite ease-in-out;
+}
+
+/* Поле ввода */
+.ai-chat-input-container-v3 {
+    flex-shrink: 0;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.9);
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.ai-input-wrapper-v3 {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    background: #f3f4f6;
+    border-radius: 20px;
+    padding: 8px;
+    transition: all 0.3s;
+    border: 2px solid transparent;
+}
+
+.ai-input-wrapper-v3:focus-within {
+    background: white;
+    border-color: #667eea;
+    box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+}
+
+.ai-input-left-controls {
+    display: flex;
+    gap: 4px;
+    margin-right: 8px;
+}
+
+.ai-input-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    border: none;
+    background: transparent;
+    color: #6b7280;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+}
+
+.ai-input-btn:hover {
+    background: rgba(0, 0, 0, 0.05);
+    color: #1f2937;
+}
+
+.ai-input-main {
+    flex: 1;
+    position: relative;
+}
+
+.ai-chat-input-v3 {
+    flex: 1;
+    border: none;
+    background: transparent;
+    padding: 12px 0;
+    font-size: 14px;
+    outline: none;
+    max-height: 120px;
+    resize: none;
+    font-family: inherit;
+    line-height: 1.5;
+}
+
+.ai-input-char-count {
+    position: absolute;
+    bottom: 8px;
+    right: 0;
+    font-size: 11px;
+    color: #9ca3af;
+}
+
+.ai-input-right-controls {
+    display: flex;
+    align-items: flex-end;
+    gap: 4px;
+}
+
+.ai-send-btn-v3 {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    border: none;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    opacity: 0.5;
+    transform: scale(0.9);
+    pointer-events: none;
+}
+
+.ai-input-wrapper-v3.has-text .ai-send-btn-v3 {
+    opacity: 1;
+    transform: scale(1);
+    pointer-events: all;
+}
+
+.ai-send-btn-v3:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.3);
+}
+
+.ai-input-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 8px;
+    padding: 0 4px;
+}
+
+.ai-input-hint {
+    font-size: 11px;
+    color: #9ca3af;
+}
+
+.ai-input-shortcuts {
+    display: flex;
+    gap: 4px;
+}
+
+.ai-shortcut {
+    padding: 2px 6px;
+    background: #e5e7eb;
+    border-radius: 4px;
+    font-size: 10px;
+    color: #6b7280;
+}
+
+/* Анимации */
+@keyframes pulseButton {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+@keyframes pulseOnline {
+    0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+    70% { box-shadow: 0 0 0 12px rgba(16, 185, 129, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+}
+
+@keyframes messageSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(25px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes typingBounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+    .ai-chat-widget-v3 {
+        bottom: 16px;
+        right: 16px;
+    }
+
+    .ai-chat-container-v3 {
+        width: 100vw;
+        height: 100vh;
+        max-height: 100vh;
+        bottom: 0;
+        right: 0;
+        border-radius: 0;
+    }
+
+    .ai-intro-features {
+        grid-template-columns: 1fr;
+    }
+
+    .ai-quick-actions {
+        flex-direction: column;
+    }
+
+    .ai-suggestions-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Темная тема */
+.ai-chat-widget-v3.dark-theme {
+    --bg-primary: rgba(17, 24, 39, 0.95);
+    --bg-secondary: rgba(31, 41, 55, 0.9);
+    --text-primary: #f9fafb;
+    --text-secondary: #9ca3af;
+    --border-color: rgba(255, 255, 255, 0.1);
+}
+
+.ai-chat-widget-v3.dark-theme .ai-chat-header-v3,
+.ai-chat-widget-v3.dark-theme .ai-chat-input-container-v3 {
+    background: var(--bg-secondary);
+}
+
+.ai-chat-widget-v3.dark-theme .ai-header-text-v3 h3 {
+    color: var(--text-primary);
+}
+
+.ai-chat-widget-v3.dark-theme .ai-control-btn-v3 {
+    color: var(--text-secondary);
+}
+
+.ai-chat-widget-v3.dark-theme .ai-control-btn-v3:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-primary);
+}
+
+.ai-chat-widget-v3.dark-theme .ai-message-v3.assistant-v3 .ai-message-content-v3 {
+    background: #1f2937;
+    color: var(--text-primary);
+}
+
+.ai-chat-widget-v3.dark-theme .ai-message-v3.assistant-v3 .ai-message-avatar-v3 {
+    background: #1f2937;
+}
+
+.ai-chat-widget-v3.dark-theme .ai-input-wrapper-v3 {
+    background: #374151;
+}
+
+.ai-chat-widget-v3.dark-theme .ai-input-wrapper-v3:focus-within {
+    background: #1f2937;
+    border-color: #667eea;
+}
+
+.ai-chat-widget-v3.dark-theme .ai-chat-input-v3 {
+    color: var(--text-primary);
+}
+</style>

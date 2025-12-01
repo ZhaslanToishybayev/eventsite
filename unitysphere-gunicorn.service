@@ -1,0 +1,40 @@
+[Unit]
+Description=UnitySphere AI Gunicorn Application Server
+After=network.target
+
+[Service]
+Type=notify
+User=www-data
+Group=www-data
+RuntimeDirectory=gunicorn
+WorkingDirectory=/var/www/myapp/eventsite
+Environment=PATH=/var/www/myapp/eventsite/venv/bin
+ExecStart=/var/www/myapp/eventsite/venv/bin/gunicorn core.wsgi:application -c gunicorn_conf.py
+ExecReload=/bin/kill -s HUP $MAINPID
+KillMode=mixed
+TimeoutStopSec=5
+PrivateTmp=true
+
+# 🔒 Security settings
+NoNewPrivileges=true
+PrivateDevices=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictRealtime=true
+RestrictSUIDSGID=true
+LockPersonality=true
+MemoryDenyWriteExecute=true
+ProtectHostname=true
+
+# 📁 Filesystem protection
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/var/www/myapp/eventsite/logs /var/www/myapp/eventsite/media /tmp
+
+# 🚫 Network restrictions
+RestrictNamespaces=true
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+
+[Install]
+WantedBy=multi-user.target

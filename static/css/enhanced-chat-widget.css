@@ -1,0 +1,416 @@
+/* Enhanced Professional Chat Widget Styles - v6.0.0 */
+
+/* Элегантная цветовая гамма - "симпатичные и классные цвета" */
+:root {
+    /* 🎯 Брендовые цвета - элегантная и профессиональная палитра */
+    --primary-color: #2563eb;        /* Глубокий синий - основной */
+    --primary-gradient-start: #1e40af;  /* Темно-синий для градиентов */
+    --primary-gradient-end: #3b82f6;    /* Светло-синий для градиентов */
+    --secondary-color: #64748b;      /* Серо-синий */
+    --accent-color: #f59e0b;         /* Золотистый акцент */
+    --success-color: #10b981;        /* Изумрудный */
+    --text-primary: #0f172a;         /* Темный текст */
+    --text-secondary: #475569;       /* Вторичный текст */
+    --text-light: #f8fafc;           /* Светлый текст */
+    --bg-primary: #ffffff;           /* Основной фон */
+    --bg-secondary: #f8fafc;         /* Вторичный фон */
+    --bg-tertiary: #f1f5f9;          /* Третичный фон */
+    --border-color: #e2e8f0;         /* Цвет границ */
+    --shadow-light: rgba(37, 99, 235, 0.1);
+    --shadow-medium: rgba(37, 99, 235, 0.2);
+    --shadow-heavy: rgba(37, 99, 235, 0.3);
+
+    /* 📏 Система отступов */
+    --space-xs: 4px;
+    --space-sm: 8px;
+    --space-md: 16px;
+    --space-lg: 24px;
+    --space-xl: 32px;
+    --space-xxl: 48px;
+
+    /* 🎭 Анимации */
+    --transition-fast: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-normal: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-slow: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+
+    /* 📱 Размеры шрифтов */
+    --font-size-xs: 0.75rem;
+    --font-size-sm: 0.875rem;
+    --font-size-base: 1rem;
+    --font-size-lg: 1.125rem;
+    --font-size-xl: 1.25rem;
+
+    /* 🎯 Тени */
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.06);
+    --shadow-md: 0 4px 6px rgba(0,0,0,0.1), 0 2px 4px rgba(0,0,0,0.06);
+    --shadow-lg: 0 10px 15px rgba(0,0,0,0.1), 0 5px 10px rgba(0,0,0,0.05);
+    --shadow-xl: 0 20px 25px rgba(0,0,0,0.1), 0 10px 10px rgba(0,0,0,0.04);
+    --shadow-2xl: 0 25px 50px rgba(0,0,0,0.15);
+}
+
+/* 🎨 MODERN CHAT WIDGET - Улучшенный дизайн */
+.modern-widget-button {
+    position: fixed;
+    bottom: var(--space-lg);
+    right: var(--space-lg);
+    width: 70px;
+    height: 70px;
+    background: linear-gradient(135deg, var(--primary-gradient-start) 0%, var(--primary-color) 100%);
+    border: none;
+    border-radius: 50px;
+    color: var(--text-light);
+    font-size: var(--font-size-xl);
+    cursor: pointer;
+    box-shadow: 0 8px 25px var(--shadow-medium), 0 2px 8px rgba(0,0,0,0.1);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--transition-normal);
+    /* Удален backdrop-filter для устранения стеклянного эффекта */
+    animation: pulse-glow 4s ease-in-out infinite;
+    letter-spacing: -1px;
+}
+
+.modern-widget-button:hover {
+    transform: scale(1.12) rotate(3deg);
+    box-shadow: 0 12px 35px var(--shadow-heavy), 0 4px 12px rgba(0,0,0,0.15);
+    animation-play-state: paused;
+}
+
+.modern-widget-button:active {
+    transform: scale(0.95) rotate(0deg);
+}
+
+@keyframes pulse-glow {
+    0%, 100% {
+        box-shadow: 0 8px 25px var(--shadow-light), 0 2px 8px rgba(0,0,0,0.1);
+    }
+    50% {
+        box-shadow: 0 12px 35px var(--shadow-medium), 0 4px 12px rgba(0,0,0,0.15);
+    }
+}
+
+.modern-widget-chat {
+    position: fixed;
+    bottom: 110px;
+    right: var(--space-lg);
+    width: 420px;
+    height: 650px;
+    background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+    border-radius: 24px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.15), 0 8px 32px rgba(0,0,0,0.1);
+    z-index: 9998;
+    display: none;
+    flex-direction: column;
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+    /* Удален backdrop-filter для устранения стеклянного эффекта */
+    animation: slideIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(30px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Исправленный хедер с правильным позиционированием */
+.modern-widget-header {
+    background: linear-gradient(135deg, var(--primary-gradient-start) 0%, var(--primary-color) 100%);
+    color: var(--text-light);
+    padding: 18px 24px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    flex-shrink: 0;
+    min-height: 60px;
+}
+
+.modern-widget-header::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: rgba(255,255,255,0.2);
+}
+
+.modern-widget-header h3 {
+    margin: 0;
+    font-size: var(--font-size-lg);
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    line-height: 1.2;
+    white-space: nowrap;
+}
+
+/* Профессиональные иконки вместо "дешевых" эмодзи */
+.modern-widget-header h3::before {
+    content: '';
+    width: 20px;
+    height: 20px;
+    background: linear-gradient(135deg, var(--accent-color) 0%, #fbbf24 100%);
+    border-radius: 50%;
+    display: inline-block;
+    position: relative;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+@keyframes statusPulse {
+    0%, 80%, 100% { opacity: 0.5; }
+    40% { opacity: 1; }
+}
+
+/* Исправленные "висящие" надписи - теперь в отдельном блоке */
+.modern-widget-features {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: rgba(245, 158, 11, 0.08);
+    padding: 8px 16px;
+    font-size: var(--font-size-xs);
+    color: var(--accent-color);
+    text-align: center;
+    border-bottom: 1px solid rgba(245, 158, 11, 0.2);
+    z-index: 10;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+}
+
+.modern-widget-close {
+    background: rgba(255,255,255,0.1);
+    border: none;
+    border-radius: 8px;
+    color: var(--text-light);
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    /* Удален backdrop-filter для устранения стеклянного эффекта */
+    font-size: var(--font-size-sm);
+    line-height: 1;
+}
+
+.modern-widget-close:hover {
+    background: rgba(255,255,255,0.2);
+    transform: rotate(90deg);
+}
+
+.modern-widget-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px;
+    background: transparent;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+/* Улучшенные стили сообщений */
+.modern-widget-message {
+    max-width: 85%;
+    padding: 14px 18px;
+    border-radius: 20px;
+    font-size: var(--font-size-base);
+    line-height: 1.5;
+    position: relative;
+    animation: messageSlideIn 0.3s ease-out;
+}
+
+@keyframes messageSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.modern-widget-bot-message {
+    background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
+    color: var(--text-primary);
+    align-self: flex-start;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.modern-widget-user-message {
+    background: linear-gradient(135deg, var(--primary-gradient-start) 0%, var(--primary-color) 100%);
+    color: var(--text-light);
+    align-self: flex-end;
+    border: 1px solid rgba(37, 99, 235, 0.2);
+    box-shadow: 0 2px 8px var(--shadow-light);
+}
+
+/* Улучшенный эффект печати */
+.modern-widget-typing {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 16px;
+    align-self: flex-start;
+    background: var(--bg-secondary);
+    border-radius: 18px;
+    border: 1px solid var(--border-color);
+}
+
+.modern-widget-typing-text {
+    font-size: var(--font-size-xs);
+    color: var(--text-secondary);
+    font-style: italic;
+}
+
+.modern-widget-typing-dots {
+    display: flex;
+    gap: 4px;
+}
+
+.modern-widget-typing-dot {
+    width: 6px;
+    height: 6px;
+    background: var(--secondary-color);
+    border-radius: 50%;
+    animation: typing 1.4s ease-in-out infinite;
+}
+
+.modern-widget-typing-dot:nth-child(2) { animation-delay: 0.2s; }
+.modern-widget-typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes typing {
+    0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
+    30% { transform: translateY(-6px); opacity: 1; }
+}
+
+.modern-widget-input {
+    display: flex;
+    padding: 16px 20px 20px;
+    background: var(--bg-primary);
+    border-top: 1px solid var(--border-color);
+    gap: 12px;
+}
+
+.modern-widget-input-field {
+    flex: 1;
+    border: 2px solid var(--border-color);
+    border-radius: 28px;
+    padding: 12px 20px;
+    outline: none;
+    font-size: var(--font-size-base);
+    transition: all var(--transition-fast);
+    background: var(--bg-secondary);
+}
+
+.modern-widget-input-field:focus {
+    border-color: var(--primary-color);
+    background: var(--bg-primary);
+    box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
+}
+
+.modern-widget-input-field::placeholder {
+    color: var(--text-secondary);
+    opacity: 0.7;
+}
+
+.modern-widget-send-btn {
+    background: linear-gradient(135deg, var(--primary-gradient-start) 0%, var(--primary-color) 100%);
+    color: var(--text-light);
+    border: none;
+    border-radius: 28px;
+    padding: 12px 20px;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    font-size: var(--font-size-base);
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 50px;
+    box-shadow: 0 2px 8px var(--shadow-light);
+}
+
+.modern-widget-send-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px var(--shadow-medium);
+}
+
+.modern-widget-send-btn:active {
+    transform: translateY(0);
+}
+
+.modern-widget-send-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Эффекты частиц - улучшенные */
+@keyframes particleFloat {
+    0% { transform: translate(0, 0) scale(1); opacity: 1; }
+    50% { opacity: 0.8; }
+    100% { transform: translate(var(--vx, 0), var(--vy, 0)) scale(0); opacity: 0; }
+}
+
+/* Профессиональные иконки для функций */
+.modern-widget-features::before {
+    content: '';
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    background: linear-gradient(135deg, var(--accent-color) 0%, #fbbf24 100%);
+    border-radius: 50%;
+    margin-right: 8px;
+    position: relative;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .modern-widget-chat {
+        width: calc(100vw - 48px);
+        right: 24px;
+        bottom: 100px;
+        max-height: 500px;
+    }
+
+    .modern-widget-button {
+        bottom: 20px;
+        right: 20px;
+        width: 60px;
+        height: 60px;
+        font-size: 24px;
+    }
+}
+
+/* Для темной темы */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg-primary: #0f172a;
+        --bg-secondary: #1e293b;
+        --bg-tertiary: #334155;
+        --text-primary: #f1f5f9;
+        --text-secondary: #94a3b8;
+        --text-light: #f8fafc;
+        --border-color: #334155;
+    }
+}
+
+/* Плавные переходы */
+* {
+    scroll-behavior: smooth;
+}

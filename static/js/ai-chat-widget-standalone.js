@@ -6,7 +6,7 @@
 class AIChatWidgetStandalone {
     constructor(options = {}) {
         this.options = {
-            apiUrl: '/api/v1/ai/',
+            apiUrl: '/api/v1/ai/simplified/interactive/chat/',
             widgetTitle: 'AI Консультант',
             welcomeMessage: '👋 Привет! Я помогу найти идеальное сообщество для тебя. С чего начнем?',
             placeholder: 'Напиши сообщение...',
@@ -15,7 +15,7 @@ class AIChatWidgetStandalone {
 
         this.isOpen = false;
         this.isTyping = false;
-        this.currentSessionId = null;
+        this.currentStateId = null;  // Используем state_id вместо session_id
         this.currentTheme = 'light';
 
         // Simple markdown parser (no external dependency)
@@ -177,37 +177,38 @@ class AIChatWidgetStandalone {
         this.scrollToBottom();
 
         try {
-            // Ensure Session
-            if (!this.currentSessionId) {
-                const session = await this.api('sessions/create/', 'POST');
-                this.currentSessionId = session.id;
-            }
-
-            // Send
-            const response = await this.api('chat/', 'POST', {
-                message,
-                session_id: this.currentSessionId
+            // Send to simplified interactive endpoint (без сессий)
+            const response = await fetch(this.options.apiUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': this.getCsrfToken()
+                },
+                body: JSON.stringify({
+                    message,
+                    user_email: this.getUserEmail(),
+                    state_id: this.currentStateId  // Send current state ID
+                })
             });
+
+            const json = await response.json();
 
             // Hide Typing
             if (typingElement) typingElement.style.display = 'none';
             this.isTyping = false;
 
             // Handle response
-            if (response.response) {
-                this.addMessage(response.response, 'assistant');
-                this.currentSessionId = response.session_id;
-            } else if (response.message) {
-                this.addMessage(response.message, 'assistant');
-                if (response.session_id) {
-                    this.currentSessionId = response.session_id;
+            if (json.message) {
+                this.addMessage(json.message, 'assistant');
+                // Update state ID if provided
+                if (json.state_id) {
+                    this.currentStateId = json.state_id;
                 }
-            } else if (response.error) {
-                this.addMessage('⚠️ Ошибка: ' + (response.details || response.error), 'assistant');
+            } else if (json.error) {
+                this.addMessage('⚠️ Ошибка: ' + (json.details || json.error), 'assistant');
             } else {
                 this.addMessage('⚠️ Неожиданный формат ответа', 'assistant');
             }
-
         } catch (e) {
             console.error('Chat error:', e);
             if (typingElement) typingElement.style.display = 'none';
@@ -323,6 +324,24 @@ class AIChatWidgetStandalone {
 
     getCsrfToken() {
         return document.querySelector('[name=csrfmiddlewaretoken]')?.value || '';
+    }
+
+    getUserEmail() {
+        // Try to get user email from various sources
+        // 1. From a data attribute on the body
+        const bodyEmail = document.body.getAttribute('data-user-email');
+        if (bodyEmail) return bodyEmail;
+
+        // 2. From a meta tag
+        const metaEmail = document.querySelector('meta[name="user-email"]');
+        if (metaEmail) return metaEmail.getAttribute('content');
+
+        // 3. From a hidden input field
+        const emailInput = document.querySelector('input[name="user_email"]');
+        if (emailInput) return emailInput.value;
+
+        // 4. Return null if no email found
+        return null;
     }
 
     checkAuth() {

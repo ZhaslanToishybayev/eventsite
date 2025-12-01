@@ -1,8 +1,6 @@
 from django.contrib.auth.views import LogoutView
 from django.urls import path
-from .api.urls import urlpatterns as accounts_api_urls
 from accounts import views
-from api import views as api_views
 from django.contrib.auth import views as auth_views
 from allauth.account import views as allauth_views
 

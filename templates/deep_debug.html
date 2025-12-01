@@ -1,0 +1,217 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deep Widget Debug</title>
+    <style>
+        body {
+            font-family: monospace;
+            background: #1e1e1e;
+            color: #d4d4d4;
+            margin: 0;
+            padding: 20px;
+        }
+        .debug-output {
+            background: #0d1117;
+            border: 1px solid #30363d;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 10px 0;
+            white-space: pre-wrap;
+            font-size: 12px;
+        }
+        .error { color: #f85149; }
+        .success { color: #56d364; }
+        .warning { color: #faa61a; }
+        .info { color: #79c0ff; }
+    </style>
+</head>
+<body>
+    <h1>🔍 Deep Widget Debug</h1>
+
+    <div class="debug-output" id="debugLog">
+        🚀 Запуск глубокой диагностики...
+    </div>
+
+    <!-- Попытка загрузить JavaScript файл -->
+    <script>
+        let debugLog = document.getElementById('debugLog');
+        let log = '';
+
+        function addToLog(message, type = 'info') {
+            const timestamp = new Date().toLocaleTimeString();
+            log += `[${timestamp}] ${type.toUpperCase()}: ${message}\n`;
+            debugLog.textContent = log;
+            debugLog.scrollTop = debugLog.scrollHeight;
+        }
+
+        addToLog('Начинаем диагностику...', 'info');
+
+        // 1. Проверяем загрузку JavaScript файла
+        addToLog('1. Проверка загрузки JavaScript файла', 'info');
+
+        function checkScriptLoading() {
+            const scripts = Array.from(document.querySelectorAll('script'));
+            const widgetScript = scripts.find(script =>
+                script.src && script.src.includes('professional-chat-widget.js')
+            );
+
+            if (widgetScript) {
+                addToLog(`✅ Найден скрипт: ${widgetScript.src}`, 'success');
+                addToLog(`   Статус загрузки: ${widgetScript.readyState || 'unknown'}`, 'info');
+                addToLog(`   async: ${widgetScript.async}, defer: ${widgetScript.defer}`, 'info');
+            } else {
+                addToLog('❌ Скрипт professional-chat-widget.js не найден', 'error');
+                addToLog('Пытаемся загрузить вручную...', 'warning');
+
+                // Пытаемся загрузить скрипт вручную
+                const script = document.createElement('script');
+                script.src = '/static/js/professional-chat-widget.js?v=5.0.0';
+                script.onload = function() {
+                    addToLog('✅ Скрипт успешно загружен', 'success');
+                    setTimeout(checkWidgetClass, 100);
+                };
+                script.onerror = function() {
+                    addToLog('❌ Ошибка загрузки скрипта', 'error');
+                };
+                document.head.appendChild(script);
+            }
+        }
+
+        // 2. Проверяем наличие класса
+        function checkWidgetClass() {
+            addToLog('2. Проверка ProfessionalChatWidget класса', 'info');
+
+            if (typeof ProfessionalChatWidget === 'function') {
+                addToLog('✅ ProfessionalChatWidget класс найден', 'success');
+                addToLog(`   Конструктор: ${ProfessionalChatWidget.toString().substring(0, 100)}...`, 'info');
+            } else {
+                addToLog(`❌ ProfessionalChatWidget класс не найден`, 'error');
+                addToLog(`   typeof ProfessionalChatWidget: ${typeof ProfessionalChatWidget}`, 'error');
+                addToLog(`   window.ProfessionalChatWidget: ${window.ProfessionalChatWidget}`, 'error');
+            }
+
+            // Проверяем все глобальные переменные, связанные с виджетом
+            const widgetVars = Object.keys(window).filter(key =>
+                key.toLowerCase().includes('widget') || key.toLowerCase().includes('professional')
+            );
+
+            if (widgetVars.length > 0) {
+                addToLog('🔍 Найдены переменные, связанные с виджетом:', 'info');
+                widgetVars.forEach(key => {
+                    addToLog(`   ${key}: ${typeof window[key]}`, 'info');
+                });
+            } else {
+                addToLog('⚠️ Переменные виджета не найдены', 'warning');
+            }
+        }
+
+        // 3. Проверяем DOM элементы
+        function checkDOMElements() {
+            addToLog('3. Проверка DOM элементов', 'info');
+
+            const widgetBtn = document.getElementById('professionalChatWidgetBtn');
+            const widgetChat = document.getElementById('professionalChatWidgetChat');
+
+            if (widgetBtn) {
+                addToLog('✅ Кнопка виджета найдена', 'success');
+                const styles = getComputedStyle(widgetBtn);
+                addToLog(`   Position: ${styles.position}`, 'info');
+                addToLog(`   Display: ${styles.display}`, 'info');
+                addToLog(`   Visibility: ${styles.visibility}`, 'info');
+                addToLog(`   Z-index: ${styles.zIndex}`, 'info');
+            } else {
+                addToLog('❌ Кнопка виджета не найдена', 'error');
+            }
+
+            if (widgetChat) {
+                addToLog('✅ Чат виджета найден', 'success');
+                const styles = getComputedStyle(widgetChat);
+                addToLog(`   Position: ${styles.position}`, 'info');
+                addToLog(`   Display: ${styles.display}`, 'info');
+                addToLog(`   Visibility: ${styles.visibility}`, 'info');
+                addToLog(`   Z-index: ${styles.zIndex}`, 'info');
+            } else {
+                addToLog('❌ Чат виджета не найден', 'error');
+            }
+        }
+
+        // 4. Проверяем CSS
+        function checkCSS() {
+            addToLog('4. Проверка CSS', 'info');
+
+            const stylesheets = Array.from(document.styleSheets);
+            const professionalCSS = stylesheets.find(sheet =>
+                sheet.href && sheet.href.includes('professional-chat-widget.css')
+            );
+
+            if (professionalCSS) {
+                addToLog('✅ Professional CSS найден', 'success');
+                addToLog(`   URL: ${professionalCSS.href}`, 'info');
+
+                // Пытаемся найти CSS правила
+                try {
+                    const rules = professionalCSS.cssRules || professionalCSS.rules;
+                    if (rules && rules.length > 0) {
+                        addToLog(`   Найдено ${rules.length} CSS правил`, 'success');
+                        // Показываем первые несколько правил
+                        for (let i = 0; i < Math.min(5, rules.length); i++) {
+                            const rule = rules[i];
+                            if (rule.selectorText && rule.selectorText.includes('professional')) {
+                                addToLog(`   ${rule.selectorText}: ...`, 'info');
+                            }
+                        }
+                    }
+                } catch (e) {
+                    addToLog(`   ❌ Ошибка доступа к CSS правилам: ${e.message}`, 'error');
+                }
+            } else {
+                addToLog('❌ Professional CSS не найден', 'error');
+                addToLog('Пытаемся загрузить CSS вручную...', 'warning');
+
+                // Пытаемся загрузить CSS вручную
+                const link = document.createElement('link');
+                link.rel = 'stylesheet';
+                link.href = '/static/css/professional-chat-widget.css?v=5.0.0';
+                link.onload = function() {
+                    addToLog('✅ CSS успешно загружен', 'success');
+                };
+                link.onerror = function() {
+                    addToLog('❌ Ошибка загрузки CSS', 'error');
+                };
+                document.head.appendChild(link);
+            }
+        }
+
+        // 5. Проверяем консоль на ошибки
+        function checkConsoleErrors() {
+            addToLog('5. Проверка ошибок в консоли', 'info');
+
+            // Это не сработает, но покажет, что мы пытаемся
+            addToLog('   💡 Проверьте консоль браузера (F12) на наличие ошибок', 'info');
+        }
+
+        // Запускаем диагностику
+        setTimeout(() => {
+            checkScriptLoading();
+            setTimeout(() => {
+                checkWidgetClass();
+                checkDOMElements();
+                checkCSS();
+                checkConsoleErrors();
+            }, 500);
+        }, 100);
+
+        // Добавляем обработчик ошибок
+        window.addEventListener('error', function(e) {
+            addToLog(`❌ Глобальная ошибка: ${e.message}`, 'error');
+        });
+
+        window.addEventListener('unhandledrejection', function(e) {
+            addToLog(`❌ Unhandled promise rejection: ${e.reason}`, 'error');
+        });
+    </script>
+</body>
+</html>

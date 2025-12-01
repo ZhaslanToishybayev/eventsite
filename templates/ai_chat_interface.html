@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UnitySphere AI Консультант</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            text-align: center;
+            color: white;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .container {
+            flex: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 30px 20px;
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 30px;
+            min-height: 80vh;
+        }
+
+        .sidebar {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+
+        .sidebar h3 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 1.3em;
+        }
+
+        .features {
+            list-style: none;
+        }
+
+        .features li {
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+        }
+
+        .features li:before {
+            content: "✨";
+            margin-right: 10px;
+        }
+
+        .chat-container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            min-height: 400px;
+        }
+
+        .message {
+            margin-bottom: 15px;
+            padding: 15px;
+            border-radius: 15px;
+            max-width: 80%;
+        }
+
+        .bot-message {
+            background: #e3f2fd;
+            margin-right: auto;
+        }
+
+        .user-message {
+            background: #f0f0f0;
+            margin-left: auto;
+            text-align: right;
+        }
+
+        .input-container {
+            display: flex;
+            gap: 15px;
+        }
+
+        .message-input {
+            flex: 1;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 25px;
+            font-size: 16px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .message-input:focus {
+            border-color: #667eea;
+        }
+
+        .send-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .send-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .status {
+            text-align: center;
+            padding: 10px;
+            background: #d4edda;
+            color: #155724;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .quick-replies {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .quick-reply {
+            background: #e9ecef;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .quick-reply:hover {
+            background: #dee2e6;
+            transform: scale(1.05);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .message {
+                max-width: 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🤖 UnitySphere AI Консультант</h1>
+        <p>Помогу создать ваш идеальный клуб через естественный диалог</p>
+    </div>
+
+    <div class="container">
+        <div class="sidebar">
+            <h3>🌟 Возможности</h3>
+            <ul class="features">
+                <li>Создание клубов через диалог</li>
+                <li>Автоматическая классификация</li>
+                <li>Генерация названий и описаний</li>
+                <li>Сбор контактной информации</li>
+                <li>Профессиональные рекомендации</li>
+                <li>Поддержка 6 категорий клубов</li>
+            </ul>
+
+            <h3 style="margin-top: 30px;">📊 Статистика</h3>
+            <p>На сайте уже 420+ активных клубов:</p>
+            <ul class="features" style="margin-top: 15px;">
+                <li>Технологии: 156 клубов</li>
+                <li>Творчество: 98 клубов</li>
+                <li>Спорт: 87 клубов</li>
+                <li>Бизнес: 65 клубов</li>
+                <li>Языки: 45 клубов</li>
+                <li>Другие: 29 клубов</li>
+            </ul>
+        </div>
+
+        <div class="chat-container">
+            <div id="status" class="status" style="display: none;"></div>
+
+            <div id="chat-messages" class="chat-messages">
+                <div class="message bot-message">
+                    👋 Привет! Я - AI консультант UnitySphere.<br><br>
+                    Готов помочь создать ваш клуб через естественный диалог!<br><br>
+                    💡 Начните с того, что хотите создать - например: "Хочу создать клуб программирования"
+                </div>
+            </div>
+
+            <div class="input-container">
+                <input type="text" id="message-input" class="message-input" placeholder="Введите ваше сообщение..." />
+                <button id="send-btn" class="send-btn">📤 Отправить</button>
+            </div>
+
+            <div id="quick-replies" class="quick-replies" style="display: none;"></div>
+        </div>
+    </div>
+
+    <script>
+        class AIChatWidget {
+            constructor() {
+                this.apiUrl = '/api/v1/ai/production/agent/';
+                this.sessionId = 'web_chat_' + Math.random().toString(36).substr(2, 9);
+                this.messagesContainer = document.getElementById('chat-messages');
+                this.input = document.getElementById('message-input');
+                this.sendBtn = document.getElementById('send-btn');
+                this.status = document.getElementById('status');
+                this.quickReplies = document.getElementById('quick-replies');
+
+                this.initEventListeners();
+            }
+
+            initEventListeners() {
+                this.sendBtn.addEventListener('click', () => this.sendMessage());
+                this.input.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') this.sendMessage();
+                });
+            }
+
+            async sendMessage() {
+                const message = this.input.value.trim();
+                if (!message) return;
+
+                this.addUserMessage(message);
+                this.input.value = '';
+                this.showStatus('🤖 Думаю...', true);
+
+                try {
+                    const response = await this.callAI(message);
+                    this.addBotMessage(response);
+                    this.hideStatus();
+                } catch (error) {
+                    this.addBotMessage({ response: 'Извините, произошла ошибка. Попробуйте еще раз.' });
+                    this.hideStatus();
+                }
+            }
+
+            async callAI(message) {
+                const response = await fetch(this.apiUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        message: message,
+                        session_id: this.sessionId
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+
+                return await response.json();
+            }
+
+            addUserMessage(message) {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = 'message user-message';
+                messageDiv.textContent = message;
+                this.messagesContainer.appendChild(messageDiv);
+                this.scrollToBottom();
+            }
+
+            addBotMessage(response) {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = 'message bot-message';
+                messageDiv.innerHTML = response.response;
+                this.messagesContainer.appendChild(messageDiv);
+
+                // Показываем quick replies если есть
+                if (response.quick_replies && response.quick_replies.length > 0) {
+                    this.showQuickReplies(response.quick_replies);
+                } else {
+                    this.hideQuickReplies();
+                }
+
+                this.scrollToBottom();
+            }
+
+            showQuickReplies(replies) {
+                this.quickReplies.innerHTML = '';
+                replies.forEach(reply => {
+                    const btn = document.createElement('button');
+                    btn.className = 'quick-reply';
+                    btn.textContent = reply;
+                    btn.addEventListener('click', () => {
+                        this.input.value = reply;
+                        this.sendMessage();
+                        this.hideQuickReplies();
+                    });
+                    this.quickReplies.appendChild(btn);
+                });
+                this.quickReplies.style.display = 'flex';
+            }
+
+            hideQuickReplies() {
+                this.quickReplies.style.display = 'none';
+            }
+
+            showStatus(text, loading = false) {
+                this.status.textContent = text;
+                if (loading) {
+                    this.status.innerHTML += ' <div class="loading"></div>';
+                }
+                this.status.style.display = 'block';
+            }
+
+            hideStatus() {
+                this.status.style.display = 'none';
+            }
+
+            scrollToBottom() {
+                this.messagesContainer.scrollTop = this.messagesContainer.scrollHeight;
+            }
+        }
+
+        // Инициализация виджета
+        document.addEventListener('DOMContentLoaded', () => {
+            new AIChatWidget();
+        });
+    </script>
+</body>
+</html>

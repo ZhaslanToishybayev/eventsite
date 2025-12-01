@@ -5,14 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="shortcut icon" href="{% static 'images/favicon-32x32.png' %}">
     <meta name="author" content="colorlib">
-    <meta name="description" content="UnitySphere - fan-club.kz">
+    <meta name="description" content="Центр сообществ">
     <meta name="keywords" content="фан-клубы, сообщества, мероприятия">
     <meta charset="UTF-8">
     {% csrf_token %}
     <meta name="csrf-token" content="{{ csrf_token }}">
 
     {% block head_title %}
-    <title>{% block title %}UnitySphere - fan-club.kz{% endblock %}</title>
+    <title>{% block title %}Центр сообществ{% endblock %}</title>
     {% endblock head_title %}
 
     <script src="https://kit.fontawesome.com/77b427ccd5.js" crossorigin="anonymous"></script>
@@ -42,21 +42,77 @@
 </head>
 <body class="bg-white">
     {% block header %}
-    <header id="header" id="home">
-        <div class="container">
+    <header id="header" class="site-header">
+        {% load static %}
+        <!-- Header-top: контакты и соцсети -->
+        <div class="header-top">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6 col-sm-6 col-8 header-top-left no-padding">
+                        <ul>
+                            <li><a href="https://www.instagram.com/fan_club.kz/" target="_blank">fan-club.kz<i class="fa-brands fa-instagram ml-1"></i></a></li>
+                            <li><a href="https://scena.kz/" target="_blank">scena.kz<i class="fa-solid fa-globe ml-1"></i></a></li>
+                            <li><a href="https://nurospan.kz/" target="_blank">nurospan.kz<i class="fa-solid fa-globe ml-1"></i></a></li>
+                            <li><a href="tel:+77087722405">+77087722405</a></li>
+                            <li><img src="{% static 'images/Flag-Kazakhstan.webp' %}" alt="" class="flag-kz"></li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-6 col-sm-6 col-4 header-top-right no-padding">
+                        <!-- Динамические действия будут здесь -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main-menu: основная навигация -->
+        <div class="container main-menu">
             <div class="row align-items-center justify-content-between d-flex">
                 <div id="logo">
-                    <a href="/"><img src="{% static 'images/fanclub_horizontal.png' %}" alt="" title="" style="max-width: 150px;" /></a>
+                    <a href="/"><img src="{% static 'images/logo_v2.png' %}" alt="" title="" style="max-width: 150px;" /></a>
                 </div>
                 <nav id="nav-menu-container">
                     <ul class="nav-menu">
                         <li><a href="/">Главная</a></li>
                         <li><a href="{% url 'clubs' %}">Сообщества</a></li>
+                        <li><a href="/find-people/">🔍 Единомышленники</a></li>
+                        <li><a href="{% url 'publications' %}">Новости для сообществ</a></li>
+                        <li><a href="{% url 'club_events' %}">События</a></li>
                         <li><a href="{% url 'festivals' %}">Фестивали</a></li>
-                        <li><a href="{% url 'publications' %}">Публикации</a></li>
-                        <li><a href="/admin/">Админ</a></li>
+                        <li><a href="{% url 'about' %}">О нас</a></li>
+
+                        <!-- Администрирование (только для суперпользователей) -->
+                        {% if request.user.is_superuser %}
+                        <li class="menu-has-children">
+                            <span class="administration sf-with-ul">Администрирование</span>
+                            <ul>
+                                <li><a href="{% url 'festival_create' %}">Организовать фестиваль</a></li>
+                                <li><a href="{% url 'service_for_club_create' %}">Добавить услугу</a></li>
+                                <li><a href="{% url 'publication_create' %}">Добавить новость</a></li>
+                                <li><a href="/admin/">Панель управления</a></li>
+                            </ul>
+                        </li>
+                        {% endif %}
                     </ul>
                 </nav>
+
+                <!-- User-actions: профиль пользователя -->
+                <div class="user-actions">
+                    {% if request.user.is_authenticated %}
+                        <div class="user-menu">
+                            <span class="username">{{ user.username|default:user.email }}</span>
+                            <ul class="dropdown">
+                                <li><a href="{{ request.user.get_absolute_url }}">Личный кабинет</a></li>
+                                <li><a href="{% url 'user_update' %}">Настройки</a></li>
+                                <li><a href="{% url 'account_logout' %}" id="logout-btn">Выход</a></li>
+                            </ul>
+                        </div>
+                    {% else %}
+                        <div class="guest-actions">
+                            <a href="{% url 'register' %}" class="btn-register">Регистрация</a>
+                            <a href="{% url 'login' %}" class="btn-login">Вход</a>
+                        </div>
+                    {% endif %}
+                </div>
             </div>
         </div>
     </header>
@@ -76,7 +132,7 @@
                     <div class="single-footer-widget">
                         <h6>О сайте</h6>
                         <p>
-                            UnitySphere - платформа для создания и управления фан-клубами, сообществами и мероприятиями.
+                            Центр сообществ - платформа для создания и управления фан-клубами, сообществами и мероприятиями.
                         </p>
                     </div>
                 </div>
@@ -114,6 +170,57 @@
 
     <!-- AI Chat Widget Scripts -->
     <script src="{% static 'js/ai-chat-widget-v2.js' %}?v=2.5.4"></script>
+
+    <!-- Header dropdown меню скрипты -->
+    <script>
+        // Плавное изменение хэдера при скролле
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('.site-header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Обработка кликов по админ-меню
+        document.querySelectorAll('.menu-has-children').forEach(function(menu) {
+            menu.addEventListener('click', function(e) {
+                e.preventDefault();
+                const dropdown = this.querySelector('.dropdown');
+                if (dropdown) {
+                    dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+                }
+            });
+        });
+
+        // Закрытие dropdown при клике вне его
+        document.addEventListener('click', function(e) {
+            document.querySelectorAll('.menu-has-children .dropdown').forEach(function(dropdown) {
+                if (!dropdown.parentElement.contains(e.target)) {
+                    dropdown.style.display = 'none';
+                }
+            });
+
+            document.querySelectorAll('.user-menu .dropdown').forEach(function(dropdown) {
+                if (!dropdown.parentElement.contains(e.target)) {
+                    dropdown.style.display = 'none';
+                }
+            });
+        });
+
+        // Адаптивное меню для мобильных (если понадобится)
+        function initMobileMenu() {
+            const navContainer = document.querySelector('.nav-menu-container');
+            if (window.innerWidth <= 768) {
+                // Можно добавить бургер-меню
+                console.log('Mobile menu initialized');
+            }
+        }
+
+        window.addEventListener('resize', initMobileMenu);
+        initMobileMenu();
+    </script>
     {% endblock %}
 
     {% block extra_scripts %}

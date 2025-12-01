@@ -1,0 +1,413 @@
+<!-- ВИДЖЕТ С МАКСИМАЛЬНОЙ ВИЗУАЛЬНОЙ ОТДЕЛЬНОСТЬЮ -->
+<style>
+    /* Простые, надежные стили без сложных свойств */
+    .ultimate-widget-btn {
+        position: fixed !important;
+        bottom: 15px !important;
+        right: 15px !important;
+        width: 65px !important;
+        height: 65px !important;
+        border-radius: 50% !important;
+        background: #4ecdc4 !important;
+        border: 3px solid #ffffff !important;
+        color: #ffffff !important;
+        font-size: 26px !important;
+        cursor: pointer !important;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2) !important;
+        transition: all 0.3s ease !important;
+        z-index: 999999999 !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        outline: none !important;
+    }
+
+    .ultimate-widget-btn:hover {
+        transform: scale(1.15) !important;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3) !important;
+    }
+
+    .ultimate-widget-btn:active {
+        transform: scale(0.95) !important;
+    }
+
+    .ultimate-widget-chat {
+        position: fixed !important;
+        bottom: 90px !important;
+        right: 15px !important;
+        width: 320px !important;
+        height: 420px !important;
+        background: #ffffff !important;
+        border-radius: 12px !important;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15) !important;
+        z-index: 9999999999 !important;
+        display: none !important;
+        flex-direction: column !important;
+        font-family: Arial, sans-serif !important;
+        overflow: hidden !important;
+        border: 2px solid #e0e0e0 !important;
+    }
+
+    .ultimate-widget-header {
+        background: #4ecdc4 !important;
+        color: #ffffff !important;
+        padding: 12px 16px !important;
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        font-weight: bold !important;
+        font-size: 14px !important;
+    }
+
+    .ultimate-widget-close {
+        background: rgba(255, 255, 255, 0.2) !important;
+        border: none !important;
+        color: #ffffff !important;
+        width: 24px !important;
+        height: 24px !important;
+        border-radius: 50% !important;
+        cursor: pointer !important;
+        font-size: 12px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        outline: none !important;
+    }
+
+    .ultimate-widget-close:hover {
+        background: rgba(255, 255, 255, 0.3) !important;
+    }
+
+    .ultimate-widget-msg-area {
+        flex: 1 !important;
+        padding: 12px !important;
+        overflow-y: auto !important;
+        background: #f8f9fa !important;
+        scroll-behavior: smooth !important;
+    }
+
+    .ultimate-widget-input {
+        padding: 12px 16px !important;
+        background: #ffffff !important;
+        border-top: 1px solid #e9ecef !important;
+    }
+
+    .ultimate-widget-input input {
+        width: 100% !important;
+        padding: 10px 14px !important;
+        border: 2px solid #e9ecef !important;
+        border-radius: 20px !important;
+        outline: none !important;
+        font-size: 14px !important;
+        margin-bottom: 6px !important;
+        transition: border-color 0.2s ease !important;
+    }
+
+    .ultimate-widget-input input:focus {
+        border-color: #4ecdc4 !important;
+    }
+
+    .ultimate-widget-input button {
+        width: 100% !important;
+        padding: 10px !important;
+        background: #4ecdc4 !important;
+        color: #ffffff !important;
+        border: none !important;
+        border-radius: 18px !important;
+        cursor: pointer !important;
+        font-size: 14px !important;
+        font-weight: 500 !important;
+        transition: all 0.2s ease !important;
+        outline: none !important;
+    }
+
+    .ultimate-widget-input button:hover {
+        background: #45b7aa !important;
+        transform: translateY(-1px) !important;
+    }
+
+    .ultimate-widget-input button:active {
+        transform: translateY(0) !important;
+    }
+
+    .ultimate-widget-msg {
+        margin: 6px 0 !important;
+        max-width: 85% !important;
+    }
+
+    .ultimate-widget-msg.user {
+        margin-left: auto !important;
+        text-align: right !important;
+    }
+
+    .ultimate-widget-msg.bot {
+        margin-right: auto !important;
+        text-align: left !important;
+    }
+
+    .ultimate-widget-msg-content {
+        padding: 10px 14px !important;
+        border-radius: 18px !important;
+        font-size: 14px !important;
+        line-height: 1.4 !important;
+        display: inline-block !important;
+    }
+
+    .ultimate-widget-msg.user .ultimate-widget-msg-content {
+        background: #4ecdc4 !important;
+        color: #ffffff !important;
+    }
+
+    .ultimate-widget-msg.bot .ultimate-widget-msg-content {
+        background: #e9ecef !important;
+        color: #495057 !important;
+    }
+</style>
+
+<button class="ultimate-widget-btn" id="ultimateWidgetBtn" onclick="ultimateOpenWidget()">💚</button>
+
+<div class="ultimate-widget-chat" id="ultimateWidgetChat">
+    <div class="ultimate-widget-header">
+        <span>AI Консультант</span>
+        <button class="ultimate-widget-close" id="ultimateWidgetClose" onclick="ultimateCloseWidget()">✕</button>
+    </div>
+    <div class="ultimate-widget-msg-area" id="ultimateWidgetMsgArea">
+        <div class="ultimate-widget-msg bot">
+            <div class="ultimate-widget-msg-content">
+                👋 Привет! Готов помочь с созданием фан-клуба!
+            </div>
+        </div>
+    </div>
+    <div class="ultimate-widget-input">
+        <input type="text" id="ultimateWidgetInput" placeholder="Напишите сообщение..." maxlength="200">
+        <button id="ultimateWidgetSend" onclick="ultimateSendMsg()">➤ Отправить</button>
+    </div>
+</div>
+
+<script>
+    // МАКСИМАЛЬНО НАДЕЖНЫЙ JavaScript
+    window.ultimateOpenWidget = function() {
+        try {
+            console.log('💚 Ultimate Widget: Открываем чат');
+
+            const chat = document.getElementById('ultimateWidgetChat');
+            if (chat) {
+                // Принудительное отображение
+                chat.style.display = 'flex !important';
+                chat.style.visibility = 'visible !important';
+                chat.style.opacity = '1 !important';
+
+                // Альтернативные способы
+                chat.style.setProperty('display', 'flex', 'important');
+                chat.style.setProperty('visibility', 'visible', 'important');
+                chat.style.setProperty('opacity', '1', 'important');
+
+                console.log('💚 Ultimate Widget: Чат должен быть виден');
+
+                setTimeout(() => {
+                    const input = document.getElementById('ultimateWidgetInput');
+                    if (input) {
+                        input.focus();
+                        console.log('💚 Ultimate Widget: Фокус установлен');
+                    }
+                }, 300);
+            } else {
+                console.error('❌ Ultimate Widget: Чат не найден');
+            }
+        } catch (error) {
+            console.error('❌ Ultimate Widget: Ошибка открытия:', error);
+        }
+    };
+
+    window.ultimateCloseWidget = function() {
+        try {
+            console.log('💚 Ultimate Widget: Закрываем чат');
+
+            const chat = document.getElementById('ultimateWidgetChat');
+            if (chat) {
+                // Принудительное скрытие
+                chat.style.display = 'none !important';
+                chat.style.visibility = 'hidden !important';
+                chat.style.opacity = '0 !important';
+
+                // Альтернативные способы
+                chat.style.setProperty('display', 'none', 'important');
+                chat.style.setProperty('visibility', 'hidden', 'important');
+                chat.style.setProperty('opacity', '0', 'important');
+
+                console.log('💚 Ultimate Widget: Чат должен быть скрыт');
+            } else {
+                console.error('❌ 💚 Ultimate Widget: Чат не найден');
+            }
+        } catch (error) {
+            console.error('❌ 💚 Ultimate Widget: Ошибка закрытия:', error);
+        }
+    };
+
+    window.ultimateHandleKeyPress = function(event) {
+        if (event && event.key === 'Enter') {
+            ultimateSendMsg();
+        }
+    };
+
+    window.ultimateSendMsg = function() {
+        try {
+            const input = document.getElementById('ultimateWidgetInput');
+            const msgArea = document.getElementById('ultimateWidgetMsgArea');
+            const userMessage = input ? input.value.trim() : '';
+
+            if (!userMessage) {
+                console.log('⚠️ 💚 Ultimate Widget: Сообщение пустое');
+                return;
+            }
+
+            console.log('💚 Ultimate Widget: Отправляем сообщение:', userMessage);
+
+            // Добавляем сообщение пользователя
+            if (msgArea) {
+                msgArea.innerHTML += `
+                    <div class="ultimate-widget-msg user">
+                        <div class="ultimate-widget-msg-content">${ultimateEscapeHtml(userMessage)}</div>
+                    </div>
+                `;
+                msgArea.scrollTop = msgArea.scrollHeight;
+            }
+
+            // Очищаем поле ввода
+            if (input) {
+                input.value = '';
+            }
+
+            // Отправляем сообщение на сервер
+            ultimateSendToServer(userMessage);
+
+        } catch (error) {
+            console.error('❌ 💚 Ultimate Widget: Ошибка отправки:', error);
+            ultimateShowError('Ошибка отправки сообщения');
+        }
+    };
+
+    window.ultimateSendToServer = function(userMessage) {
+        try {
+            const protocol = window.location.protocol;
+            const host = window.location.host;
+            const apiUrl = `${protocol}//${host}/api/v1/ai/production/agent/`;
+
+            console.log('💚 Ultimate Widget: URL API:', apiUrl);
+
+            fetch(apiUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': ultimateGetCsrfToken()
+                },
+                body: JSON.stringify({
+                    message: userMessage,
+                    session_id: 'ultimate_' + Date.now()
+                })
+            })
+            .then(response => {
+                console.log('💚 Ultimate Widget: Получен ответ:', response.status);
+                if (!response.ok) {
+                    throw new Error('HTTP error: ' + response.status);
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('💚 Ultimate Widget: Данные получены:', data);
+                if (data.success) {
+                    ultimateShowBotResponse(data.response || '🤖 Ответ от AI');
+                } else {
+                    throw new Error(data.error || 'AI error');
+                }
+            })
+            .catch(error => {
+                console.error('❌ 💚 Ultimate Widget: Ошибка API:', error);
+                ultimateShowError('Ошибка соединения с сервером');
+            });
+
+        } catch (error) {
+            console.error('❌ 💚 Ultimate Widget: Ошибка отправки на сервер:', error);
+            ultimateShowError('Ошибка подготовки запроса');
+        }
+    };
+
+    window.ultimateShowBotResponse = function(botResponse) {
+        try {
+            const msgArea = document.getElementById('ultimateWidgetMsgArea');
+            if (msgArea) {
+                msgArea.innerHTML += `
+                    <div class="ultimate-widget-msg bot">
+                        <div class="ultimate-widget-msg-content">${ultimateEscapeHtml(botResponse)}</div>
+                    </div>
+                `;
+                msgArea.scrollTop = msgArea.scrollHeight;
+            }
+        } catch (error) {
+            console.error('❌ 💚 Ultimate Widget: Ошибка показа ответа:', error);
+        }
+    };
+
+    window.ultimateShowError = function(errorMessage) {
+        try {
+            const msgArea = document.getElementById('ultimateWidgetMsgArea');
+            if (msgArea) {
+                msgArea.innerHTML += `
+                    <div class="ultimate-widget-msg bot">
+                        <div class="ultimate-widget-msg-content">❌ ${ultimateEscapeHtml(errorMessage)}</div>
+                    </div>
+                `;
+                msgArea.scrollTop = msgArea.scrollHeight;
+            }
+        } catch (error) {
+            console.error('❌ 💚 Ultimate Widget: Ошибка показа ошибки:', error);
+        }
+    };
+
+    window.ultimateEscapeHtml = function(text) {
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+    };
+
+    window.ultimateGetCsrfToken = function() {
+        try {
+            const token = document.querySelector('[name=csrfmiddlewaretoken]');
+            if (token) {
+                return token.value;
+            }
+            const meta = document.querySelector('meta[name="csrf-token"]');
+            return meta ? meta.getAttribute('content') : '';
+        } catch (error) {
+            console.error('❌ 💚 Ultimate Widget: Ошибка получения CSRF:', error);
+            return '';
+        }
+    };
+
+    // Инициализация
+    window.ultimateInitWidget = function() {
+        try {
+            console.log('💚 Ultimate Widget: Инициализация');
+
+            // Добавляем обработчик для поля ввода
+            const input = document.getElementById('ultimateWidgetInput');
+            if (input) {
+                input.addEventListener('keypress', window.ultimateHandleKeyPress);
+                console.log('💚 Ultimate Widget: Обработчик клавиш добавлен');
+            }
+
+            console.log('💚 Ultimate Widget: Готов к работе');
+        } catch (error) {
+            console.error('❌ 💚 Ultimate Widget: Ошибка инициализации:', error);
+        }
+    };
+
+    // Запускаем инициализацию
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', window.ultimateInitWidget);
+    } else {
+        window.ultimateInitWidget();
+    }
+
+    console.log('💚 Ultimate Widget: Система загружена');
+</script>

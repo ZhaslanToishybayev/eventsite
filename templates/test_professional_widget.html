@@ -1,0 +1,155 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Widget - Professional</title>
+    <!-- Professional Chat Widget Styles -->
+    <link rel="stylesheet" href="{% static 'css/professional-chat-widget.css' %}?v=5.0.0">
+    <!-- Professional Chat Widget Scripts -->
+    <script src="{% static 'js/professional-chat-widget.js' %}?v=5.0.0"></script>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        .test-content {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .status {
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+            font-weight: bold;
+        }
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .status.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .status.warning {
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeaa7;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-content">
+        <h1>🧪 Professional Chat Widget Test</h1>
+        <div id="statusArea">
+            <div class="status warning">🔄 Проверка компонентов...</div>
+        </div>
+
+        <div style="margin: 20px 0;">
+            <button onclick="checkWidget()" style="padding: 10px 20px; background: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; margin-right: 10px;">
+                Проверить виджет
+            </button>
+            <button onclick="toggleWidget()" style="padding: 10px 20px; background: #28a745; color: white; border: none; border-radius: 4px; cursor: pointer;">
+                Открыть виджет
+            </button>
+        </div>
+
+        <div class="status success">
+            <strong>✅ Ожидаемый результат:</strong> Виджет должен появиться в правом нижнем углу экрана
+        </div>
+    </div>
+
+    <!-- Professional Chat Widget -->
+    {% include 'professional_chat_widget.html' %}
+
+    <script>
+        function updateStatus(message, type = 'info') {
+            const statusArea = document.getElementById('statusArea');
+            const statusClass = type === 'success' ? 'success' : type === 'error' ? 'error' : 'warning';
+            statusArea.innerHTML = `<div class="status ${statusClass}">${message}</div>`;
+        }
+
+        function checkWidget() {
+            let checks = [];
+
+            // Check ProfessionalChatWidget class
+            if (typeof ProfessionalChatWidget === 'function') {
+                checks.push('✅ ProfessionalChatWidget class: Доступен');
+            } else {
+                checks.push('❌ ProfessionalChatWidget class: Не найден');
+            }
+
+            // Check initializeProfessionalWidget function
+            if (typeof initializeProfessionalWidget === 'function') {
+                checks.push('✅ initializeProfessionalWidget: Доступна');
+            } else {
+                checks.push('❌ initializeProfessionalWidget: Не найдена');
+            }
+
+            // Check widget elements
+            const widgetBtn = document.getElementById('professionalChatWidgetBtn');
+            const widgetChat = document.getElementById('professionalChatWidgetChat');
+
+            if (widgetBtn) {
+                checks.push('✅ Widget button: Найден');
+                const styles = getComputedStyle(widgetBtn);
+                checks.push(`   - Position: ${styles.position}`);
+                checks.push(`   - Display: ${styles.display}`);
+            } else {
+                checks.push('❌ Widget button: Не найден');
+            }
+
+            if (widgetChat) {
+                checks.push('✅ Widget chat: Найден');
+                const styles = getComputedStyle(widgetChat);
+                checks.push(`   - Display: ${styles.display}`);
+                checks.push(`   - Position: ${styles.position}`);
+            } else {
+                checks.push('❌ Widget chat: Не найден');
+            }
+
+            // Check widget instance
+            if (window.professionalChatWidget) {
+                checks.push('✅ Widget instance: Создан');
+            } else {
+                checks.push('⚠️ Widget instance: Не найден в window');
+            }
+
+            updateStatus(checks.join('<br>'), 'info');
+        }
+
+        function toggleWidget() {
+            if (window.professionalChatWidget) {
+                window.professionalChatWidget.toggleChat();
+            } else if (typeof initializeProfessionalWidget === 'function') {
+                initializeProfessionalWidget();
+                setTimeout(() => {
+                    if (window.professionalChatWidget) {
+                        window.professionalChatWidget.toggleChat();
+                    } else {
+                        updateStatus('❌ Не удалось инициализировать виджет', 'error');
+                    }
+                }, 500);
+            } else {
+                updateStatus('❌ Не удалось найти функции инициализации', 'error');
+            }
+        }
+
+        // Auto-check when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(checkWidget, 1000);
+        });
+    </script>
+</body>
+</html>

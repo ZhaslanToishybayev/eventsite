@@ -1,0 +1,229 @@
+# 🐳 Docker Compose для UnitySphere AI Monitoring Stack
+version: '3.8'
+
+services:
+  # 📊 Prometheus - Metrics Collection
+  prometheus:
+    image: prom/prometheus:v2.47.0
+    container_name: unitysphere-prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - ./monitoring/alert_rules.yml:/etc/prometheus/alert_rules.yml:ro
+      - prometheus_data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/etc/prometheus/console_libraries'
+      - '--web.console.templates=/etc/prometheus/consoles'
+      - '--storage.tsdb.retention.time=200h'
+      - '--web.enable-lifecycle'
+      - '--web.enable-admin-api'
+    restart: unless-stopped
+    networks:
+      - monitoring
+
+  # 📈 Grafana - Visualization
+  grafana:
+    image: grafana/grafana:10.2.0
+    container_name: unitysphere-grafana
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=unitysphere_admin_2024
+      - GF_INSTALL_PLUGINS=grafana-clock-panel,grafana-simple-json-datasource,redis-datasource
+      - GF_FEATURE_TOGGLES_ENABLE=ngalert
+      - GF_UNIFIED_ALERTING_ENABLED=true
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./monitoring/grafana/provisioning:/etc/grafana/provisioning:ro
+      - ./monitoring/grafana/dashboards:/var/lib/grafana/dashboards:ro
+    restart: unless-stopped
+    networks:
+      - monitoring
+
+  # 🚨 AlertManager - Alerting
+  alertmanager:
+    image: prom/alertmanager:v0.26.0
+    container_name: unitysphere-alertmanager
+    ports:
+      - "9093:9093"
+    volumes:
+      - ./monitoring/alertmanager.yml:/etc/alertmanager/alertmanager.yml:ro
+      - alertmanager_data:/alertmanager
+    command:
+      - '--config.file=/etc/alertmanager/alertmanager.yml'
+      - '--storage.path=/alertmanager'
+      - '--web.external-url=http://localhost:9093'
+      - '--cluster.listen-address=0.0.0.0:9093'
+    restart: unless-stopped
+    networks:
+      - monitoring
+
+  # 📝 Node Exporter - System Metrics
+  node-exporter:
+    image: prom/node-exporter:v1.6.1
+    container_name: unitysphere-node-exporter
+    ports:
+      - "9100:9100"
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+      - ./monitoring/node-exporter/config.yml:/etc/node-exporter/config.yml:ro
+    command:
+      - '--path.procfs=/host/proc'
+      - '--path.rootfs=/rootfs'
+      - '--path.sysfs=/host/sys'
+      - '--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)'
+      - '--web.config=/etc/node-exporter/config.yml'
+    restart: unless-stopped
+    networks:
+      - monitoring
+
+  # 📝 Nginx Exporter - Web Server Metrics
+  nginx-exporter:
+    image: nginx/nginx-prometheus-exporter:0.11.0
+    container_name: unitysphere-nginx-exporter
+    ports:
+      - "9113:9113"
+    command:
+      - -nginx.scrape-uri=http://nginx:8080/stub_status
+    restart: unless-stopped
+    networks:
+      - monitoring
+    depends_on:
+      - nginx
+
+  # 📊 cAdvisor - Container Metrics
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:v0.47.0
+    container_name: unitysphere-cadvisor
+    ports:
+      - "8080:8080"
+    volumes:
+      - /:/rootfs:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+      - /dev/disk/:/dev/disk:ro
+    privileged: true
+    devices:
+      - /dev/kmsg
+    restart: unless-stopped
+    networks:
+      - monitoring
+
+  # 📊 Redis Exporter (если используется Redis)
+  redis-exporter:
+    image: oliver006/redis_exporter:v1.51.0
+    container_name: unitysphere-redis-exporter
+    ports:
+      - "9121:9121"
+    environment:
+      - REDIS_ADDR=redis:6379
+    restart: unless-stopped
+    networks:
+      - monitoring
+    profiles:
+      - redis
+
+  # 📊 Blackbox Exporter - Uptime Monitoring
+  blackbox-exporter:
+    image: prom/blackbox-exporter:v0.24.0
+    container_name: unitysphere-blackbox-exporter
+    ports:
+      - "9115:9115"
+    volumes:
+      - ./monitoring/blackbox/config.yml:/etc/blackbox_exporter/config.yml:ro
+    command:
+      - '--config.file=/etc/blackbox_exporter/config.yml'
+    restart: unless-stopped
+    networks:
+      - monitoring
+
+  # 📊 Pushgateway - Push Metrics
+  pushgateway:
+    image: prom/pushgateway:v1.6.0
+    container_name: unitysphere-pushgateway
+    ports:
+      - "9091:9091"
+    restart: unless-stopped
+    networks:
+      - monitoring
+
+  # 📊 Loki - Log Aggregation
+  loki:
+    image: grafana/loki:2.9.0
+    container_name: unitysphere-loki
+    ports:
+      - "3100:3100"
+    volumes:
+      - ./monitoring/loki/config.yml:/etc/loki/local-config.yaml:ro
+      - loki_data:/loki
+    command: -config.file=/etc/loki/local-config.yaml
+    restart: unless-stopped
+    networks:
+      - monitoring
+
+  # 📊 Promtail - Log Shipper
+  promtail:
+    image: grafana/promtail:2.9.0
+    container_name: unitysphere-promtail
+    volumes:
+      - ./monitoring/promtail/config.yml:/etc/promtail/config.yml:ro
+      - /var/log:/var/log:ro
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro
+      - ./logs:/app/logs:ro
+    command: -config.file=/etc/promtail/config.yml
+    restart: unless-stopped
+    networks:
+      - monitoring
+
+  # 📊 Jaeger - Distributed Tracing
+  jaeger:
+    image: jaegertracing/all-in-one:1.49
+    container_name: unitysphere-jaeger
+    ports:
+      - "16686:16686"  # UI
+      - "14268:14268"  # HTTP collector
+      - "14250:14250"  # gRPC collector
+    environment:
+      - COLLECTOR_OTLP_ENABLED=true
+    restart: unless-stopped
+    networks:
+      - monitoring
+
+  # 📊 Tempo - Distributed Tracing Backend
+  tempo:
+    image: grafana/tempo:1.8.2
+    container_name: unitysphere-tempo
+    ports:
+      - "3200:3200"  # HTTP server
+      - "14268:14268"  # OTLP gRPC server
+    volumes:
+      - ./monitoring/tempo/config.yml:/etc/tempo/config.yml:ro
+      - tempo_data:/tempo
+    command: -config.file=/etc/tempo/config.yml
+    restart: unless-stopped
+    networks:
+      - monitoring
+
+volumes:
+  prometheus_data:
+    driver: local
+  grafana_data:
+    driver: local
+  alertmanager_data:
+    driver: local
+  loki_data:
+    driver: local
+  tempo_data:
+    driver: local
+
+networks:
+  monitoring:
+    driver: bridge
+    name: unitysphere-monitoring

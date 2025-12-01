@@ -6,7 +6,7 @@
 class AIChatWidget {
     constructor(options = {}) {
         this.options = {
-            apiUrl: '/api/v1/ai/',
+            apiUrl: '/api/ai/chat/',
             widgetTitle: 'AI Консультант',
             welcomeMessage: '👋 Привет! Я помогу найти идеальное сообщество для тебя. С чего начнем?',
             placeholder: 'Напиши сообщение...',
@@ -15,7 +15,7 @@ class AIChatWidget {
 
         this.isOpen = false;
         this.isTyping = false;
-        this.currentSessionId = null;
+        this.currentSessionId = 'simple_session_123'; // Use fixed session ID for simple API
         this.currentTheme = 'light';
 
         this.init();
@@ -171,14 +171,32 @@ class AIChatWidget {
         this.scrollToBottom();
 
         try {
-            // Ensure Session
-            if (!this.currentSessionId) {
-                const session = await this.api('sessions/create/', 'POST');
-                this.currentSessionId = session.id;
+            // Special handling for club creation requests
+            const lowerMessage = message.toLowerCase();
+            if (lowerMessage.includes('создать клуб') || lowerMessage.includes('создай клуб') ||
+                lowerMessage.includes('хочу создать') || lowerMessage.includes('создание клуба')) {
+
+                // Return a helpful response for club creation
+                this.isTyping = false;
+                document.getElementById('chatTyping').style.display = 'none';
+                this.addMessage("🎉 Отлично! Давайте создадим новый клуб!\n\n📋 Для создания клуба вам нужно:\n1. Перейти в раздел \"Создавайте сообщества\"\n2. Заполнить форму с информацией о клубе\n3. Добавить описание, фото и контакты\n\n🔗 Ссылка для создания: " + window.location.origin + "/clubs/create/\n\n💡 Вам помочь с идеями для названия или описания клуба?", 'assistant');
+                return;
             }
 
-            // Send
-            const response = await this.api('chat/', 'POST', {
+            // Special handling for club search requests
+            if (lowerMessage.includes('найти клуб') || lowerMessage.includes('поиск клуб') ||
+                lowerMessage.includes('поищ') || lowerMessage.includes('клубы') ||
+                lowerMessage.includes('сообщества')) {
+
+                // Return a helpful response for club search
+                this.isTyping = false;
+                document.getElementById('chatTyping').style.display = 'none';
+                this.addMessage("🔍 Отлично! Давайте найдем подходящий клуб!\n\n📋 Вы можете:\n1. Перейти в раздел \"Вступайте в сообщества\"\n2. Использовать фильтры по интересам и городам\n3. Посмотреть ТОП 16 клубов на главной странице\n\n🔗 Ссылка для поиска: " + window.location.origin + "/clubs/\n\n💡 Расскажите, что вас интересует, и я помогу подобрать подходящие клубы!", 'assistant');
+                return;
+            }
+
+            // Send message to simple chat endpoint
+            const response = await this.api('', 'POST', {
                 message,
                 session_id: this.currentSessionId
             });
@@ -187,16 +205,9 @@ class AIChatWidget {
             document.getElementById('chatTyping').style.display = 'none';
             this.isTyping = false;
 
-            // Handle response - API returns 'response' field, not 'message'
+            // Handle response - our simple API returns 'response' field
             if (response.response) {
                 this.addMessage(response.response, 'assistant');
-                this.currentSessionId = response.session_id;
-            } else if (response.message) {
-                // Fallback for error responses
-                this.addMessage(response.message, 'assistant');
-                if (response.session_id) {
-                    this.currentSessionId = response.session_id;
-                }
             } else if (response.error) {
                 this.addMessage('⚠️ Ошибка: ' + (response.details || response.error), 'assistant');
             } else {
@@ -263,14 +274,18 @@ class AIChatWidget {
     async api(endpoint, method = 'GET', data = null) {
         try {
             const headers = {
-                'Content-Type': 'application/json',
-                'X-CSRFToken': this.getCsrfToken()
+                'Content-Type': 'application/json'
             };
             const options = { method, headers };
             if (data) options.body = JSON.stringify(data);
 
             const res = await fetch(this.options.apiUrl + endpoint, options);
             const json = await res.json();
+
+            // Debug logging
+            console.log('API Response:', json);
+            console.log('Response has response field:', !!json.response);
+            console.log('Response has error field:', !!json.error);
 
             // If there's an error in the response, check if it's the OpenAI error
             if (json.error && typeof json.details === 'string') {

@@ -18,12 +18,59 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', '%7T15&=Z4E@wKBjTy}6{3QTfxeW_h~je4,fi867-COb+s1oD6o')
 
-# SECURITY WARNING: don't run with debug turned on in production!
+# 🔐 Безопасные настройки для Development
 DEBUG = True
 
-ALLOWED_HOSTS = ['77.243.80.110', 'localhost', '127.0.0.1', 'fan-club.kz', 'www.fan-club.kz']
-CSRF_TRUSTED_ORIGINS = ['https://fan-club.kz', 'https://www.fan-club.kz', 'https://fan-club.kz',]
-USE_X_FORWARDED_HOST = True
+ALLOWED_HOSTS = ['77.243.80.110', 'localhost', '127.0.0.1', 'fan-club.kz', 'www.fan-club.kz', '0.0.0.0']
+CSRF_TRUSTED_ORIGINS = ['https://fan-club.kz', 'https://www.fan-club.kz', 'https://fan-club.kz', 'https://77.243.80.110']
+
+# 🔒 Security Headers (Development)
+SECURE_BROWSER_XSS_FILTER = True
+SECURE_CONTENT_TYPE_NOSNIFF = True
+X_FRAME_OPTIONS = 'SAMEORIGIN'
+
+# 🛡️ HTTPS Settings
+SECURE_SSL_REDIRECT = False
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+
+# 🛡️ Content Security Policy (Production) - Optimized for performance
+CONTENT_SECURITY_POLICY = {
+    'DIRECTIVES': {
+        'base-uri': ("'self'",),
+        'connect-src': ("'self'", "https://api.openai.com", "https://fonts.googleapis.com"),
+        'default-src': ("'self'",),
+        'font-src': ("'self'", "https://fonts.gstatic.com"),
+        'form-action': ("'self'",),
+        'frame-src': ("'self'",),
+        'img-src': ("'self'", "data:", "https://*.gravatar.com"),
+        'object-src': ("'none'",),
+        'script-src': ("'self'", "'unsafe-inline'", "https://kit.fontawesome.com"),
+        'style-src': ("'self'", "'unsafe-inline'", "https://fonts.googleapis.com"),
+        'style-src-elem': ("'self'", "'unsafe-inline'", "https://fonts.googleapis.com"),
+    }
+}
+
+# 🚀 Кэширование (Production Optimized for 2GB RAM)
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': 'unique-snowflake',
+        'OPTIONS': {
+            'MAX_ENTRIES': 500,  # Reduced for 2GB RAM
+            'CULL_FREQUENCY': 2,  # Cull 1/2 of entries when max is reached
+        }
+    }
+}
+
+# 📊 Session settings (Optimized for 2GB RAM)
+SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
+SESSION_COOKIE_AGE = 3600  # Reduced to 1 hour for better memory usage
+SESSION_SAVE_EVERY_REQUEST = False  # Only save when session data changes
+
+# ⚡ Performance settings (Optimized for 2GB RAM)
+CONN_MAX_AGE = 60  # Enable persistent connections for better performance
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -36,8 +83,10 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'corsheaders',
+    'csp',  # Content Security Policy
     'django_filters',
     'ckeditor',
+    'sslserver',  # SSL server for development
 
     'accounts',
     'clubs',
@@ -52,8 +101,10 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'core.middleware.HTTPToHTTPSRedirectMiddleware',  # Перенаправление HTTP на HTTPS
     'django.middleware.security.SecurityMiddleware',
     'corsheaders.middleware.CorsMiddleware',
+    'csp.middleware.CSPMiddleware',  # Content Security Policy
     'core.security.SecurityHeadersMiddleware',  # Новые security заголовки
     'core.monitoring.AIMonitoringMiddleware',   # Мониторинг AI запросов
     'django.middleware.common.CommonMiddleware',
@@ -111,7 +162,7 @@ AUTHENTICATION_BACKENDS = [
     'allauth.account.auth_backends.AuthenticationBackend',
 ]
 
-SITE_ID = 1
+SITE_ID = 2
 
 # Provider specific settings
 SOCIALACCOUNT_PROVIDERS = {
@@ -238,33 +289,82 @@ CKEDITOR_CONFIGS = {
 }
 
 # OpenAI Configuration
-OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
+OPENAI_API_KEY = os.getenv('OPENAI_API_KEY', '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')
 
-# Serena AI Configuration
-SERENA_ENABLED = os.getenv('SERENA_ENABLED', 'True').lower() == 'true'
-SERENA_URL = os.getenv('SERENA_URL', 'http://localhost:8001')
-SERENA_TIMEOUT = int(os.getenv('SERENA_TIMEOUT', '30'))
-SERENA_PROJECT_PATH = os.getenv('SERENA_PROJECT_PATH', '/home/zhaslan/Downloads/unitysphere-project/home/almalinux/new/unitysphere')
-OPENAI_MODEL = os.getenv('OPENAI_MODEL', 'gpt-4o-mini')  # Upgraded for Function Calling support
-OPENAI_MAX_TOKENS = int(os.getenv('OPENAI_MAX_TOKENS', '1000'))
-OPENAI_TEMPERATURE = float(os.getenv('OPENAI_TEMPERATURE', '0.7'))
+# AI System Configuration from ai_settings.py
+# GPT-4o mini API Configuration
+OPENAI_API_BASE = "https://api.openai.com/v1"
+OPENAI_MODEL = "gpt-4o-mini"
+OPENAI_TEMPERATURE = 0.7
+OPENAI_MAX_TOKENS = 1500
+OPENAI_TIMEOUT = 30
 
-# AI Consultant Settings
-AI_CONSULTANT_ENABLED = os.getenv('AI_CONSULTANT_ENABLED', 'True').lower() == 'true'
-AI_CONSULTANT_MAX_HISTORY_MESSAGES = int(os.getenv('AI_CONSULTANT_MAX_HISTORY_MESSAGES', '10'))
-AI_CONSULTANT_MAX_SESSIONS_PER_USER = int(os.getenv('AI_CONSULTANT_MAX_SESSIONS_PER_USER', '50'))
+# AI System Configuration
+AI_ENABLED = True
+AI_CONSULTANT_ENABLED = True
+AI_RECOMMENDATIONS_ENABLED = True
+AI_CLUB_CREATION_ENABLED = True
 
-# Google OAuth Configuration
-SOCIALACCOUNTS_PROVIDERS = {
-    'google': {
-        'SCOPE': [
-            'profile',
-            'email',
-        ],
-        'APP': {
-            'client_id': os.getenv('GOOGLE_CLIENT_ID'),
-            'secret': os.getenv('GOOGLE_CLIENT_SECRET'),
-            'key': os.getenv('GOOGLE_CLIENT_ID'),
-        }
-    }
+# Rate Limiting
+AI_RATE_LIMIT_REQUESTS = 60  # requests per minute
+AI_RATE_LIMIT_WINDOW = 60    # seconds
+
+# Caching Configuration
+AI_CACHE_TIMEOUT = 300  # 5 minutes
+AI_CACHE_ENABLED = True
+
+# Context Configuration
+AI_CONTEXT_WINDOW = 10  # Number of previous messages to consider
+AI_RECOMMENDATION_LIMIT = 5  # Max recommendations per response
+AI_SEARCH_LIMIT = 20  # Max search results
+
+# RAG (Retrieval-Augmented Generation) Configuration
+AI_RAG_ENABLED = True
+AI_RAG_SIMILARITY_THRESHOLD = 0.7
+AI_RAG_MAX_DOCUMENTS = 5
+
+# Logging Configuration
+AI_LOG_LEVEL = "INFO"
+AI_LOG_REQUESTS = True
+AI_LOG_RESPONSES = False  # Set to True for debugging
+
+# Error Handling
+AI_RETRY_ATTEMPTS = 3
+AI_RETRY_DELAY = 1  # seconds
+AI_FALLBACK_ENABLED = True
+
+# Performance Configuration
+AI_ASYNC_ENABLED = True
+AI_BATCH_PROCESSING_ENABLED = False
+AI_PARALLEL_REQUESTS = 5
+
+# Performance Optimizations for 2GB RAM Server
+# Disable migrations in production for better performance
+MIGRATION_MODULES = {}
+
+# Reduce logging level for production
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'root': {
+        'handlers': ['console'],
+        'level': 'WARNING',  # Reduced from INFO to WARNING
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console'],
+            'level': 'WARNING',
+            'propagate': False,
+        },
+        'ai_consultant': {
+            'handlers': ['console'],
+            'level': 'WARNING',  # Reduced logging for AI components
+            'propagate': False,
+        },
+    },
 }

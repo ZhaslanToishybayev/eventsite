@@ -763,3 +763,68 @@ class ClubPost(models.Model):
 
     def __str__(self):
         return f"{self.club.name}: {self.title}"
+
+
+class UserInterest(models.Model):
+    """
+    Модель представляет интересы пользователя для рекомендательной системы.
+    """
+
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    user = models.ForeignKey(
+        'accounts.User',
+        on_delete=models.CASCADE,
+        related_name='interests',
+        verbose_name='Пользователь'
+    )
+    interest = models.CharField(
+        max_length=100,
+        verbose_name='Интерес'
+    )
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name='Создан')
+
+    class Meta:
+        verbose_name = 'Интерес пользователя'
+        verbose_name_plural = 'Интересы пользователей'
+        unique_together = ['user', 'interest']
+
+    def __str__(self):
+        return f"{self.user.username} - {self.interest}"
+
+
+class UserInteraction(models.Model):
+    """
+    Модель представляет взаимодействия пользователя с системой для аналитики.
+    """
+
+    INTERACTION_TYPES = [
+        ('club_creation', 'Создание клуба'),
+        ('club_view', 'Просмотр клуба'),
+        ('ai_chat', 'AI чат'),
+        ('recommendation_click', 'Клик по рекомендации'),
+        ('search', 'Поиск'),
+    ]
+
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    user = models.ForeignKey(
+        'accounts.User',
+        on_delete=models.CASCADE,
+        related_name='interactions',
+        verbose_name='Пользователь'
+    )
+    content = models.TextField(verbose_name='Содержание')
+    interaction_type = models.CharField(
+        max_length=50,
+        choices=INTERACTION_TYPES,
+        verbose_name='Тип взаимодействия'
+    )
+    metadata = models.JSONField(default=dict, blank=True, verbose_name='Метаданные')
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name='Создан')
+
+    class Meta:
+        verbose_name = 'Взаимодействие пользователя'
+        verbose_name_plural = 'Взаимодействия пользователей'
+        ordering = ['-created_at']
+
+    def __str__(self):
+        return f"{self.user.username} - {self.get_interaction_type_display()} - {self.created_at}"

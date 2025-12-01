@@ -1,0 +1,397 @@
+<!-- САМЫЙ НАДЕЖНЫЙ ВИДЖЕТ -->
+<style>
+    .reliable-widget-btn {
+        position: fixed !important;
+        bottom: 20px !important;
+        right: 20px !important;
+        width: 60px !important;
+        height: 60px !important;
+        border-radius: 50% !important;
+        background: #ff6b6b !important;
+        border: 3px solid white !important;
+        color: white !important;
+        font-size: 24px !important;
+        cursor: pointer !important;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.2) !important;
+        transition: all 0.3s ease !important;
+        z-index: 9999999 !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        outline: none !important;
+    }
+
+    .reliable-widget-btn:hover {
+        transform: scale(1.15) !important;
+        box-shadow: 0 6px 20px rgba(0,0,0,0.3) !important;
+    }
+
+    .reliable-widget-btn:active {
+        transform: scale(0.95) !important;
+    }
+
+    .reliable-widget-chat {
+        position: fixed !important;
+        bottom: 100px !important;
+        right: 20px !important;
+        width: 300px !important;
+        height: 400px !important;
+        background: white !important;
+        border-radius: 12px !important;
+        box-shadow: 0 8px 25px rgba(0,0,0,0.15) !important;
+        z-index: 99999999 !important;
+        display: none !important;
+        flex-direction: column !important;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+        overflow: hidden !important;
+        border: 2px solid #f0f0f0 !important;
+    }
+
+    .reliable-widget-header {
+        background: #ff6b6b !important;
+        color: white !important;
+        padding: 12px 16px !important;
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        font-weight: 600 !important;
+        font-size: 14px !important;
+    }
+
+    .reliable-widget-close {
+        background: rgba(255,255,255,0.2) !important;
+        border: none !important;
+        color: white !important;
+        width: 24px !important;
+        height: 24px !important;
+        border-radius: 50% !important;
+        cursor: pointer !important;
+        font-size: 12px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        outline: none !important;
+    }
+
+    .reliable-widget-close:hover {
+        background: rgba(255,255,255,0.3) !important;
+    }
+
+    .reliable-widget-msg-area {
+        flex: 1 !important;
+        padding: 12px !important;
+        overflow-y: auto !important;
+        background: #fafafa !important;
+        scroll-behavior: smooth !important;
+    }
+
+    .reliable-widget-input {
+        padding: 12px 16px !important;
+        background: white !important;
+        border-top: 1px solid #e8e8e8 !important;
+    }
+
+    .reliable-widget-input input {
+        width: 100% !important;
+        padding: 10px 14px !important;
+        border: 2px solid #e8e8e8 !important;
+        border-radius: 20px !important;
+        outline: none !important;
+        font-size: 14px !important;
+        margin-bottom: 6px !important;
+        transition: border-color 0.2s ease !important;
+    }
+
+    .reliable-widget-input input:focus {
+        border-color: #ff6b6b !important;
+    }
+
+    .reliable-widget-input button {
+        width: 100% !important;
+        padding: 10px !important;
+        background: #ff6b6b !important;
+        color: white !important;
+        border: none !important;
+        border-radius: 18px !important;
+        cursor: pointer !important;
+        font-size: 14px !important;
+        font-weight: 500 !important;
+        transition: all 0.2s ease !important;
+        outline: none !important;
+    }
+
+    .reliable-widget-input button:hover {
+        background: #ff5252 !important;
+        transform: translateY(-1px) !important;
+    }
+
+    .reliable-widget-input button:active {
+        transform: translateY(0) !important;
+    }
+
+    .reliable-widget-msg {
+        margin: 6px 0 !important;
+        max-width: 85% !important;
+        animation: slideIn 0.3s ease !important;
+    }
+
+    .reliable-widget-msg.user {
+        margin-left: auto !important;
+        text-align: right !important;
+    }
+
+    .reliable-widget-msg.bot {
+        margin-right: auto !important;
+        text-align: left !important;
+    }
+
+    .reliable-widget-msg-content {
+        padding: 10px 14px !important;
+        border-radius: 18px !important;
+        font-size: 14px !important;
+        line-height: 1.4 !important;
+        display: inline-block !important;
+    }
+
+    .reliable-widget-msg.user .reliable-widget-msg-content {
+        background: #ff6b6b !important;
+        color: white !important;
+    }
+
+    .reliable-widget-msg.bot .reliable-widget-msg-content {
+        background: #e8e8e8 !important;
+        color: #333 !important;
+    }
+
+    @keyframes slideIn {
+        from {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+</style>
+
+<button class="reliable-widget-btn" id="reliableWidgetBtn" onclick="reliableOpenWidget()">💬</button>
+
+<div class="reliable-widget-chat" id="reliableWidgetChat">
+    <div class="reliable-widget-header">
+        <span>AI Помощник</span>
+        <button class="reliable-widget-close" id="reliableWidgetClose" onclick="reliableCloseWidget()">✕</button>
+    </div>
+    <div class="reliable-widget-msg-area" id="reliableWidgetMsgArea">
+        <div class="reliable-widget-msg bot">
+            <div class="reliable-widget-msg-content">
+                👋 Привет! Готов помочь с созданием фан-клуба!
+            </div>
+        </div>
+    </div>
+    <div class="reliable-widget-input">
+        <input type="text" id="reliableWidgetInput" placeholder="Напишите сообщение..." maxlength="200">
+        <button id="reliableWidgetSend" onclick="reliableSendMsg()">➤ Отправить</button>
+    </div>
+</div>
+
+<script>
+    // НАДЕЖНЫЙ JavaScript с inline обработчиками
+    window.reliableOpenWidget = function() {
+        try {
+            console.log('✅ Надежный виджет: Открываем чат');
+            const chat = document.getElementById('reliableWidgetChat');
+            if (chat) {
+                chat.style.display = 'flex';
+                setTimeout(() => {
+                    const input = document.getElementById('reliableWidgetInput');
+                    if (input) {
+                        input.focus();
+                        console.log('✅ Надежный виджет: Фокус установлен');
+                    }
+                }, 200);
+            }
+        } catch (error) {
+            console.error('❌ Надежный виджет: Ошибка открытия:', error);
+        }
+    };
+
+    window.reliableCloseWidget = function() {
+        try {
+            console.log('✅ Надежный виджет: Закрываем чат');
+            const chat = document.getElementById('reliableWidgetChat');
+            if (chat) {
+                chat.style.display = 'none';
+            }
+        } catch (error) {
+            console.error('❌ Надежный виджет: Ошибка закрытия:', error);
+        }
+    };
+
+    window.reliableHandleKeyPress = function(event) {
+        if (event && event.key === 'Enter') {
+            reliableSendMsg();
+        }
+    };
+
+    window.reliableSendMsg = function() {
+        try {
+            const input = document.getElementById('reliableWidgetInput');
+            const msgArea = document.getElementById('reliableWidgetMsgArea');
+            const userMessage = input ? input.value.trim() : '';
+
+            if (!userMessage) {
+                console.log('⚠️ Надежный виджет: Сообщение пустое');
+                return;
+            }
+
+            console.log('✅ Надежный виджет: Отправляем сообщение:', userMessage);
+
+            // Добавляем сообщение пользователя
+            if (msgArea) {
+                msgArea.innerHTML += `
+                    <div class="reliable-widget-msg user">
+                        <div class="reliable-widget-msg-content">${reliableEscapeHtml(userMessage)}</div>
+                    </div>
+                `;
+                msgArea.scrollTop = msgArea.scrollHeight;
+            }
+
+            // Очищаем поле ввода
+            if (input) {
+                input.value = '';
+            }
+
+            // Отправляем сообщение на сервер
+            reliableSendToServer(userMessage);
+
+        } catch (error) {
+            console.error('❌ Надежный виджет: Ошибка отправки:', error);
+            reliableShowError('Ошибка отправки сообщения');
+        }
+    };
+
+    window.reliableSendToServer = function(userMessage) {
+        try {
+            const protocol = window.location.protocol;
+            const host = window.location.host;
+            const apiUrl = `${protocol}//${host}/api/v1/ai/production/agent/`;
+
+            console.log('✅ Надежный виджет: URL API:', apiUrl);
+
+            fetch(apiUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': reliableGetCsrfToken()
+                },
+                body: JSON.stringify({
+                    message: userMessage,
+                    session_id: 'reliable_' + Date.now()
+                })
+            })
+            .then(response => {
+                console.log('✅ Надежный виджет: Получен ответ:', response.status);
+                if (!response.ok) {
+                    throw new Error('HTTP error: ' + response.status);
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('✅ Надежный виджет: Данные получены:', data);
+                if (data.success) {
+                    reliableShowBotResponse(data.response || '🤖 Ответ от AI');
+                } else {
+                    throw new Error(data.error || 'AI error');
+                }
+            })
+            .catch(error => {
+                console.error('❌ Надежный виджет: Ошибка API:', error);
+                reliableShowError('Ошибка соединения с сервером');
+            });
+
+        } catch (error) {
+            console.error('❌ Надежный виджет: Ошибка отправки на сервер:', error);
+            reliableShowError('Ошибка подготовки запроса');
+        }
+    };
+
+    window.reliableShowBotResponse = function(botResponse) {
+        try {
+            const msgArea = document.getElementById('reliableWidgetMsgArea');
+            if (msgArea) {
+                msgArea.innerHTML += `
+                    <div class="reliable-widget-msg bot">
+                        <div class="reliable-widget-msg-content">${reliableEscapeHtml(botResponse)}</div>
+                    </div>
+                `;
+                msgArea.scrollTop = msgArea.scrollHeight;
+            }
+        } catch (error) {
+            console.error('❌ Надежный виджет: Ошибка показа ответа:', error);
+        }
+    };
+
+    window.reliableShowError = function(errorMessage) {
+        try {
+            const msgArea = document.getElementById('reliableWidgetMsgArea');
+            if (msgArea) {
+                msgArea.innerHTML += `
+                    <div class="reliable-widget-msg bot">
+                        <div class="reliable-widget-msg-content">❌ ${reliableEscapeHtml(errorMessage)}</div>
+                    </div>
+                `;
+                msgArea.scrollTop = msgArea.scrollHeight;
+            }
+        } catch (error) {
+            console.error('❌ Надежный виджет: Ошибка показа ошибки:', error);
+        }
+    };
+
+    window.reliableEscapeHtml = function(text) {
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+    };
+
+    window.reliableGetCsrfToken = function() {
+        try {
+            const token = document.querySelector('[name=csrfmiddlewaretoken]');
+            if (token) {
+                return token.value;
+            }
+            const meta = document.querySelector('meta[name="csrf-token"]');
+            return meta ? meta.getAttribute('content') : '';
+        } catch (error) {
+            console.error('❌ Надежный виджет: Ошибка получения CSRF:', error);
+            return '';
+        }
+    };
+
+    // Инициализация
+    window.reliableInitWidget = function() {
+        try {
+            console.log('✅ Надежный виджет: Инициализация');
+
+            // Добавляем обработчик для поля ввода
+            const input = document.getElementById('reliableWidgetInput');
+            if (input) {
+                input.addEventListener('keypress', window.reliableHandleKeyPress);
+                console.log('✅ Надежный виджет: Обработчик клавиш добавлен');
+            }
+
+            console.log('✅ Надежный виджет: Готов к работе');
+        } catch (error) {
+            console.error('❌ Надежный виджет: Ошибка инициализации:', error);
+        }
+    };
+
+    // Запускаем инициализацию
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', window.reliableInitWidget);
+    } else {
+        window.reliableInitWidget();
+    }
+
+    console.log('✅ Надежный виджет: Система загружена');
+</script>

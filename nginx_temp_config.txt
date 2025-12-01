@@ -1,0 +1,44 @@
+# Temporary nginx configuration for testing
+# Use this to test the setup before full deployment
+
+# Test configuration - add to existing nginx config
+# This should be added to the existing server block
+
+# Add these location blocks to existing server configuration:
+
+# location /test-django/ {
+#     proxy_pass http://127.0.0.1:8001/;
+#     proxy_set_header Host $host;
+#     proxy_set_header X-Real-IP $remote_addr;
+#     proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+#     proxy_set_header X-Forwarded-Proto $scheme;
+# }
+
+# location /test-api/ {
+#     proxy_pass http://127.0.0.1:8001/api/;
+#     proxy_set_header Host $host;
+#     proxy_set_header X-Real-IP $remote_addr;
+#     proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+#     proxy_set_header X-Forwarded-Proto $scheme;
+# }
+
+# For immediate testing, you can access Django directly:
+# http://127.0.0.1:8001/ - Main Django application
+# http://127.0.0.1:8001/api/v1/ai/health/ - AI API health check
+# http://127.0.0.1:8001/admin/ - Django admin
+
+# To fully integrate with nginx, you need to:
+# 1. Remove the unitysphere site from sites-enabled:
+#    sudo rm /etc/nginx/sites-enabled/unitysphere
+
+# 2. Add proxy configuration to existing fan-club.kz server block:
+#    location / {
+#        proxy_pass http://127.0.0.1:8001;
+#        proxy_set_header Host $host;
+#        proxy_set_header X-Real-IP $remote_addr;
+#        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+#        proxy_set_header X-Forwarded-Proto $scheme;
+#    }
+
+# 3. Test and reload nginx:
+#    sudo nginx -t && sudo systemctl reload nginx

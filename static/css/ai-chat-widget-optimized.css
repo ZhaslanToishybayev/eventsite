@@ -1,0 +1,300 @@
+/* 🚀 Оптимизированный AI Chat Widget CSS - Production Ready */
+
+/* 🎯 Critical CSS - Load First */
+.ai-chat-button {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+    border: none;
+    color: white;
+    font-size: 28px;
+    cursor: pointer;
+    box-shadow: 0 10px 30px rgba(99, 102, 241, 0.4);
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    opacity: 0;
+    transform: scale(0.8);
+    animation: buttonEntrance 0.6s ease forwards;
+}
+
+@keyframes buttonEntrance {
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.ai-chat-button:hover {
+    transform: translateY(-4px) scale(1.05);
+    box-shadow: 0 20px 40px rgba(99, 102, 241, 0.5);
+}
+
+/* 🎨 Lazy Load остальных стилей */
+.ai-chat-container {
+    position: absolute;
+    bottom: 85px;
+    right: 0;
+    width: 420px;
+    height: 700px;
+    max-height: 85vh;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    border-radius: 24px;
+    box-shadow: 0 20px 60px -10px rgba(0, 0, 0, 0.15);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    transform-origin: bottom right;
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: scale(0.9) translateY(20px);
+}
+
+.ai-chat-container.active {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: all;
+    transform: scale(1) translateY(0);
+}
+
+/* 💬 Messages */
+.ai-chat-messages {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+    scroll-behavior: smooth;
+    background: transparent;
+}
+
+.ai-message {
+    margin-bottom: 16px;
+    display: flex;
+    flex-direction: column;
+    animation: messageSlideIn 0.4s ease-out;
+}
+
+@keyframes messageSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.ai-message-content {
+    max-width: 85%;
+    padding: 14px 18px;
+    border-radius: 18px;
+    font-size: 14px;
+    line-height: 1.6;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.ai-message.assistant .ai-message-content {
+    background: white;
+    color: #1f2937;
+    border-bottom-left-radius: 4px;
+}
+
+.ai-message.user .ai-message-content {
+    background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+    color: white;
+    border-bottom-right-radius: 4px;
+    box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+}
+
+/* ✍️ Input */
+.ai-chat-input-container {
+    flex-shrink: 0;
+    padding: 16px;
+    background: rgba(255, 255, 255, 0.9);
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.ai-input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    background: #f3f4f6;
+    border-radius: 16px;
+    padding: 4px;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.ai-input-wrapper:focus-within {
+    background: white;
+    border-color: #6366f1;
+    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+}
+
+.ai-chat-input {
+    flex: 1;
+    border: none;
+    background: transparent;
+    padding: 12px 16px;
+    font-size: 14px;
+    outline: none;
+    max-height: 100px;
+    resize: none;
+    font-family: inherit;
+}
+
+.ai-send-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    border: none;
+    background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    opacity: 0;
+    transform: scale(0.8);
+    pointer-events: none;
+}
+
+.ai-input-wrapper.has-text .ai-send-btn {
+    opacity: 1;
+    transform: scale(1);
+    pointer-events: all;
+}
+
+.ai-send-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+}
+
+/* 🌙 Темная тема */
+.ai-chat-widget.dark-theme .ai-chat-container {
+    background: rgba(17, 24, 39, 0.95);
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.ai-chat-widget.dark-theme .ai-message.assistant .ai-message-content {
+    background: #1f2937;
+    color: #f9fafb;
+}
+
+.ai-chat-widget.dark-theme .ai-input-wrapper {
+    background: #374151;
+}
+
+.ai-chat-widget.dark-theme .ai-input-wrapper:focus-within {
+    background: #1f2937;
+    border-color: #6366f1;
+}
+
+/* 📱 Mobile First */
+@media (max-width: 480px) {
+    .ai-chat-button {
+        bottom: 16px;
+        right: 16px;
+        width: 56px;
+        height: 56px;
+        font-size: 24px;
+    }
+
+    .ai-chat-container {
+        width: 100vw;
+        height: 100vh;
+        max-height: 100vh;
+        bottom: 0;
+        right: 0;
+        border-radius: 0;
+    }
+
+    .ai-message-content {
+        max-width: 90%;
+        padding: 12px 16px;
+    }
+
+    .ai-input-wrapper {
+        padding: 8px;
+    }
+}
+
+/* 🎯 Performance Optimizations */
+.ai-chat-widget {
+    will-change: transform;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+}
+
+.ai-message, .ai-chat-button, .ai-send-btn {
+    will-change: transform, opacity;
+}
+
+/* 🎨 Smooth scrolling */
+.ai-chat-messages {
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* 🌈 Loading states */
+.ai-typing {
+    display: flex;
+    gap: 4px;
+    padding: 8px 12px;
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 12px;
+    width: fit-content;
+    margin-bottom: 12px;
+    margin-left: 44px;
+}
+
+.ai-typing-dot {
+    width: 6px;
+    height: 6px;
+    background: #6b7280;
+    border-radius: 50%;
+    animation: typingBounce 1.4s infinite ease-in-out;
+}
+
+.ai-typing-dot:nth-child(1) { animation-delay: 0s; }
+.ai-typing-dot:nth-child(2) { animation-delay: 0.2s; }
+.ai-typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes typingBounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-4px); }
+}
+
+/* 🎯 Focus states for accessibility */
+.ai-chat-input:focus,
+.ai-send-btn:focus,
+.ai-chat-button:focus {
+    outline: 2px solid #6366f1;
+    outline-offset: 2px;
+}
+
+/* 🎨 Micro-interactions */
+.ai-chat-button {
+    will-change: transform;
+}
+
+.ai-send-btn {
+    will-change: transform, opacity;
+}
+
+.ai-input-wrapper {
+    will-change: background, border-color;
+}
+
+/* 🚀 Critical CSS ends here */

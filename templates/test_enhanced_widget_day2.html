@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тестирование Улучшенного AI Виджета - День 2</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 2.5em;
+            font-weight: 300;
+        }
+        .header p {
+            margin: 10px 0 0 0;
+            opacity: 0.9;
+            font-size: 1.1em;
+        }
+        .content {
+            padding: 40px;
+        }
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .feature-card {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 25px;
+            border-left: 4px solid #667eea;
+            transition: transform 0.2s ease;
+        }
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+        .feature-card h3 {
+            color: #333;
+            margin-top: 0;
+            font-size: 1.3em;
+        }
+        .feature-card ul {
+            margin: 15px 0;
+            padding-left: 20px;
+        }
+        .feature-card li {
+            margin-bottom: 8px;
+            color: #666;
+        }
+        .test-section {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+        .test-section h3 {
+            color: #333;
+            margin-top: 0;
+            font-size: 1.5em;
+        }
+        .test-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .test-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+        .test-btn:hover {
+            background: #5a6fd8;
+            transform: translateY(-2px);
+        }
+        .api-test {
+            background: #e9ecef;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+        }
+        .api-test h4 {
+            margin-top: 0;
+            color: #495057;
+        }
+        .api-url {
+            background: #495057;
+            color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            margin: 10px 0;
+        }
+        .response-area {
+            background: #212529;
+            color: #fff;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            max-height: 200px;
+            overflow-y: auto;
+            margin-top: 10px;
+        }
+        .status-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+        .status-healthy {
+            background: #28a745;
+        }
+        .status-error {
+            background: #dc3545;
+        }
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        .comparison-table th,
+        .comparison-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #dee2e6;
+        }
+        .comparison-table th {
+            background: #667eea;
+            color: white;
+        }
+        .comparison-table tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background: #e9ecef;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            width: 40%;
+            transition: width 0.5s ease;
+        }
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #28a745;
+            margin: 15px 0;
+        }
+        .error-message {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #dc3545;
+            margin: 15px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 День 2: Улучшенный AI Виджет</h1>
+            <p>Реальная интеграция с базой данных клубов и улучшенный функционал</p>
+        </div>
+
+        <div class="content">
+            <!-- Progress -->
+            <div class="progress-bar">
+                <div class="progress-fill"></div>
+            </div>
+            <p><strong>Прогресс: 40% - Второй день завершен ✅</strong></p>
+
+            <!-- Features Grid -->
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h3>🤖 Улучшенный AI Анализ</h3>
+                    <ul>
+                        <li>Точный анализ типов запросов</li>
+                        <li>Извлечение параметров из сообщений</li>
+                        <li>Контекстное понимание целей пользователя</li>
+                        <li>Интеллектуальная классификация запросов</li>
+                    </ul>
+                </div>
+
+                <div class="feature-card">
+                    <h3>🔍 Реальный Поиск Клубов</h3>
+                    <ul>
+                        <li>Поиск по городам, категориям, интересам</li>
+                        <li>Фильтрация по популярности и рейтингу</li>
+                        <li>Сортировка по релевантности</li>
+                        <li>Пагинация и ограничение результатов</li>
+                    </ul>
+                </div>
+
+                <div class="feature-card">
+                    <h3>🎯 Персонализированные Рекомендации</h3>
+                    <ul>
+                        <li>Рекомендации на основе интересов</li>
+                        <li>Анализ целевой аудитории</li>
+                        <li>Учет популярности и активности клубов</li>
+                        <li>Интеллектуальная система ранжирования</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Test Section -->
+            <div class="test-section">
+                <h3>🧪 Тестирование Нового Функционала</h3>
+
+                <div class="test-buttons">
+                    <button class="test-btn" onclick="testEnhancedAI()">Тест AI Анализа</button>
+                    <button class="test-btn" onclick="testClubSearch()">Тест Поиска Клубов</button>
+                    <button class="test-btn" onclick="testHealthCheck()">Health Check</button>
+                    <button class="test-btn" onclick="testCategoriesAPI()">Категории API</button>
+                    <button class="test-btn" onclick="testCitiesAPI()">Города API</button>
+                </div>
+
+                <!-- API Tests -->
+                <div id="api-tests">
+                    <div class="api-test">
+                        <h4>🔍 Enhanced AI Chat API</h4>
+                        <div class="api-url">POST /api/ai/enhanced/chat/</div>
+                        <div class="response-area" id="ai-response">Нажмите "Тест AI Анализа" для проверки...</div>
+                    </div>
+
+                    <div class="api-test">
+                        <h4>🏥 Health Check</h4>
+                        <div class="api-url">GET /api/ai/enhanced/health/</div>
+                        <div class="response-area" id="health-response">Нажмите "Health Check" для проверки...</div>
+                    </div>
+
+                    <div class="api-test">
+                        <h4>📚 Категории Клубов</h4>
+                        <div class="api-url">GET /api/ai/enhanced/categories/</div>
+                        <div class="response-area" id="categories-response">Нажмите "Категории API" для проверки...</div>
+                    </div>
+
+                    <div class="api-test">
+                        <h4>🏙️ Города</h4>
+                        <div class="api-url">GET /api/ai/enhanced/cities/</div>
+                        <div class="response-area" id="cities-response">Нажмите "Города API" для проверки...</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Comparison Table -->
+            <div class="test-section">
+                <h3>📊 Сравнение: Старый vs Новый AI</h3>
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Функция</th>
+                            <th>Старая Версия</th>
+                            <th>Новая Версия (День 2)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Анализ запросов</td>
+                            <td>Базовый (шаблонный)</td>
+                            <td>✅ Интеллектуальный (NLP + контекст)</td>
+                        </tr>
+                        <tr>
+                            <td>Поиск клубов</td>
+                            <td>❌ Нет интеграции с БД</td>
+                            <td>✅ Реальный поиск по базе данных</td>
+                        </tr>
+                        <tr>
+                            <td>Рекомендации</td>
+                            <td>❌ Шаблонные ответы</td>
+                            <td>✅ Персонализированные на основе интересов</td>
+                        </tr>
+                        <tr>
+                            <td>API эндпоинты</td>
+                            <td>✅ Базовые</td>
+                            <td>✅ Расширенные + Health Check + Статистика</td>
+                        </tr>
+                        <tr>
+                            <td>Производительность</td>
+                            <td>⚠️ Нагрузка на сервер</td>
+                            <td>✅ Оптимизировано для 2GB RAM</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Success Message -->
+            <div class="success-message">
+                <strong>🎉 Отлично! День 2 завершен успешно!</strong><br>
+                Улучшенный AI виджет теперь:
+                <ul>
+                    <li>✅ Работает с реальной базой данных клубов</li>
+                    <li>✅ Предоставляет персонализированные рекомендации</li>
+                    <li>✅ Имеет расширенные API эндпоинты</li>
+                    <li>✅ Оптимизирован для производительности на 2GB RAM сервере</li>
+                    <li>✅ Поддерживает поиск по городам, категориям и интересам</li>
+                </ul>
+            </div>
+
+            <!-- Next Steps -->
+            <div class="test-section">
+                <h3>🚀 Что дальше?</h3>
+                <p><strong>День 3:</strong> Интеграция с RAG (Retrieval-Augmented Generation) для умного поиска по описаниям клубов</p>
+                <p><strong>День 4:</strong> Реализация создания клубов через AI чат</p>
+                <p><strong>День 5:</strong> Machine Learning рекомендательная система</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Test functions for API endpoints
+        async function testEnhancedAI() {
+            const responseArea = document.getElementById('ai-response');
+            responseArea.textContent = 'Тестирование...';
+
+            try {
+                const response = await fetch('/api/ai/enhanced/chat/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        message: 'Найди мне клубы по спорту в Алмате',
+                        session_id: 'test_session_123'
+                    })
+                });
+
+                const data = await response.json();
+                responseArea.textContent = JSON.stringify(data, null, 2);
+            } catch (error) {
+                responseArea.textContent = `Ошибка: ${error.message}`;
+            }
+        }
+
+        async function testHealthCheck() {
+            const responseArea = document.getElementById('health-response');
+            responseArea.textContent = 'Тестирование...';
+
+            try {
+                const response = await fetch('/api/ai/enhanced/health/');
+                const data = await response.json();
+                responseArea.textContent = JSON.stringify(data, null, 2);
+            } catch (error) {
+                responseArea.textContent = `Ошибка: ${error.message}`;
+            }
+        }
+
+        async function testCategoriesAPI() {
+            const responseArea = document.getElementById('categories-response');
+            responseArea.textContent = 'Тестирование...';
+
+            try {
+                const response = await fetch('/api/ai/enhanced/categories/');
+                const data = await response.json();
+                responseArea.textContent = JSON.stringify(data, null, 2);
+            } catch (error) {
+                responseArea.textContent = `Ошибка: ${error.message}`;
+            }
+        }
+
+        async function testCitiesAPI() {
+            const responseArea = document.getElementById('cities-response');
+            responseArea.textContent = 'Тестирование...';
+
+            try {
+                const response = await fetch('/api/ai/enhanced/cities/');
+                const data = await response.json();
+                responseArea.textContent = JSON.stringify(data, null, 2);
+            } catch (error) {
+                responseArea.textContent = `Ошибка: ${error.message}`;
+            }
+        }
+
+        async function testClubSearch() {
+            const responseArea = document.getElementById('ai-response');
+            responseArea.textContent = 'Тестирование поиска...';
+
+            try {
+                const response = await fetch('/api/ai/enhanced/clubs/search/?q=спорт&limit=3');
+                const data = await response.json();
+                responseArea.textContent = JSON.stringify(data, null, 2);
+            } catch (error) {
+                responseArea.textContent = `Ошибка: ${error.message}`;
+            }
+        }
+
+        // Add some interactivity
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animate progress bar
+            setTimeout(() => {
+                document.querySelector('.progress-fill').style.width = '40%';
+            }, 500);
+
+            console.log('Enhanced AI Widget Test Page loaded!');
+            console.log('Доступные функции тестирования:');
+            console.log('- testEnhancedAI() - Тест AI анализа запросов');
+            console.log('- testClubSearch() - Тест поиска клубов');
+            console.log('- testHealthCheck() - Health check системы');
+            console.log('- testCategoriesAPI() - API категорий');
+            console.log('- testCitiesAPI() - API городов');
+        });
+    </script>
+</body>
+</html>

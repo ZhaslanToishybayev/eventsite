@@ -1,0 +1,365 @@
+{
+  "postgres_analysis": {
+    "tables": [
+      "accounts_profile",
+      "accounts_user",
+      "accounts_user_groups",
+      "accounts_user_user_permissions",
+      "auth_group",
+      "auth_group_permissions",
+      "auth_permission",
+      "authtoken_token",
+      "cache_table",
+      "clubs_city",
+      "clubs_club",
+      "clubs_club_likes",
+      "clubs_club_managers",
+      "clubs_club_members",
+      "clubs_club_partners",
+      "clubs_clubads",
+      "clubs_clubadtype",
+      "clubs_clubcategory",
+      "clubs_clubevent",
+      "clubs_clubgalleryphoto",
+      "clubs_clubjoinrequest",
+      "clubs_clubpartnershiprequest",
+      "clubs_clubservice",
+      "clubs_clubserviceimage",
+      "clubs_festival",
+      "clubs_festival_approved_clubs",
+      "clubs_festivalparticipationrequest",
+      "clubs_publication",
+      "clubs_serviceforclubs",
+      "django_admin_log",
+      "django_content_type",
+      "django_migrations",
+      "django_session"
+    ],
+    "structures": {
+      "clubs_club": {
+        "fields": [
+          [
+            "uuid",
+            "NOT NULL"
+          ],
+          [
+            "NOT",
+            "NULL"
+          ],
+          [
+            "NOT",
+            "NULL"
+          ],
+          [
+            "text",
+            "NOT NULL"
+          ],
+          [
+            "NOT",
+            "NULL"
+          ],
+          [
+            "NOT",
+            "NULL"
+          ],
+          [
+            "NOT",
+            "NULL"
+          ],
+          [
+            "integer",
+            "NOT NULL"
+          ],
+          [
+            "integer",
+            "NOT NULL"
+          ],
+          [
+            "boolean",
+            "NOT NULL"
+          ],
+          [
+            "boolean",
+            "NOT NULL"
+          ],
+          [
+            "zone",
+            "NOT NULL"
+          ],
+          [
+            "zone",
+            "NOT NULL"
+          ],
+          [
+            "integer",
+            "NOT NULL"
+          ],
+          [
+            "uuid",
+            "NOT NULL"
+          ],
+          [
+            "uuid",
+            "NOT NULL"
+          ],
+          [
+            "clubs_club_likes_count_check",
+            "CHECK"
+          ],
+          [
+            "clubs_club_members_count_check",
+            "CHECK"
+          ],
+          [
+            "clubs_club_partners_count_check",
+            "CHECK"
+          ]
+        ],
+        "has_data": false
+      },
+      "clubs_city": {
+        "fields": [
+          [
+            "uuid",
+            "NOT NULL"
+          ],
+          [
+            "NOT",
+            "NULL"
+          ],
+          [
+            "NOT",
+            "NULL"
+          ],
+          [
+            "zone",
+            "NOT NULL"
+          ],
+          [
+            "zone",
+            "NOT NULL"
+          ]
+        ],
+        "has_data": false
+      },
+      "clubs_clubcategory": {
+        "fields": [
+          [
+            "uuid",
+            "NOT NULL"
+          ],
+          [
+            "NOT",
+            "NULL"
+          ],
+          [
+            "boolean",
+            "NOT NULL"
+          ],
+          [
+            "zone",
+            "NOT NULL"
+          ],
+          [
+            "zone",
+            "NOT NULL"
+          ]
+        ],
+        "has_data": false
+      },
+      "clubs_festival": {
+        "fields": [
+          [
+            "uuid",
+            "NOT NULL"
+          ],
+          [
+            "NOT",
+            "NULL"
+          ],
+          [
+            "text",
+            "NOT NULL"
+          ],
+          [
+            "NOT",
+            "NULL"
+          ],
+          [
+            "zone",
+            "NOT NULL"
+          ],
+          [
+            "zone",
+            "NOT NULL"
+          ],
+          [
+            "zone",
+            "NOT NULL"
+          ],
+          [
+            "NOT",
+            "NULL"
+          ]
+        ],
+        "has_data": false
+      },
+      "clubs_publication": {
+        "fields": [
+          [
+            "uuid",
+            "NOT NULL"
+          ],
+          [
+            "NOT",
+            "NULL"
+          ],
+          [
+            "zone",
+            "NOT NULL"
+          ],
+          [
+            "zone",
+            "NOT NULL"
+          ],
+          [
+            "text",
+            "NOT NULL"
+          ],
+          [
+            "text",
+            "NOT NULL"
+          ]
+        ],
+        "has_data": false
+      },
+      "accounts_user": {
+        "fields": [
+          [
+            "NOT",
+            "NULL"
+          ],
+          [
+            "boolean",
+            "NOT NULL"
+          ],
+          [
+            "boolean",
+            "NOT NULL"
+          ],
+          [
+            "boolean",
+            "NOT NULL"
+          ],
+          [
+            "zone",
+            "NOT NULL"
+          ],
+          [
+            "uuid",
+            "NOT NULL"
+          ],
+          [
+            "NOT",
+            "NULL"
+          ],
+          [
+            "NOT",
+            "NULL"
+          ],
+          [
+            "NOT",
+            "NULL"
+          ],
+          [
+            "NOT",
+            "NULL"
+          ],
+          [
+            "boolean",
+            "NOT NULL"
+          ],
+          [
+            "boolean",
+            "NOT NULL"
+          ]
+        ],
+        "has_data": false
+      }
+    },
+    "total_tables": 33
+  },
+  "sqlite_analysis": {
+    "tables": [
+      "account_emailaddress",
+      "account_emailconfirmation",
+      "accounts_profile",
+      "accounts_user",
+      "accounts_user_groups",
+      "accounts_user_user_permissions",
+      "agents_agentlog",
+      "agents_agenttask",
+      "ai_consultant_aicontext",
+      "ai_consultant_chatanalytics",
+      "ai_consultant_chatmessage",
+      "ai_consultant_chatsession",
+      "ai_consultant_developmentcategory",
+      "ai_consultant_developmentpath",
+      "ai_consultant_developmentpath_skills",
+      "ai_consultant_developmentresource",
+      "ai_consultant_developmentskill",
+      "ai_consultant_feedbackattachment",
+      "ai_consultant_feedbackcategory",
+      "ai_consultant_feedbackrating",
+      "ai_consultant_interviewrequest",
+      "ai_consultant_platformservice",
+      "ai_consultant_userdevelopmentplan",
+      "ai_consultant_userfeedback",
+      "ai_consultant_userskillprogress",
+      "ai_conversation_states",
+      "ai_session_logs",
+      "auth_group",
+      "auth_group_permissions",
+      "auth_permission",
+      "authtoken_token",
+      "club_creation_requests",
+      "clubs_city",
+      "clubs_club",
+      "clubs_club_likes",
+      "clubs_club_managers",
+      "clubs_club_members",
+      "clubs_club_partners",
+      "clubs_clubads",
+      "clubs_clubadtype",
+      "clubs_clubcategory",
+      "clubs_clubevent",
+      "clubs_clubgalleryphoto",
+      "clubs_clubjoinrequest",
+      "clubs_clubpartnershiprequest",
+      "clubs_clubpost",
+      "clubs_clubservice",
+      "clubs_clubserviceimage",
+      "clubs_festival",
+      "clubs_festival_approved_clubs",
+      "clubs_festivalparticipationrequest",
+      "clubs_publication",
+      "clubs_serviceforclubs",
+      "django_admin_log",
+      "django_content_type",
+      "django_migrations",
+      "django_session",
+      "django_site",
+      "socialaccount_socialaccount",
+      "socialaccount_socialapp",
+      "socialaccount_socialapp_sites",
+      "socialaccount_socialtoken",
+      "sqlite_sequence"
+    ],
+    "models": {},
+    "total_tables": 63
+  },
+  "comparison_summary": {
+    "postgres_tables_count": 33,
+    "sqlite_tables_count": 63
+  }
+}

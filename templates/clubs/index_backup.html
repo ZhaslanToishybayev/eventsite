@@ -1,0 +1,357 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block styles %}
+<link rel="stylesheet" href="{%  static 'css/template_css/linearicons.css' %}">
+<link rel="stylesheet" href="{%  static 'css/template_css/font-awesome.min.css' %}">
+<link rel="stylesheet" href="{%  static 'css/template_css/bootstrap.css' %}">
+<link rel="stylesheet" href="{%  static 'css/template_css/magnific-popup.css' %}">
+<link rel="stylesheet" href="{%  static 'css/template_css/nice-select.css' %}">
+<link rel="stylesheet" href="{%  static 'css/template_css/animate.min.css' %}">
+<link rel="stylesheet" href="{%  static 'css/template_css/owl.carousel.css' %}">
+<link rel="stylesheet" href="{%  static 'css/template_css/jquery-ui.css' %}">
+<link rel="stylesheet" href="{%  static 'css/template_css/main.css' %}">
+<link rel="stylesheet" href="{%  static 'css/our_css/style.css' %}">
+
+<!-- AI Chat Widget Styles -->
+<link rel="stylesheet" href="{% static 'css/ai-chat-widget-v2.css' %}?v=2.5.4">
+{% endblock %}
+
+{% block header %}
+{% include 'partial/site-header.html' %}
+{% endblock %}
+
+{% block content %}
+<section class="banner-area relative" id="home">
+    <div class="overlay overlay-bg"></div>
+    <div class="container">
+        <div class="row fullscreen d-flex align-items-center justify-content-between">
+            <div class="banner-content col-lg-9 col-md-12 mx-auto text-center">
+                <h2 class="text-uppercase text-white">
+                    <span class="your-future-txt">ВЫБИРАЙ ОКРУЖЕНИЕ</span>,
+                    <br>КОТОРОЕ ПОМОЖЕТ ТЕБЕ РАСТИ
+                </h2>
+                <p class="pt-10 pb-10">
+                    "Мы собрали для Вас лучшие сообщества Казахстана!"
+                </p>
+                <a href="{% url 'clubs' %}" class="primary-btn text-uppercase">Найти сообщество</a>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End banner Area -->
+
+<!-- Start feature Area -->
+<section class="feature-area">
+    <div class="container">
+        <div class="row">
+            {# <div class="col-lg-3">#}
+                {# <div class="single-feature">#}
+                    {# <div class="title">#}
+                        {# <h4>ЗАЯВИТЬ О СВОЁМ ПРОЕКТЕ (СТАРТАПЕ / БИЗНЕС ИДЕЕ)</h4>#}
+                        {# </div>#}
+                    {# <div class="desc-wrap">#}
+                        {# <p style="min-height: 90px;">#}
+                            {# РАССКАЖИТЕ О СВОЁМ ПРОЕКТЕ ЧТОБЫ СОБРАТЬ КОМАНДУ ИЛИ ПРИВЛЕЧЬ БИЗНЕС ПАРТНЕРОВ#}
+                            {# </p>#}
+                        {# <a href="#">Заявить сейчас</a>#}
+                        {# </div>#}
+                    {# </div>#}
+                {# </div>#}
+            <div class="col-lg-4">
+                <a href="{% url 'club_create' %}">
+                    <div class="single-feature">
+                        <div class="title">
+                            <h4>Создавайте сообщества</h4>
+                        </div>
+                        <div class="desc-wrap">
+                            <p style="min-height: 90px;">
+                                ЧЕМ ПОЛЕЗНЕЕ И ИНТЕРЕСНЕЕ БУДЕТ ВАШЕ СООБЩЕСТВО ТЕМ БОЛЬШЕ УЧАСТНИКОВ В НЕМ БУДЕТ,
+                                КОТОРЫМ ВЫ СМОЖЕТЕ ПРОДАВАТЬ СВОЙ ТОВАР ИЛИ УСЛУГИ
+                            </p>
+                            <a class="link" href="{% url 'club_create' %}">Создать сейчас</a>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-4">
+                <a href="{% url 'clubs' %}">
+                    <div class="single-feature">
+                        <div class="title">
+                            <h4>Вступайте в сообщества</h4>
+                        </div>
+                        <div class="desc-wrap">
+                            <p>ХОТИТЕ РАЗВЛЕЧЕНИЙ - ХОББИ СООБЩЕСТВА</p>
+                            <p>ХОТИТЕ ЗАНИМАТЬСЯ СПОРТОМ - СПОРТ СООБЩЕСТВА</p>
+                            <p>ХОТИТЕ РАЗВИВАТЬСЯ КАК СПЕЦИАЛИСТ - ПРОФЕССИОНАЛЬНЫЕ СООБЩЕСТВА</p>
+                            <a class="link" href="{% url 'clubs' %}">Список сообществ</a>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-4">
+                <a href="{% url 'festivals' %}">
+                    <div class="single-feature">
+                        <div class="title">
+                            <h4>Фестивали сообществ</h4>
+                        </div>
+                        <div class="desc-wrap">
+                            <p style="min-height: 90px;">
+                                ЗДЕСЬ ВЫ МОЖЕТЕ ПОЗНАКОМИТЬСЯ С СООБЩЕСТВАМИ В ЖИВУЮ, ПОДАТЬ ЗАЯВКУ НА УЧАСТИЕ ИЛИ
+                                ПОСМОТРЕТЬ СПИСОК УЧАСТВУЮЩИХ
+                            </p>
+                            <a class="link" href="{% url 'festivals' %}">Ближайшие фестивали</a>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- End feature Area -->
+<section class="top-category-widget-area pt-90 pb-90 ">
+    <div class="container y-border-eee">
+        <div class="row d-flex justify-content-center">
+            <div class="menu-content pb-70 col-lg-8">
+                <div class="title text-center">
+                    <h1 class="mb-10">Поддержка для сообществ</h1>
+                    <!-- <p>
+                            Мы предлагаем широкий спектр услуг поддержки,
+                            разработанных специально для содействия развитию и
+                            процветанию вашего сообщества. Наша миссия состоит в том,
+                            чтобы стать вашим надёжным партнёром в стремлении создать
+                            сильное, взаимодействующее и вдохновляющее сообщество.
+                        </p> -->
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="active-popular-carusel-services">
+                {% for service in services %}
+                <div class="single-cat-widget">
+                    <div class="content relative">
+                        <a href="{% url 'service_for_club_detail' service.pk %}">
+                            <div class="overlay overlay-bg"></div>
+                            <div class="thumb">
+                                <img class="content-image img-fluid d-block mx-auto" src="{{ service.image.url }}"
+                                    alt="" style="height: 250px;">
+                            </div>
+                            <div class="content-details">
+                                <h4 class="content-title mx-auto text-wrap text-uppercase w-75">{{ service.name }}</h4>
+                                <span></span>
+                                <p class="w-75 mx-auto text-wrap">{{ service.description|slice:":100" }}...</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {# {% for service in services %}#}
+            {# <div class="col-lg-4">#}
+                {# <div class="single-cat-widget">#}
+                    {# <div class="content relative">#}
+                        {# <a href="{% url 'service_for_club_detail' service.pk %}">#}
+                            {# <div class="overlay overlay-bg"></div>#}
+                            {# <div class="thumb">#}
+                                {# <img class="content-image img-fluid d-block mx-auto" src="{{ service.image.url }}"
+                                    alt="" style="height: 250px;">#}
+                                {# </div>#}
+                            {# <div class="content-details">#}
+                                {# <h4 class="content-title mx-auto text-wrap text-uppercase w-75">{{ service.name }}
+                                </h4>#}
+                                {# <span></span>#}
+                                {# <p class="w-75 mx-auto text-wrap">{{ service.description|slice:":100" }}...</p>#}
+                                {# </div>#}
+                            {# </a>#}
+                        {# </div>#}
+                    {# </div>#}
+                {# </div>#}
+            {# {% endfor %}#}
+        </div>
+        <a href="{% url 'service_for_club_list' %}" class="d-block mx-auto text-center mt-3">Все услуги для
+            сообществ</a>
+    </div>
+</section>
+<!-- Start cta-one Area -->
+<section class="cta-one-area relative section-gap">
+    <div class="container">
+        <a class="text-decoration-none text-white" href="{% url 'user_list' %}">
+            <div class="overlay overlay-bg" style="background-color: rgba(4, 9, 30, 0.8);"></div>
+            <div class="row justify-content-center">
+                <div class="wrap">
+                    <h1 class="text-white">Единомышленники в один клик: ваш путь к новым связям.</h1>
+                    <p class="mx-auto py-3">
+                        Наше приложение предоставляет уникальную платформу,
+                        где вы можете найти тех, кто разделяет ваши
+                        взгляды и увлечения, с легкостью и комфортом.
+                        Откройте новые горизонты дружбы и сотрудничества
+                        с нашим быстрым и простым поиском единомышленников.
+                    </p>
+                    <a class="primary-btn text-uppercase" href="{% url 'user_list' %}">Найти единомышленника</a>
+                </div>
+            </div>
+        </a>
+    </div>
+</section>
+<!-- End cta-one Area -->
+<!-- Start popular-course Area -->
+{% if top_16_clubs %}
+<section class="popular-course-area section-gap clubs">
+    <div class="container y-border-eee">
+        <div class="row d-flex justify-content-center">
+            <div class="menu-content pb-70 col-lg-8">
+                <div class="title text-center">
+                    <h1 class="mb-10">Популярные сообщества нашего сайта</h1>
+                    <p>
+                        Вступая в сообщества, вы обретете единомышленников, друзей и даже спутника жизни.
+                        Наберетесь опыта и знаний в интересующей вас теме. Получите различные скидки, которые
+                        есть у сообществ
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="active-popular-carusel">
+                {% for club in top_16_clubs %}
+                <div class="single-popular-carusel club-item">
+                    <div class="thumb-wrap relative">
+                        <div class="thumb relative">
+                            <div class="overlay overlay-bg"></div>
+                            <a href="{{ club.get_absolute_url }}">
+                                <div class="image-container">
+                                    <img class="img-fluid" src="{{ club.logo.url}}" alt="">
+                                </div>
+                            </a>
+                        </div>
+                        <div class="custom-meta d-flex justify-content-between py-2">
+                            <div class="mx-auto">
+                                <span class="club_members">
+                                    <i class="fa-solid fa-users"></i> {{ club.members_count }}
+                                </span>
+                                <span class="club_likes">
+                                    <i class="fa-solid fa-heart"></i> {{ club.likes_count }}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="details">
+                        <a href="{{ club.get_absolute_url }}">
+                            <h4 class="text-center">
+                                {{ club.name }}
+                            </h4>
+                        </a>
+
+                    </div>
+                    <a href="{% url 'club_detail' club.pk %}"
+                        class="d-block primary-btn w-100 my-4 action-btn">Подробнее</a>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        <a href="{% url 'clubs' %}" class="d-block text-center">ВСЕ СООБЩЕСТВА</a>
+    </div>
+</section>
+{% endif %}
+<!-- End popular-course Area -->
+<!-- Start upcoming-event Area -->
+{% if nearest_16_events %}
+<section class="popular-course-area section-gap events">
+    <div class="container y-border-eee">
+        <div class="row d-flex justify-content-center">
+            <div class="menu-content pb-70 col-lg-8">
+                <div class="title text-center">
+                    <h1 class="mb-10">БЛИЖАЙШИЕ СОБЫТИЯ</h1>
+                    <p>
+                        Впереди много интересного: Откройте мир возможностей с
+                        нашим списком ближайших событий!
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="active-popular-carusel">
+                {% for event in nearest_16_events %}
+                <div class="single-popular-carusel">
+                    <div class="thumb-wrap relative">
+                        <div class="thumb relative">
+                            <div class="overlay overlay-bg"></div>
+                            <a href="{{ event.get_absolute_url }}">
+                                <div class="image-container">
+                                    {% if event.banner %}
+                                    <img class="img-fluid" src="{{ event.banner.url }}" alt="">
+                                    {% else %}
+                                    <img class="img-fluid" src="{% static 'images/event-details-img.jpg' %}" alt="{{ event.title }}">
+                                    {% endif %}
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="details">
+                        <a href="{{ event.get_absolute_url }}" class="mb-1">
+                            <h4 style="height: 50px;">{{ event.title }}</h4>
+                        </a>
+                        <div class="event-details mb-2">
+                            <div class="event-key-value">
+                                <span class="event-key">Организатор:</span>
+                                <a href="{{ event.club.get_absolute_url }}" class="event d-inline-block">{{
+                                    event.club.name }}</a>
+                            </div>
+                            <div class="event-key-value">
+                                <span class="event-key">Начало:</span>
+                                <span class="event-value">{{ event.start_datetime }}</span>
+                            </div>
+                        </div>
+                        <p class="event-description">{{ event.description }}</p>
+                    </div>
+                    <a href="{% url 'event_detail' event.pk %}"
+                        class="d-block primary-btn w-100 my-4 action-btn">Записаться</a>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        <a href="{% url 'club_events' %}" class="d-block text-center">ВСЕ СОБЫТИЯ</a>
+    </div>
+</section>
+{% endif %}
+<!-- End upcoming-event Area -->
+{% endblock %}
+
+{% block footer %}
+{% include 'partial/footer.html' %}
+{% endblock %}
+
+{% block scripts %}
+<script src="{%  static 'js/template_js/vendor/jquery-2.2.4.min.js' %}"></script>
+<script src="{%  static 'js/template_js/vendor/bootstrap.min.js' %}"></script>
+{#
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBhOdIF3Y9382fqJYt5I_sswSrEw5eihAA"></script>#}
+<script src="{%  static 'js/template_js/easing.min.js' %}"></script>
+<script src="{%  static 'js/template_js/hoverIntent.js' %}"></script>
+<script src="{%  static 'js/template_js/superfish.min.js' %}"></script>
+<script src="{%  static 'js/template_js/jquery.ajaxchimp.min.js' %}"></script>
+<script src="{%  static 'js/template_js/jquery.magnific-popup.min.js' %}"></script>
+<script src="{%  static 'js/template_js/jquery.tabs.min.js' %}"></script>
+<script src="{%  static 'js/template_js/jquery.nice-select.min.js' %}"></script>
+<script src="{%  static 'js/template_js/owl.carousel.min.js' %}"></script>
+<script src="{%  static 'js/template_js/mail-script.js' %}"></script>
+<script src="{%  static 'js/template_js/main.js' %}"></script>
+<script src="{%  static 'js/our_js/index.js' %}"></script>
+
+<!-- AI Chat Widget Script v2.8 - CSP Fixed -->
+<script src="{% static 'js/ai-chat-widget-v2.js' %}?v=2.8.1"></script>
+
+<!-- Standalone Widget (No Dependencies) -->
+<script src="{% static 'js/ai-chat-widget-standalone.js' %}?v=2.8.0"></script>
+
+{% block extra_scripts %}
+{% endblock %}
+
+            // Проверяем, есть ли уже элемент виджета
+            console.log('5. Элемент виджета после автоматической инициализации:', document.getElementById('ai-chat-widget'));
+            console.log('6. Кнопка виджета:', document.getElementById('chatToggleBtn'));
+
+    });
+</script>
+{% endblock %}

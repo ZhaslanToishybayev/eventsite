@@ -1,0 +1,275 @@
+<!-- САМЫЙ ПРОСТОЙ РАБОЧИЙ ВИДЖЕТ -->
+<style>
+    .min-widget-btn {
+        position: fixed !important;
+        bottom: 30px !important;
+        right: 30px !important;
+        width: 60px !important;
+        height: 60px !important;
+        border-radius: 50% !important;
+        background: #667eea !important;
+        border: none !important;
+        color: white !important;
+        font-size: 24px !important;
+        cursor: pointer !important;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.2) !important;
+        transition: all 0.3s ease !important;
+        z-index: 9999 !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+    }
+
+    .min-widget-btn:hover {
+        transform: scale(1.1) !important;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.3) !important;
+    }
+
+    .min-widget-chat {
+        position: fixed !important;
+        bottom: 100px !important;
+        right: 30px !important;
+        width: 350px !important;
+        height: 450px !important;
+        background: white !important;
+        border-radius: 10px !important;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1) !important;
+        z-index: 10000 !important;
+        display: none !important;
+        flex-direction: column !important;
+        font-family: Arial, sans-serif !important;
+        overflow: hidden !important;
+        border: 1px solid #ddd !important;
+    }
+
+    .min-widget-header {
+        background: #667eea !important;
+        color: white !important;
+        padding: 12px 15px !important;
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        font-weight: bold !important;
+    }
+
+    .min-widget-close {
+        background: rgba(255,255,255,0.2) !important;
+        border: none !important;
+        color: white !important;
+        width: 25px !important;
+        height: 25px !important;
+        border-radius: 50% !important;
+        cursor: pointer !important;
+        font-size: 12px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+    }
+
+    .min-widget-msg-area {
+        flex: 1 !important;
+        padding: 10px !important;
+        overflow-y: auto !important;
+        background: #f9f9f9 !important;
+    }
+
+    .min-widget-input {
+        padding: 10px 15px !important;
+        background: white !important;
+        border-top: 1px solid #ddd !important;
+    }
+
+    .min-widget-input input {
+        width: 100% !important;
+        padding: 8px 12px !important;
+        border: 1px solid #ddd !important;
+        border-radius: 20px !important;
+        outline: none !important;
+        font-size: 14px !important;
+        margin-bottom: 5px !important;
+    }
+
+    .min-widget-input button {
+        width: 100% !important;
+        padding: 8px !important;
+        background: #667eea !important;
+        color: white !important;
+        border: none !important;
+        border-radius: 15px !important;
+        cursor: pointer !important;
+        font-size: 14px !important;
+        transition: background 0.2s ease !important;
+    }
+
+    .min-widget-input button:hover {
+        background: #5a6fd8 !important;
+    }
+
+    .min-widget-msg {
+        margin: 5px 0 !important;
+        max-width: 90% !important;
+    }
+
+    .min-widget-msg.usr {
+        margin-left: auto !important;
+        text-align: right !important;
+    }
+
+    .min-widget-msg.bot {
+        margin-right: auto !important;
+        text-align: left !important;
+    }
+
+    .min-widget-msg-content {
+        padding: 8px 12px !important;
+        border-radius: 15px !important;
+        font-size: 14px !important;
+        display: inline-block !important;
+    }
+
+    .min-widget-msg.usr .min-widget-msg-content {
+        background: #667eea !important;
+        color: white !important;
+    }
+
+    .min-widget-msg.bot .min-widget-msg-content {
+        background: #e9ecef !important;
+        color: #333 !important;
+    }
+</style>
+
+<button class="min-widget-btn" id="minWidgetBtn">🤖</button>
+
+<div class="min-widget-chat" id="minWidgetChat">
+    <div class="min-widget-header">
+        <span>AI Помощник</span>
+        <button class="min-widget-close" id="minWidgetClose">✕</button>
+    </div>
+    <div class="min-widget-msg-area" id="minWidgetMsgArea">
+        <div class="min-widget-msg bot">
+            <div class="min-widget-msg-content">
+                Привет! Готов помочь с созданием фан-клуба!
+            </div>
+        </div>
+    </div>
+    <div class="min-widget-input">
+        <input type="text" id="minWidgetInput" placeholder="Напишите сообщение..." maxlength="200">
+        <button id="minWidgetSend">Отправить</button>
+    </div>
+</div>
+
+<script>
+    (function() {
+        'use strict';
+
+        function openWidget() {
+            console.log('✅ Мини-виджет: Открываем');
+            document.getElementById('minWidgetChat').style.display = 'flex';
+            setTimeout(() => {
+                const input = document.getElementById('minWidgetInput');
+                if (input) input.focus();
+            }, 100);
+        }
+
+        function closeWidget() {
+            console.log('✅ Мини-виджет: Закрываем');
+            document.getElementById('minWidgetChat').style.display = 'none';
+        }
+
+        function handleKeyPress(e) {
+            if (e.key === 'Enter') {
+                sendMsg();
+            }
+        }
+
+        async function sendMsg() {
+            const input = document.getElementById('minWidgetInput');
+            const msgArea = document.getElementById('minWidgetMsgArea');
+            const userMsg = input.value.trim();
+
+            if (!userMsg) return;
+
+            console.log('✅ Мини-виджет: Отправляем:', userMsg);
+
+            // Добавляем сообщение пользователя
+            msgArea.innerHTML += `
+                <div class="min-widget-msg usr">
+                    <div class="min-widget-msg-content">${userMsg}</div>
+                </div>
+            `;
+
+            input.value = '';
+            msgArea.scrollTop = msgArea.scrollHeight;
+
+            try {
+                const protocol = window.location.protocol;
+                const host = window.location.host;
+                const apiUrl = `${protocol}//${host}/api/v1/ai/production/agent/`;
+
+                console.log('✅ Мини-виджет: URL API:', apiUrl);
+
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': getCsrfToken()
+                    },
+                    body: JSON.stringify({
+                        message: userMsg,
+                        session_id: 'mini_' + Date.now()
+                    })
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    const botResponse = data.success ? data.response : 'Ошибка AI';
+
+                    msgArea.innerHTML += `
+                        <div class="min-widget-msg bot">
+                            <div class="min-widget-msg-content">${botResponse}</div>
+                        </div>
+                    `;
+                } else {
+                    throw new Error('API error');
+                }
+            } catch (error) {
+                console.error('❌ Мини-виджет: Ошибка:', error);
+                msgArea.innerHTML += `
+                    <div class="min-widget-msg bot">
+                        <div class="min-widget-msg-content">Ошибка соединения</div>
+                    </div>
+                `;
+            }
+
+            msgArea.scrollTop = msgArea.scrollHeight;
+        }
+
+        function getCsrfToken() {
+            const token = document.querySelector('[name=csrfmiddlewaretoken]');
+            if (!token) {
+                const meta = document.querySelector('meta[name="csrf-token"]');
+                return meta ? meta.getAttribute('content') : '';
+            }
+            return token.value;
+        }
+
+        function initWidget() {
+            console.log('✅ Мини-виджет: Инициализация');
+
+            document.getElementById('minWidgetBtn').onclick = openWidget;
+            document.getElementById('minWidgetClose').onclick = closeWidget;
+            document.getElementById('minWidgetSend').onclick = sendMsg;
+            document.getElementById('minWidgetInput').addEventListener('keypress', handleKeyPress);
+
+            console.log('✅ Мини-виджет: Готов к работе');
+        }
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initWidget);
+        } else {
+            initWidget();
+        }
+
+        console.log('✅ Мини-виджет: Загружен');
+    })();
+</script>

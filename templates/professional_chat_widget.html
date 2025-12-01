@@ -1,0 +1,46 @@
+{% load static %}
+<!-- 🎨 PROFESSIONAL CHAT WIDGET - Premium Design Implementation -->
+<link rel="stylesheet" href="{% static 'css/professional-chat-widget.css' %}?v=5.0.0">
+
+<div class="professional-chat-widget-btn" id="professionalChatWidgetBtn" title="🤖 Professional AI Consultant" aria-label="Professional AI Consultant" role="button">
+    🤖
+</div>
+
+<div class="professional-chat-widget-chat" id="professionalChatWidgetChat" aria-label="Professional AI chat consultant window" role="dialog">
+    <div class="professional-chat-widget-header" aria-label="Chat header">
+        🤖 Professional AI Консультант
+        <button class="professional-chat-widget-close" id="professionalChatWidgetClose" aria-label="Close chat" role="button">✕</button>
+    </div>
+
+    <div class="professional-chat-widget-messages" id="professionalChatWidgetMessages" aria-live="polite" aria-label="Chat messages">
+        <div class="professional-chat-widget-message ai">
+            <strong>🚀 Добро пожаловать в Professional AI Консультант!</strong><br>
+            Я - ваш профессиональный AI помощник по созданию фан-клубов и сообществ.<br><br>
+            <em>💡 Просто скажите, что вас интересует:</em>
+        </div>
+
+        <!-- 🎯 Professional Quick Actions -->
+        <div class="professional-chat-quick-actions" id="professionalQuickActions">
+            <div class="professional-chat-quick-action" data-action="create">➕ Создать клуб</div>
+            <div class="professional-chat-quick-action" data-action="find">🔍 Найти клубы</div>
+            <div class="professional-chat-quick-action" data-action="help">❓ Помощь</div>
+        </div>
+    </div>
+
+    <div class="professional-chat-widget-input" aria-label="Message input">
+        <input type="text" id="professionalChatWidgetInput" placeholder="Введите сообщение..." maxlength="500" aria-label="Enter your message" autocomplete="off" />
+        <button id="professionalChatWidgetSend" aria-label="Send message" role="button">Отправить</button>
+    </div>
+</div>
+
+<script src="{% static 'js/professional-chat-widget.js' %}?v=5.0.0"></script>
+
+<!-- 🚀 Инициализация Professional Chat Widget -->
+<script>
+    // Инициализация виджета после загрузки DOM
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initializeProfessionalWidget);
+    } else {
+        initializeProfessionalWidget();
+    }
+</script>

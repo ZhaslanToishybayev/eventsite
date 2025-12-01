@@ -1,0 +1,446 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% load i18n %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{% static 'css/template_css/linearicons.css' %}">
+    <link rel="stylesheet" href="{% static 'css/template_css/font-awesome.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/template_css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'css/template_css/magnific-popup.css' %}">
+    <link rel="stylesheet" href="{% static 'css/template_css/nice-select.css' %}">
+    <link rel="stylesheet" href="{% static 'css/template_css/animate.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/template_css/owl.carousel.css' %}">
+    <link rel="stylesheet" href="{% static 'css/template_css/jquery-ui.css' %}">
+    <link rel="stylesheet" href="{% static 'css/template_css/main.css' %}">
+    <link rel="stylesheet" href="{% static 'css/our_css/style.css' %}">
+    <style>
+        .allies-container {
+            padding: 40px 0;
+        }
+        .allies-header {
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        .allies-header h1 {
+            color: #333;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        .allies-header p {
+            color: #666;
+            font-size: 1.1em;
+        }
+        .search-filters {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+        .search-filters h4 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .filter-group {
+            margin-bottom: 20px;
+        }
+        .filter-group label {
+            font-weight: 500;
+            color: #333;
+            margin-bottom: 5px;
+            display: block;
+        }
+        .filter-input {
+            width: 100%;
+            padding: 10px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        .filter-input:focus {
+            outline: none;
+            border-color: #f7631b;
+            box-shadow: 0 0 0 3px rgba(247, 99, 27, 0.1);
+        }
+        .filter-select {
+            width: 100%;
+            padding: 10px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            background: white;
+            cursor: pointer;
+        }
+        .search-btn {
+            background: linear-gradient(135deg, #1a73e8 0%, #34a853 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 100%;
+        }
+        .search-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(26, 115, 232, 0.3);
+        }
+        .allies-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+        }
+        .ally-card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 1px solid #e0e0e0;
+        }
+        .ally-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+        .ally-header {
+            padding: 20px;
+            background: linear-gradient(135deg, #f7631b 0%, #ff9500 100%);
+            color: white;
+            text-align: center;
+        }
+        .ally-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: 3px solid white;
+            margin: 0 auto 15px;
+            display: block;
+            background: white;
+            object-fit: cover;
+        }
+        .ally-name {
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .ally-info {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+        .ally-body {
+            padding: 20px;
+        }
+        .ally-field {
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .ally-field:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        .ally-label {
+            font-weight: 600;
+            color: #f7631b;
+            margin-bottom: 5px;
+            display: block;
+            font-size: 0.9em;
+        }
+        .ally-value {
+            color: #333;
+            font-size: 1em;
+            line-height: 1.5;
+        }
+        .ally-interests {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .ally-tag {
+            background: #e3f2fd;
+            color: #1976d2;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            font-weight: 500;
+        }
+        .ally-actions {
+            padding: 20px;
+            border-top: 1px solid #f0f0f0;
+            display: flex;
+            gap: 10px;
+        }
+        .ally-btn {
+            flex: 1;
+            padding: 10px 15px;
+            border-radius: 8px;
+            text-decoration: none;
+            text-align: center;
+            font-weight: 500;
+            transition: all 0.3s;
+            font-size: 0.9em;
+        }
+        .ally-btn-primary {
+            background: #f7631b;
+            color: white;
+            border: none;
+        }
+        .ally-btn-primary:hover {
+            background: #e05a18;
+        }
+        .ally-btn-secondary {
+            background: #f8f9fa;
+            color: #333;
+            border: 1px solid #e0e0e0;
+        }
+        .ally-btn-secondary:hover {
+            background: #e9ecef;
+        }
+        .pagination-section {
+            margin-top: 40px;
+            text-align: center;
+        }
+        .pagination .page-item .page-link {
+            color: #333;
+            border: 1px solid #e0e0e0;
+            padding: 8px 16px;
+            margin: 0 5px;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        .pagination .page-item.active .page-link {
+            background: #f7631b;
+            border-color: #f7631b;
+            color: white;
+        }
+        .pagination .page-item .page-link:hover {
+            background: #f7631b;
+            color: white;
+            border-color: #f7631b;
+        }
+        .no-results {
+            text-align: center;
+            padding: 60px 20px;
+            color: #666;
+            font-size: 1.2em;
+        }
+        .no-results-icon {
+            font-size: 4em;
+            margin-bottom: 20px;
+            color: #f7631b;
+        }
+        @media (max-width: 768px) {
+            .allies-grid {
+                grid-template-columns: 1fr;
+            }
+            .ally-header {
+                padding: 15px;
+            }
+            .ally-name {
+                font-size: 1.2em;
+            }
+        }
+    </style>
+{% endblock %}
+
+{% block header %}
+    {% include 'partial/site-header.html' %}
+{% endblock %}
+
+{% block content %}
+    <section class="allies-container">
+        <div class="container">
+            <div class="allies-header">
+                <h1>🔍 Единомышленники</h1>
+                <p>Найдите людей с похожими интересами и целями</p>
+            </div>
+
+            <div class="search-filters">
+                <h4>🔍 Фильтры поиска</h4>
+                <form method="GET" action="{% url 'find_people' %}">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="filter-group">
+                                <label for="search">Поиск</label>
+                                <input type="text" id="search" name="search" class="filter-input"
+                                       placeholder="Введите интересы, город или имя..."
+                                       value="{{ search_query }}">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="filter-group">
+                                <label for="search_field">Где искать</label>
+                                <select id="search_field" name="search_field" class="filter-select">
+                                    <option value="all" {% if search_field == 'all' %}selected{% endif %}>Везде</option>
+                                    <option value="interests" {% if search_field == 'interests' %}selected{% endif %}>Только интересы</option>
+                                    <option value="city" {% if search_field == 'city' %}selected{% endif %}>Только город</option>
+                                    <option value="name" {% if search_field == 'name' %}selected{% endif %}>Только имя</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="filter-group">
+                                <label for="city">Город</label>
+                                <input type="text" id="city" name="city" class="filter-input"
+                                       placeholder="Введите город..."
+                                       value="{{ city_filter }}">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="filter-group">
+                                <label for="min_age">Минимальный возраст</label>
+                                <input type="number" id="min_age" name="min_age" class="filter-input"
+                                       placeholder="18" min="18" max="100"
+                                       value="{{ min_age }}">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="filter-group">
+                                <label for="max_age">Максимальный возраст</label>
+                                <input type="number" id="max_age" name="max_age" class="filter-input"
+                                       placeholder="65" min="18" max="100"
+                                       value="{{ max_age }}">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <button type="submit" class="search-btn">
+                                <i class="fa fa-search"></i> Найти единомышленников
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            {% if page_obj %}
+                <div class="allies-grid">
+                    {% for user in page_obj %}
+                        <div class="ally-card">
+                            <div class="ally-header">
+                                <img src="{{ user.avatar.url }}" alt="{{ user }}" class="ally-avatar">
+                                <div class="ally-name">{{ user }}</div>
+                                <div class="ally-info">
+                                    {% if user.profile.city %}
+                                        <i class="fa fa-map-marker"></i> {{ user.profile.city }}
+                                    {% else %}
+                                        <i class="fa fa-map-marker"></i> Город не указан
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="ally-body">
+                                {% if user.profile.interests %}
+                                    <div class="ally-field">
+                                        <span class="ally-label">Интересы</span>
+                                        <div class="ally-interests">
+                                            {% for interest in user.profile.interests.split %}{{ interest }}{% if not forloop.last %},{% endif %}{% endfor %}
+                                        </div>
+                                    </div>
+                                {% endif %}
+
+                                {% if user.profile.about %}
+                                    <div class="ally-field">
+                                        <span class="ally-label">О себе</span>
+                                        <div class="ally-value">{{ user.profile.about|truncatewords:20 }}</div>
+                                    </div>
+                                {% endif %}
+
+                                {% if user.profile.goals_for_life %}
+                                    <div class="ally-field">
+                                        <span class="ally-label">Цели на жизнь</span>
+                                        <div class="ally-value">{{ user.profile.goals_for_life|truncatewords:20 }}</div>
+                                    </div>
+                                {% endif %}
+                            </div>
+                            <div class="ally-actions">
+                                <a href="{% url 'user_detail' user.pk %}" class="ally-btn ally-btn-primary">
+                                    <i class="fa fa-user"></i> Профиль
+                                </a>
+                                <a href="{% url 'user_detail' user.pk %}#clubs" class="ally-btn ally-btn-secondary">
+                                    <i class="fa fa-users"></i> Клубы
+                                </a>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+
+                {% if page_obj.has_other_pages %}
+                    <div class="pagination-section">
+                        <nav aria-label="Page navigation">
+                            <ul class="pagination justify-content-center">
+                                {% if page_obj.has_previous %}
+                                    <li class="page-item">
+                                        <a class="page-link" href="?page={{ page_obj.previous_page_number }}{% if search_query %}&search={{ search_query }}{% endif %}{% if search_field %}&search_field={{ search_field }}{% endif %}{% if city_filter %}&city={{ city_filter }}{% endif %}{% if min_age %}&min_age={{ min_age }}{% endif %}{% if max_age %}&max_age={{ max_age }}{% endif %}">
+                                            Назад
+                                        </a>
+                                    </li>
+                                {% endif %}
+
+                                {% for num in page_obj.paginator.page_range %}
+                                    {% if page_obj.number == num %}
+                                        <li class="page-item active">
+                                            <span class="page-link">{{ num }}</span>
+                                        </li>
+                                    {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                                        <li class="page-item">
+                                            <a class="page-link" href="?page={{ num }}{% if search_query %}&search={{ search_query }}{% endif %}{% if search_field %}&search_field={{ search_field }}{% endif %}{% if city_filter %}&city={{ city_filter }}{% endif %}{% if min_age %}&min_age={{ min_age }}{% endif %}{% if max_age %}&max_age={{ max_age }}{% endif %}">
+                                                {{ num }}
+                                            </a>
+                                        </li>
+                                    {% endif %}
+                                {% endfor %}
+
+                                {% if page_obj.has_next %}
+                                    <li class="page-item">
+                                        <a class="page-link" href="?page={{ page_obj.next_page_number }}{% if search_query %}&search={{ search_query }}{% endif %}{% if search_field %}&search_field={{ search_field }}{% endif %}{% if city_filter %}&city={{ city_filter }}{% endif %}{% if min_age %}&min_age={{ min_age }}{% endif %}{% if max_age %}&max_age={{ max_age }}{% endif %}">
+                                            Вперёд
+                                        </a>
+                                    </li>
+                                {% endif %}
+                            </ul>
+                        </nav>
+                    </div>
+                {% endif %}
+            {% else %}
+                <div class="no-results">
+                    <div class="no-results-icon">
+                        <i class="fa fa-search"></i>
+                    </div>
+                    <h3>К сожалению, мы ничего не нашли</h3>
+                    <p>Попробуйте изменить параметры поиска или расширить критерии</p>
+                    <a href="{% url 'find_people' %}" class="btn btn-primary">Сбросить фильтры</a>
+                </div>
+            {% endif %}
+        </div>
+    </section>
+{% endblock %}
+
+{% block footer %}
+    {% include 'partial/footer.html' %}
+{% endblock %}
+
+{% block scripts %}
+    <script src="{% static 'js/our_js/mask.js' %}"></script>
+    <script>
+        // Добавляем плавную анимацию для карточек
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.ally-card');
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                setTimeout(() => {
+                    card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, index * 100);
+            });
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,170 @@
+# 🚀 Полноценная nginx конфигурация для fan-club.kz с SSL
+
+server {
+    listen 80;
+    server_name fan-club.kz www.fan-club.kz;
+    # Автоматическое перенаправление на HTTPS
+    return 301 https://$server_name$request_uri;
+}
+
+server {
+    listen 443 ssl http2;
+    server_name fan-club.kz www.fan-club.kz;
+
+    # SSL сертификаты Let's Encrypt
+    ssl_certificate /etc/letsencrypt/live/fan-club.kz/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/fan-club.kz/privkey.pem;
+
+    # Современные настройки SSL
+    ssl_protocols TLSv1.2 TLSv1.3;
+    ssl_ciphers ECDHE-RSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-RSA-AES128-SHA256:ECDHE-RSA-AES256-SHA384;
+    ssl_prefer_server_ciphers off;
+    ssl_session_cache shared:SSL:10m;
+    ssl_session_timeout 10m;
+    ssl_session_tickets off;
+
+    # HSTS (HTTP Strict Transport Security)
+    add_header Strict-Transport-Security "max-age=63072000; includeSubDomains; preload" always;
+    add_header X-Frame-Options DENY always;
+    add_header X-Content-Type-Options nosniff always;
+    add_header X-XSS-Protection "1; mode=block" always;
+    add_header Referrer-Policy "strict-origin-when-cross-origin" always;
+
+    # Основное приложение Django
+    location / {
+        proxy_pass http://127.0.0.1:8000;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header X-Forwarded-Host $host;
+        proxy_set_header X-Forwarded-Port $server_port;
+
+        # Таймауты
+        proxy_connect_timeout 60s;
+        proxy_send_timeout 60s;
+        proxy_read_timeout 60s;
+
+        # Буферизация
+        proxy_buffering on;
+        proxy_buffer_size 4k;
+        proxy_buffers 8 4k;
+    }
+
+    # Статические файлы
+    location /static/ {
+        alias /var/www/myapp/eventsite/static/;
+        expires 1y;
+        add_header Cache-Control "public, immutable";
+        add_header X-Content-Type-Options nosniff;
+
+        # Gzip для статических файлов
+        gzip_static on;
+
+        # CORS заголовки
+        add_header Access-Control-Allow-Origin *;
+    }
+
+    # Медиа файлы
+    location /media/ {
+        alias /var/www/myapp/eventsite/media/;
+        expires 1y;
+        add_header Cache-Control "public, immutable";
+
+        # Ограничение на загрузку файлов
+        client_max_body_size 10M;
+    }
+
+    # Проверка работоспособности
+    location /health/ {
+        access_log off;
+        return 200 "healthy\n";
+        add_header Content-Type text/plain;
+    }
+
+    # API endpoints
+    location /api/ {
+        proxy_pass http://127.0.0.1:8000;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+
+        # CORS для API
+        add_header Access-Control-Allow-Origin *;
+        add_header Access-Control-Allow-Methods "GET, POST, PUT, DELETE, OPTIONS";
+        add_header Access-Control-Allow-Headers "Origin, X-Requested-With, Content-Type, Accept, Authorization";
+
+        # Обработка OPTIONS запросов
+        if ($request_method = 'OPTIONS') {
+            add_header Access-Control-Allow-Origin *;
+            add_header Access-Control-Allow-Methods "GET, POST, PUT, DELETE, OPTIONS";
+            add_header Access-Control-Allow-Headers "Origin, X-Requested-With, Content-Type, Accept, Authorization";
+            add_header Access-Control-Max-Age 1728000;
+            add_header Content-Type "text/plain charset=UTF-8";
+            add_header Content-Length 0;
+            return 204;
+        }
+    }
+
+    # Django admin
+    location /admin/ {
+        proxy_pass http://127.0.0.1:8000;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+
+        # Дополнительная защита для админки
+        proxy_cookie_path /admin/ /admin/;
+    }
+
+    # CSRF protection
+    location ~* \.(txt|xml)$ {
+        proxy_pass http://127.0.0.1:8000;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+
+    # Gzip сжатие
+    gzip on;
+    gzip_vary on;
+    gzip_min_length 1000;
+    gzip_proxied any;
+    gzip_comp_level 6;
+    gzip_types
+        text/plain
+        text/css
+        text/xml
+        text/javascript
+        application/json
+        application/javascript
+        application/xml+rss
+        application/atom+xml
+        image/svg+xml;
+
+    # Логи
+    access_log /var/log/nginx/fan-club.kz.access.log;
+    error_log /var/log/nginx/fan-club.kz.error.log;
+
+    # Размер загрузки файлов
+    client_max_body_size 10M;
+}
+
+# Дополнительный сервер для acme-challenge (Let's Encrypt)
+server {
+    listen 80;
+    server_name fan-club.kz www.fan-club.kz;
+
+    location /.well-known/acme-challenge/ {
+        root /var/www/myapp/eventsite/;
+        try_files $uri =404;
+    }
+
+    # Все остальные запросы перенаправляются на HTTPS
+    location / {
+        return 301 https://$server_name$request_uri;
+    }
+}

@@ -1,70 +1,73 @@
+"""📋 Minimal Django URLs - Только основные приложения"""
+
 from django.contrib import admin
-from django.urls import path, include, re_path
-from django.conf.urls.static import static
+from django.urls import path, include
+from django.shortcuts import redirect
 from django.conf import settings
-from django import views as django_views
+from django.conf.urls.static import static
+from core.api_views import proxy_ai_agent, proxy_ai_health, proxy_ai_info, proxy_conversational_ai_agent
+from core.api_clubs_views import api_clubs, api_club_recommendation, api_ai_chat
+from core.api_ai_consultant import api_ai_consult, api_ai_clubs_search, api_ai_clubs_recommend, api_ai_club_create, api_ai_health
+from ai_consultant.api.enhanced_ai_urls import urlpatterns as enhanced_ai_urls
 from django.shortcuts import render
-from django.http import HttpResponse
-from django.views.generic import TemplateView
-
-def test_chat_view(request):
-    """Страница для тестирования ИИ-консультанта"""
-    return render(request, 'test_chat.html')
-
-def serena_demo_view(request):
-    """Страница для демонстрации Serena AI"""
-    return render(request, 'serena_demo.html')
-
-def ai_chat_demo_v2_view(request):
-    """Страница для демонстрации ИИ-консультанта v2.0"""
-    return render(request, 'ai-chat-demo-v2.html')
-
-def debug_widget_view(request):
-    """Тестовая страница для отладки AI виджета"""
-    return render(request, 'debug_widget.html')
-
-def test_widget_minimal_view(request):
-    """Минимальная тестовая страница для AI виджета"""
-    return render(request, 'test-widget-minimal.html')
-
-def debug_main_page_view(request):
-    """Диагностика главной страницы для AI виджета"""
-    return render(request, 'debug-main-page.html')
-
-def test_simple_view(request):
-    """Простой тест виджета"""
-    return render(request, 'test-simple.html')
-
-def ai_demo_view(request):
-    """Демонстрационная страница AI консультанта"""
-    return render(request, 'ai_demo.html')
+from accounts.views import find_allies_view
 
 urlpatterns = [
-    path('ckeditor/', include('ckeditor_uploader.urls')),
     path('admin/', admin.site.urls),
-    path('api/v1/', include('core.urls_api_v1')),
-    path('accounts/', include('accounts.urls')),
-    path('accounts/', include('allauth.urls')),
-    path('test-chat/', test_chat_view, name='test_chat'),
-    path('serena-demo/', serena_demo_view, name='serena_demo'),
-    path('ai-chat-demo-v2/', ai_chat_demo_v2_view, name='ai_chat_demo_v2'),
-    path('debug-widget/', debug_widget_view, name='debug_widget'),
-    path('test-widget-minimal/', test_widget_minimal_view, name='test_widget_minimal'),
-    path('debug-main-page/', debug_main_page_view, name='debug_main_page'),
-    path('test-simple/', test_simple_view, name='test_simple'),
-    path('ai-demo/', ai_demo_view, name='ai_demo'),
+
+    # Только основные приложения без проблемных зависимостей
     path('', include('clubs.urls')),
-    re_path(r'^jsi18n/$', django_views.i18n.JavaScriptCatalog.as_view(), name='jsi18n'),
+    path('accounts/', include('accounts.urls')),
+
+    # Страница "Единомышленники" - реальная страница вместо редиректа
+    path('find-people/', find_allies_view, name='find_people'),
+    path('единомышленники/', find_allies_view, name='find_allies'),
+
+    # Страницы тестирования удалены - оставляем только основной сайт
+
+    # AI агент прокси API endpoints
+    path('api/v1/ai/production/agent/', proxy_ai_agent, name='proxy_ai_agent'),
+    path('api/v1/ai/production/health/', proxy_ai_health, name='proxy_ai_health'),
+    path('api/v1/ai/production/info/', proxy_ai_info, name='proxy_ai_info'),
+    path('api/v1/ai/conversational/agent/', proxy_conversational_ai_agent, name='proxy_conversational_ai_agent'),
+
+    # Новые AI Club API endpoints
+    path('api/clubs/', api_clubs, name='api_clubs'),
+    path('api/clubs/recommend/', api_club_recommendation, name='api_club_recommendation'),
+    path('api/ai/chat/', api_ai_chat, name='api_ai_chat'),
+
+    # AI Consultant API endpoints
+    path('api/ai/consult/', api_ai_consult, name='api_ai_consult'),
+    path('api/ai/clubs/search/', api_ai_clubs_search, name='api_ai_clubs_search'),
+    path('api/ai/clubs/recommend/', api_ai_clubs_recommend, name='api_ai_clubs_recommend'),
+    path('api/ai/club/create/', api_ai_club_create, name='api_ai_club_create'),
+    path('api/ai/health/', api_ai_health, name='api_ai_health'),
+
+    # API v1 - Clubs with Actionable AI
+    path('api/v1/', include('core.urls_api_v1_actionable')),
+
+    # Enhanced widget test page
+    path('test_enhanced_widget/', lambda request: render(request, 'test_enhanced_widget_day2.html'), name='test_enhanced_widget'),
+
+    # Enhanced AI API endpoints
+    path('api/ai/enhanced/', include(enhanced_ai_urls)),
+
+    # Тестовая страница AI виджета
+    path('test-widget/', lambda request: render(request, 'widget_test_page.html'), name='test_widget'),
+    path('widget-diagnostic/', lambda request: render(request, 'widget_diagnostic.html'), name='widget_diagnostic'),
+    path('test-professional-widget/', lambda request: render(request, 'test_professional_widget.html'), name='test_professional_widget'),
+    path('deep-debug/', lambda request: render(request, 'deep_debug.html'), name='deep_debug'),
+    path('simple-widget/', lambda request: render(request, 'simple_working_widget.html'), name='simple_widget'),
+
+    # Allauth URLs для авторизации и регистрации
+    path('accounts/', include('allauth.urls')),
 ]
 
-
-def custom_403(request, exception):
-    return render(request, 'errors/403.html', status=403)
-
-
-handler403 = custom_403
-
-
-# if settings.DEBUG:
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+# Статические файлы
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+else:
+    # В production режиме тоже обслуживаем медиа файлы
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

@@ -1,0 +1,947 @@
+<!-- 🤖 ENHANCED CHAT WIDGET - Профессиональный дизайн с улучшенной UX/UI -->
+<style>
+    /* 🎨 Дизайн-система UnitySphere */
+    :root {
+        /* 🎯 Брендовые цвета */
+        --brand-primary: #1a365d;
+        --brand-accent: #0077be;
+        --brand-orange: #ff6b35;
+        --brand-success: #28a745;
+        --brand-warning: #ffc107;
+        --brand-error: #dc3545;
+        --brand-info: #17a2b8;
+
+        /* 🎨 Нейтральные цвета */
+        --neutral-white: #ffffff;
+        --neutral-light: #f8f9fa;
+        --neutral-lighter: #e9ecef;
+        --neutral-gray: #6c757d;
+        --neutral-dark: #333333;
+        --neutral-darker: #1a202c;
+
+        /* 🎯 Цвета для виджета */
+        --widget-primary: var(--brand-accent);
+        --widget-primary-hover: #00568c;
+        --widget-secondary: var(--brand-orange);
+        --widget-background: var(--neutral-white);
+        --widget-surface: var(--neutral-light);
+        --widget-text-primary: var(--neutral-darker);
+        --widget-text-secondary: var(--neutral-gray);
+        --widget-border: var(--neutral-lighter);
+
+        /* 📏 Пространственная система */
+        --space-xs: 4px;
+        --space-sm: 8px;
+        --space-md: 16px;
+        --space-lg: 24px;
+        --space-xl: 32px;
+        --space-xxl: 48px;
+
+        /* 🎭 Анимации */
+        --transition-fast: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+        --transition-normal: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        --transition-slow: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        --easing-emphasized: cubic-bezier(0.4, 0, 0.2, 1);
+        --easing-standard: cubic-bezier(0.4, 0, 0.2, 1);
+
+        /* 📱 Размеры шрифтов */
+        --font-size-xs: 0.75rem;
+        --font-size-sm: 0.875rem;
+        --font-size-base: 1rem;
+        --font-size-lg: 1.125rem;
+        --font-size-xl: 1.25rem;
+
+        /* 🎯 Тени */
+        --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
+        --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.06);
+        --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1), 0 5px 10px rgba(0, 0, 0, 0.05);
+        --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.1), 0 10px 10px rgba(0, 0, 0, 0.04);
+        --shadow-2xl: 0 25px 50px rgba(0, 0, 0, 0.15);
+        --shadow-inner: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+
+        /* 🎭 Z-index слои */
+        --z-overlay: 1000;
+        --z-modal: 1100;
+        --z-dropdown: 1200;
+        --z-sticky: 1300;
+        --z-header: 1400;
+        --z-floating: 1500;
+        --z-toast: 1600;
+        --z-tooltip: 1700;
+    }
+
+    /* 🌙 Темная тема */
+    @media (prefers-color-scheme: dark) {
+        :root {
+            --widget-background: var(--neutral-darker);
+            --widget-surface: #2d3748;
+            --widget-text-primary: var(--neutral-white);
+            --widget-text-secondary: #a0aec0;
+            --widget-border: #4a5568;
+        }
+    }
+
+    /* 🎨 Основные стили виджета */
+    .enhanced-chat-widget-btn {
+        position: fixed;
+        bottom: var(--space-lg);
+        right: var(--space-lg);
+        width: 70px;
+        height: 70px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--widget-primary) 0%, var(--widget-secondary) 100%);
+        border: 3px solid var(--widget-background);
+        color: var(--widget-background);
+        font-size: var(--font-size-xl);
+        cursor: pointer;
+        box-shadow: var(--shadow-xl);
+        transition: all var(--transition-normal);
+        z-index: var(--z-floating);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        outline: none;
+        animation: enhanced-pulse 4s infinite;
+        opacity: 1;
+        visibility: visible;
+        margin: 0;
+        padding: 0;
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        line-height: 1;
+        transform: rotate(0deg);
+        will-change: transform, box-shadow;
+    }
+
+    @keyframes enhanced-pulse {
+        0%, 100% {
+            transform: scale(1) rotate(0deg);
+            box-shadow: var(--shadow-xl);
+        }
+        50% {
+            transform: scale(1.05) rotate(1deg);
+            box-shadow: var(--shadow-2xl);
+        }
+    }
+
+    .enhanced-chat-widget-btn:hover {
+        transform: scale(1.15) rotate(2deg);
+        box-shadow: var(--shadow-2xl);
+        animation-play-state: paused;
+        background: linear-gradient(135deg, var(--widget-primary-hover) 0%, #ff8a50 100%);
+    }
+
+    .enhanced-chat-widget-btn:focus {
+        outline: 3px solid var(--widget-primary);
+        outline-offset: 2px;
+    }
+
+    .enhanced-chat-widget-btn:active {
+        transform: scale(0.95) rotate(-1deg);
+        box-shadow: var(--shadow-lg);
+    }
+
+    .enhanced-chat-widget-chat {
+        position: fixed;
+        bottom: calc(var(--space-lg) + 70px);
+        right: var(--space-lg);
+        width: 400px;
+        height: 600px;
+        background: var(--widget-background);
+        border-radius: 16px;
+        box-shadow: var(--shadow-2xl);
+        transition: all var(--transition-slow);
+        z-index: calc(var(--z-floating) - 1);
+        display: none;
+        overflow: hidden;
+        border: 1px solid var(--widget-border);
+        flex-direction: column;
+        backdrop-filter: blur(10px);
+        will-change: transform, opacity;
+    }
+
+    .enhanced-chat-widget-chat.show {
+        display: flex;
+        animation: slide-up-reveal var(--transition-slow) var(--easing-emphasized);
+    }
+
+    @keyframes slide-up-reveal {
+        from {
+            opacity: 0;
+            transform: translateY(50px) scale(0.9);
+            filter: blur(10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            filter: blur(0);
+        }
+    }
+
+    .enhanced-chat-widget-header {
+        background: linear-gradient(135deg, var(--widget-primary) 0%, var(--widget-secondary) 100%);
+        color: var(--widget-background);
+        padding: var(--space-md);
+        text-align: center;
+        font-weight: 600;
+        font-size: var(--font-size-base);
+        position: relative;
+        flex-shrink: 0;
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: var(--space-sm);
+    }
+
+    .enhanced-chat-widget-close {
+        position: absolute;
+        right: var(--space-md);
+        top: 50%;
+        transform: translateY(-50%);
+        background: none;
+        border: none;
+        color: var(--widget-background);
+        font-size: var(--font-size-lg);
+        cursor: pointer;
+        padding: var(--space-xs);
+        border-radius: 50%;
+        transition: all var(--transition-fast);
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        line-height: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 32px;
+        height: 32px;
+    }
+
+    .enhanced-chat-widget-close:hover {
+        background: rgba(255, 255, 255, 0.2);
+        transform: translateY(-50%) scale(1.1);
+    }
+
+    .enhanced-chat-widget-close:focus {
+        outline: 2px solid var(--widget-background);
+        outline-offset: 2px;
+    }
+
+    .enhanced-chat-widget-messages {
+        flex: 1;
+        padding: var(--space-md);
+        overflow-y: auto;
+        background: var(--widget-surface);
+        scroll-behavior: smooth;
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-sm);
+        scrollbar-width: thin;
+        scrollbar-color: var(--widget-border) var(--widget-surface);
+    }
+
+    .enhanced-chat-widget-messages::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    .enhanced-chat-widget-messages::-webkit-scrollbar-track {
+        background: var(--widget-surface);
+        border-radius: 3px;
+    }
+
+    .enhanced-chat-widget-messages::-webkit-scrollbar-thumb {
+        background: var(--widget-border);
+        border-radius: 3px;
+    }
+
+    .enhanced-chat-widget-input {
+        display: flex;
+        padding: var(--space-md);
+        background: var(--widget-background);
+        border-top: 1px solid var(--widget-border);
+        flex-shrink: 0;
+        gap: var(--space-sm);
+        align-items: flex-end;
+    }
+
+    .enhanced-chat-widget-input input {
+        flex: 1;
+        padding: var(--space-sm) var(--space-md);
+        border: 2px solid var(--widget-border);
+        border-radius: 25px;
+        outline: none;
+        font-size: var(--font-size-base);
+        transition: all var(--transition-fast);
+        max-height: 120px;
+        resize: none;
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        box-sizing: border-box;
+        background: var(--widget-surface);
+        color: var(--widget-text-primary);
+    }
+
+    .enhanced-chat-widget-input input:focus {
+        border-color: var(--widget-primary);
+        box-shadow: 0 0 0 3px rgba(0, 119, 190, 0.1);
+        background: var(--widget-background);
+    }
+
+    .enhanced-chat-widget-input input::placeholder {
+        color: var(--widget-text-secondary);
+        opacity: 0.7;
+    }
+
+    .enhanced-chat-widget-input button {
+        padding: var(--space-sm) calc(var(--space-md) + var(--space-sm));
+        background: linear-gradient(135deg, var(--widget-primary) 0%, var(--widget-primary-hover) 100%);
+        color: var(--widget-background);
+        border: none;
+        border-radius: 25px;
+        cursor: pointer;
+        font-size: var(--font-size-base);
+        transition: all var(--transition-normal);
+        font-weight: 500;
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        white-space: nowrap;
+        box-shadow: var(--shadow-sm);
+        will-change: transform, box-shadow;
+    }
+
+    .enhanced-chat-widget-input button:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-md);
+        background: linear-gradient(135deg, var(--widget-primary-hover) 0%, #004d80 100%);
+    }
+
+    .enhanced-chat-widget-input button:active {
+        transform: translateY(0);
+        box-shadow: var(--shadow-sm);
+    }
+
+    .enhanced-chat-widget-input button:disabled {
+        background: #ccc;
+        cursor: not-allowed;
+        transform: none;
+        box-shadow: none;
+    }
+
+    .enhanced-chat-widget-message {
+        max-width: 80%;
+        padding: var(--space-sm) var(--space-md);
+        border-radius: 18px;
+        line-height: 1.5;
+        font-size: var(--font-size-base);
+        word-wrap: break-word;
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        margin: 0;
+        animation: message-slide-in var(--transition-normal);
+    }
+
+    @keyframes message-slide-in {
+        from {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .enhanced-chat-widget-message.user {
+        background: var(--widget-primary);
+        color: var(--widget-background);
+        margin-left: auto;
+        border-bottom-right-radius: 8px;
+        text-align: left;
+        box-shadow: var(--shadow-sm);
+    }
+
+    .enhanced-chat-widget-message.ai {
+        background: var(--widget-background);
+        color: var(--widget-text-primary);
+        border-bottom-left-radius: 8px;
+        box-shadow: var(--shadow-sm);
+        text-align: left;
+        align-self: flex-start;
+        border: 1px solid var(--widget-border);
+    }
+
+    .enhanced-chat-widget-quick-reply {
+        display: inline-block;
+        margin: var(--space-xs);
+        padding: var(--space-sm) var(--space-md);
+        background: var(--widget-surface);
+        color: var(--widget-text-secondary);
+        border: 1px solid var(--widget-border);
+        border-radius: 15px;
+        font-size: var(--font-size-sm);
+        cursor: pointer;
+        transition: all var(--transition-fast);
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        text-align: center;
+        box-shadow: var(--shadow-xs);
+        will-change: transform, background-color;
+    }
+
+    .enhanced-chat-widget-quick-reply:hover {
+        background: var(--widget-primary);
+        color: var(--widget-background);
+        border-color: var(--widget-primary);
+        transform: translateY(-1px) scale(1.02);
+        box-shadow: var(--shadow-sm);
+    }
+
+    .enhanced-chat-widget-quick-reply:focus {
+        outline: 2px solid var(--widget-primary);
+        outline-offset: 1px;
+    }
+
+    .typing-indicator {
+        display: flex;
+        align-items: center;
+        gap: var(--space-sm);
+        padding: var(--space-sm) var(--space-md);
+        color: var(--widget-text-secondary);
+        font-size: var(--font-size-sm);
+        background: var(--widget-surface);
+        border-radius: 18px;
+        align-self: flex-start;
+        border: 1px solid var(--widget-border);
+        box-shadow: var(--shadow-xs);
+        animation: typing-slide-in var(--transition-normal);
+    }
+
+    @keyframes typing-slide-in {
+        from {
+            opacity: 0;
+            transform: translateX(-10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+
+    .typing-dots {
+        display: flex;
+        gap: 3px;
+    }
+
+    .typing-dots span {
+        width: 6px;
+        height: 6px;
+        background: var(--widget-text-secondary);
+        border-radius: 50%;
+        animation: enhanced-typing 1.4s infinite;
+        display: inline-block;
+    }
+
+    @keyframes enhanced-typing {
+        0%, 60%, 100% {
+            transform: translateY(0);
+            opacity: 0.4;
+        }
+        30% {
+            transform: translateY(-5px);
+            opacity: 1;
+        }
+    }
+
+    /* 📱 Адаптивность */
+    @media (max-width: 768px) {
+        .enhanced-chat-widget-btn {
+            bottom: var(--space-md);
+            right: var(--space-md);
+            width: 60px;
+            height: 60px;
+            font-size: var(--font-size-lg);
+        }
+
+        .enhanced-chat-widget-chat {
+            bottom: calc(var(--space-md) + 60px);
+            right: var(--space-md);
+            width: calc(100vw - 30px);
+            height: 70vh;
+            max-width: 400px;
+            min-height: 300px;
+        }
+
+        .enhanced-chat-widget-header {
+            font-size: var(--font-size-sm);
+            padding: var(--space-sm);
+        }
+
+        .enhanced-chat-widget-message {
+            max-width: 85%;
+            font-size: var(--font-size-sm);
+        }
+
+        .enhanced-chat-widget-input {
+            padding: var(--space-sm);
+        }
+
+        .enhanced-chat-widget-input input,
+        .enhanced-chat-widget-input button {
+            font-size: var(--font-size-sm);
+            padding: var(--space-xs) var(--space-sm);
+        }
+    }
+
+    @media (max-width: 480px) {
+        .enhanced-chat-widget-chat {
+            width: calc(100vw - 20px);
+            right: 10px;
+            bottom: calc(var(--space-sm) + 60px);
+        }
+
+        .enhanced-chat-widget-messages {
+            padding: var(--space-sm);
+        }
+    }
+
+    /* 🙈 Для очень маленьких экранов */
+    @media (max-height: 400px) {
+        .enhanced-chat-widget-btn {
+            display: none;
+        }
+    }
+
+    /* ♿ Доступность */
+    .enhanced-chat-widget-btn {
+        aria-label: "AI Консультант по клубам";
+        role: "button";
+    }
+
+    .enhanced-chat-widget-close {
+        aria-label: "Закрыть чат";
+        role: "button";
+    }
+
+    .enhanced-chat-widget-input input {
+        aria-label: "Введите сообщение";
+        role: "textbox";
+        autocomplete: "off";
+    }
+
+    .enhanced-chat-widget-input button {
+        aria-label: "Отправить сообщение";
+        role: "button";
+    }
+
+    /* 🎭 Поддержка уменьшения анимации */
+    @media (prefers-reduced-motion: reduce) {
+        .enhanced-chat-widget-btn,
+        .enhanced-chat-widget-chat,
+        .enhanced-chat-widget-header,
+        .enhanced-chat-widget-close,
+        .enhanced-chat-widget-input button,
+        .enhanced-chat-widget-message,
+        .typing-indicator,
+        .enhanced-chat-widget-quick-reply {
+            animation: none !important;
+            transition: none !important;
+            transform: none !important;
+        }
+
+        .enhanced-chat-widget-chat.show {
+            animation: none;
+            transform: none;
+        }
+    }
+</style>
+
+<div class="enhanced-chat-widget-btn" id="enhancedChatWidgetBtn" title="🤖 AI Консультант по клубам" aria-label="AI Консультант по клубам" role="button">
+    🤖
+</div>
+
+<div class="enhanced-chat-widget-chat" id="enhancedChatWidgetChat" aria-label="Окно чата с AI консультантом" role="dialog">
+    <div class="enhanced-chat-widget-header" aria-label="Заголовок чата">
+        🤖 AI Консультант по клубам
+        <button class="enhanced-chat-widget-close" id="enhancedChatWidgetClose" aria-label="Закрыть чат" role="button">×</button>
+    </div>
+    <div class="enhanced-chat-widget-messages" id="enhancedChatWidgetMessages" aria-live="polite" aria-label="Сообщения чата">
+        <div class="enhanced-chat-widget-message ai">
+            <strong>🚀 Добро пожаловать!</strong><br>
+            Я - ваш AI консультант по созданию фан-клубов и сообществ.<br><br>
+            <em>💡 Просто скажите, какой клуб вы хотите создать:</em><br>
+            • "Хочу создать шахматный клуб"<br>
+            • "Нужен клуб по программированию"<br>
+            • "Ищу спортивный клуб"
+        </div>
+    </div>
+    <div class="enhanced-chat-widget-input" aria-label="Поле ввода сообщения">
+        <input type="text" id="enhancedChatWidgetInput" placeholder="Введите сообщение..." maxlength="500" aria-label="Введите сообщение" autocomplete="off" />
+        <button id="enhancedChatWidgetSend" aria-label="Отправить сообщение" role="button">Отправить</button>
+    </div>
+</div>
+
+<script>
+    // 🚀 Enhanced Chat Widget - Профессиональная реализация
+    (function() {
+        'use strict';
+
+        class EnhancedChatWidget {
+            constructor() {
+                this.isOpen = false;
+                this.sessionId = 'enhanced_' + Date.now();
+                this.isTyping = false;
+                this.messageCount = 0;
+                this.initializeElements();
+                this.attachEventListeners();
+                this.loadQuickReplies();
+                this.announceWidgetReady();
+                console.log('🤖 EnhancedChatWidget: Инициализация завершена');
+            }
+
+            announceWidgetReady() {
+                // ♿ Семантическое объявление для скринридеров
+                const announcement = new SpeechSynthesisUtterance('AI чат-консультант готов к работе');
+                if (window.speechSynthesis && localStorage.getItem('widget-sound-enabled') === 'true') {
+                    window.speechSynthesis.speak(announcement);
+                }
+            }
+
+            initializeElements() {
+                this.btn = document.getElementById('enhancedChatWidgetBtn');
+                this.chat = document.getElementById('enhancedChatWidgetChat');
+                this.messages = document.getElementById('enhancedChatWidgetMessages');
+                this.input = document.getElementById('enhancedChatWidgetInput');
+                this.sendBtn = document.getElementById('enhancedChatWidgetSend');
+                this.closeBtn = document.getElementById('enhancedChatWidgetClose');
+
+                // ♿ Устанавливаем ARIA атрибуты
+                if (this.chat) {
+                    this.chat.setAttribute('aria-expanded', 'false');
+                    this.chat.setAttribute('aria-hidden', 'true');
+                }
+            }
+
+            attachEventListeners() {
+                if (this.btn) {
+                    this.btn.addEventListener('click', () => this.toggleChat());
+                    this.btn.addEventListener('keydown', (e) => this.handleButtonKeydown(e));
+                }
+                if (this.closeBtn) {
+                    this.closeBtn.addEventListener('click', () => this.toggleChat());
+                }
+                if (this.sendBtn) {
+                    this.sendBtn.addEventListener('click', () => this.sendMessage());
+                }
+                if (this.input) {
+                    this.input.addEventListener('keypress', (e) => {
+                        if (e.key === 'Enter' && !e.shiftKey) {
+                            e.preventDefault();
+                            this.sendMessage();
+                        }
+                    });
+                    this.input.addEventListener('input', () => this.handleInputUpdate());
+                    this.input.addEventListener('keydown', (e) => this.handleInputKeydown(e));
+                }
+
+                // Quick reply handlers
+                document.addEventListener('click', (e) => {
+                    if (e.target.classList.contains('enhanced-chat-widget-quick-reply')) {
+                        const message = e.target.textContent;
+                        if (this.input) {
+                            this.input.value = message;
+                            this.sendMessage();
+                        }
+                    }
+                });
+
+                // Close on escape
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'Escape' && this.isOpen) {
+                        this.toggleChat();
+                    }
+                });
+
+                // ♿ Фокусировка при открытии
+                this.chat.addEventListener('transitionend', () => {
+                    if (this.isOpen && this.input) {
+                        this.input.focus();
+                    }
+                });
+            }
+
+            handleButtonKeydown(e) {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    this.toggleChat();
+                }
+            }
+
+            handleInputUpdate() {
+                const hasText = this.input && this.input.value.trim().length > 0;
+                if (this.sendBtn) {
+                    this.sendBtn.disabled = !hasText;
+                }
+            }
+
+            handleInputKeydown(e) {
+                // Navigate quick replies with arrow keys
+                if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+                    e.preventDefault();
+                    this.navigateQuickReplies(e.key);
+                }
+            }
+
+            navigateQuickReplies(direction) {
+                const quickReplies = document.querySelectorAll('.enhanced-chat-widget-quick-reply');
+                if (quickReplies.length === 0) return;
+
+                let currentIndex = Array.from(quickReplies).findIndex(el => el === document.activeElement);
+                if (currentIndex === -1) currentIndex = 0;
+
+                const nextIndex = direction === 'ArrowDown' ?
+                    (currentIndex + 1) % quickReplies.length :
+                    (currentIndex - 1 + quickReplies.length) % quickReplies.length;
+
+                quickReplies[nextIndex].focus();
+            }
+
+            toggleChat() {
+                this.isOpen = !this.isOpen;
+
+                if (this.chat) {
+                    this.chat.setAttribute('aria-expanded', this.isOpen);
+                    this.chat.setAttribute('aria-hidden', !this.isOpen);
+                }
+
+                if (this.isOpen) {
+                    this.chat.classList.add('show');
+                    this.loadQuickReplies();
+                    this.btn.setAttribute('aria-pressed', 'true');
+                    console.log('🤖 EnhancedChatWidget: Чат открыт');
+                } else {
+                    this.chat.classList.remove('show');
+                    this.btn.setAttribute('aria-pressed', 'false');
+                    console.log('🤖 EnhancedChatWidget: Чат закрыт');
+                }
+            }
+
+            addTypingIndicator() {
+                if (!this.messages) return;
+                const typingDiv = document.createElement('div');
+                typingDiv.className = 'typing-indicator';
+                typingDiv.id = 'typingIndicator';
+                typingDiv.setAttribute('aria-label', 'AI печатает');
+                typingDiv.innerHTML = `
+                    <div class="typing-dots">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                    Печатает...
+                `;
+                this.messages.appendChild(typingDiv);
+                this.scrollToBottom();
+            }
+
+            removeTypingIndicator() {
+                const typingIndicator = document.getElementById('typingIndicator');
+                if (typingIndicator) {
+                    typingIndicator.remove();
+                }
+            }
+
+            addQuickReplies() {
+                if (!this.messages) return;
+                const quickReplies = [
+                    '🎮 Создать игровой клуб',
+                    '📚 Книжный клуб',
+                    '🍳 Кулинарный клуб',
+                    '📸 Фото-клуб',
+                    '🎵 Музыкальный клуб',
+                    '🏃 Спортивный клуб',
+                    '❓ Как это работает?'
+                ];
+
+                quickReplies.forEach((reply, index) => {
+                    const replyElement = document.createElement('div');
+                    replyElement.className = 'enhanced-chat-widget-quick-reply';
+                    replyElement.textContent = reply;
+                    replyElement.setAttribute('role', 'button');
+                    replyElement.setAttribute('tabindex', '0');
+                    replyElement.setAttribute('aria-label', `Быстрый ответ: ${reply}`);
+                    replyElement.style.animationDelay = `${index * 0.1}s`;
+                    this.messages.appendChild(replyElement);
+                });
+
+                this.scrollToBottom();
+            }
+
+            removeQuickReplies() {
+                const quickReplies = document.querySelectorAll('.enhanced-chat-widget-quick-reply');
+                quickReplies.forEach(reply => reply.remove());
+            }
+
+            loadQuickReplies() {
+                setTimeout(() => {
+                    this.addQuickReplies();
+                }, 500);
+            }
+
+            sendMessage() {
+                if (!this.input) return;
+                const message = this.input.value.trim();
+                if (!message) return;
+
+                this.input.value = '';
+                this.handleInputUpdate();
+
+                // Add user message
+                this.addMessage(message, 'user');
+
+                // Remove quick replies after first message
+                if (this.messageCount > 1) {
+                    this.removeQuickReplies();
+                }
+
+                // Simulate typing and send to AI
+                setTimeout(() => {
+                    this.sendToAI(message);
+                }, 300);
+            }
+
+            addMessage(text, sender) {
+                if (!this.messages) return;
+                const messageDiv = document.createElement('div');
+                messageDiv.className = `enhanced-chat-widget-message ${sender}`;
+                messageDiv.setAttribute('role', 'listitem');
+
+                // Convert newlines and sanitize HTML
+                const formattedText = this.sanitizeHTML(text).replace(/\n/g, '<br>');
+                messageDiv.innerHTML = formattedText;
+
+                // Add message counter for animation
+                this.messageCount++;
+                messageDiv.style.animationDelay = `${Math.min(this.messageCount * 0.1, 0.5)}s`;
+
+                this.messages.appendChild(messageDiv);
+                this.scrollToBottom();
+
+                // ♿ Announce new message to screen readers
+                if (sender === 'ai') {
+                    const announcement = new SpeechSynthUtterance(`Сообщение от AI: ${text}`);
+                    if (window.speechSynthesis && localStorage.getItem('widget-sound-enabled') === 'true') {
+                        setTimeout(() => window.speechSynthesis.speak(announcement), 100);
+                    }
+                }
+            }
+
+            sanitizeHTML(text) {
+                const div = document.createElement('div');
+                div.textContent = text;
+                return div.innerHTML;
+            }
+
+            async sendToAI(message) {
+                this.addTypingIndicator();
+                this.isTyping = true;
+
+                try {
+                    const response = await fetch('/api/v1/ai/conversational/agent/', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            message: message,
+                            session_id: this.sessionId
+                        })
+                    });
+
+                    const result = await response.json();
+                    this.removeTypingIndicator();
+                    this.isTyping = false;
+
+                    if (result.success) {
+                        this.addMessage(result.response, 'ai');
+
+                        // Add quick replies if available
+                        if (result.quick_replies && result.quick_replies.length > 0) {
+                            result.quick_replies.forEach((reply, index) => {
+                                const replyElement = document.createElement('div');
+                                replyElement.className = 'enhanced-chat-widget-quick-reply';
+                                replyElement.textContent = reply;
+                                replyElement.setAttribute('role', 'button');
+                                replyElement.setAttribute('tabindex', '0');
+                                replyElement.setAttribute('aria-label', `Быстрый ответ: ${reply}`);
+                                replyElement.style.animationDelay = `${index * 0.1}s`;
+                                this.messages.appendChild(replyElement);
+                            });
+                        }
+
+                        // Handle completion
+                        if (result.state === 'completed' || result.action === 'close_chat') {
+                            setTimeout(() => {
+                                this.addMessage('🎉 Отлично! Ваш клуб успешно создан! Спасибо за использование AI консультанта! 🎊', 'ai');
+                                setTimeout(() => this.toggleChat(), 5000);
+                            }, 1000);
+                        }
+                    } else {
+                        this.addMessage('😔 Ой, что-то пошло не так... Попробуйте еще раз или скажите "помощь" если нужна помощь! 🤗', 'ai');
+                    }
+
+                } catch (error) {
+                    this.removeTypingIndicator();
+                    this.isTyping = false;
+                    console.error('EnhancedChatWidget Error:', error);
+                    this.addMessage('❌ Ошибка соединения. Проверьте интернет и попробуйте снова!', 'ai');
+                }
+
+                if (this.input) {
+                    this.input.disabled = false;
+                }
+                if (this.sendBtn) {
+                    this.sendBtn.disabled = false;
+                }
+                if (this.input) {
+                    this.input.focus();
+                }
+            }
+
+            scrollToBottom() {
+                if (this.messages) {
+                    // Smooth scroll with fallback
+                    try {
+                        this.messages.scrollTo({
+                            top: this.messages.scrollHeight,
+                            behavior: 'smooth'
+                        });
+                    } catch (e) {
+                        this.messages.scrollTop = this.messages.scrollHeight;
+                    }
+                }
+            }
+        }
+
+        // Initialize widget when DOM is loaded
+        function initializeWidget() {
+            console.log('🤖 EnhancedChatWidget: DOM загружен, инициализация...');
+            window.enhancedChatWidget = new EnhancedChatWidget();
+            console.log('✅ EnhancedChatWidget: Готов к работе!');
+        }
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initializeWidget);
+        } else {
+            initializeWidget();
+        }
+
+        // Handle page visibility changes
+        document.addEventListener('visibilitychange', () => {
+            if (document.visibilityState === 'visible') {
+                console.log('🤖 EnhancedChatWidget: Страница активна');
+            }
+        });
+
+        // ♿ Keyboard navigation improvements
+        document.addEventListener('focusin', (e) => {
+            if (e.target.closest('.enhanced-chat-widget-chat')) {
+                e.target.closest('.enhanced-chat-widget-chat').style.outline = 'none';
+            }
+        });
+
+    })();
+</script>

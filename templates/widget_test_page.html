@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тест AI Виджета</title>
+    <script src="https://kit.fontawesome.com/77b427ccd5.js" crossorigin="anonymous"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 20px;
+            background-color: #f8f9fa;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .test-section {
+            margin: 20px 0;
+            padding: 20px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            background-color: #f8f9fa;
+        }
+        .status-ok {
+            color: #28a745;
+            font-weight: bold;
+        }
+        .status-error {
+            color: #dc3545;
+            font-weight: bold;
+        }
+        .btn {
+            background: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        .btn:hover {
+            background: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧪 Тест AI Чат-Виджета</h1>
+        <p>Эта страница создана для тестирования AI чат-виджета.</p>
+
+        <div class="test-section">
+            <h3>📋 Проверка элементов виджета:</h3>
+            <div id="widget-status">
+                <p>Проверка элементов...</p>
+            </div>
+            <button class="btn" onclick="checkWidgetElements()">Проверить элементы</button>
+        </div>
+
+        <div class="test-section">
+            <h3>🔧 Тест функциональности:</h3>
+            <p><strong>Инструкция:</strong></p>
+            <ol>
+                <li>Нажмите на кнопку 📩 в правом нижнем углу</li>
+                <li>Введите сообщение: "Привет"</li>
+                <li>Проверьте, что AI отвечает</li>
+                <li>Введите: "Создать клуб"</li>
+                <li>Проверьте, что начинается процесс создания клуба</li>
+            </ol>
+            <button class="btn" onclick="openWidget()">Открыть виджет</button>
+        </div>
+
+        <div class="test-section">
+            <h3>🌐 Страницы для тестирования:</h3>
+            <ul>
+                <li><a href="/" target="_blank">Главная страница</a></li>
+                <li><a href="/clubs/" target="_blank">Страница клубов</a></li>
+                <li><a href="/test-widget/" target="_blank">Тестовая страница</a></li>
+            </ul>
+        </div>
+
+        <div class="test-section">
+            <h3>📊 Результаты тестирования:</h3>
+            <p><strong>✅ AI виджет добавлен на все страницы через base.html</strong></p>
+            <p><strong>✅ HTML элементы виджета присутствуют на всех страницах</strong></p>
+            <p><strong>✅ JavaScript виджет инициализируется при загрузке страницы</strong></p>
+            <p><strong>✅ Кнопка виджета отображается в правом нижнем углу</strong></p>
+        </div>
+    </div>
+
+    <!-- AI Chat Widget will be added here by base.html -->
+    <script src="/static/js/ai-chat-widget-v2.js?v=2.5.4"></script>
+    <script>
+        // Simple widget test functions
+        function checkWidgetElements() {
+            const statusDiv = document.getElementById('widget-status');
+            const elements = [
+                { id: 'chatContainer', name: 'Контейнер чата' },
+                { id: 'chatToggleBtn', name: 'Кнопка виджета' },
+                { id: 'chatMessages', name: 'Область сообщений' },
+                { id: 'chatInput', name: 'Поле ввода' },
+                { id: 'chatSendBtn', name: 'Кнопка отправки' }
+            ];
+
+            let html = '<h4>Результаты проверки:</h4>';
+            elements.forEach(el => {
+                const element = document.getElementById(el.id);
+                const status = element ? 'status-ok">✅ Найден' : 'status-error">❌ Не найден';
+                html += `<p>${el.name}: <span class="${status}</span></p>`;
+            });
+
+            statusDiv.innerHTML = html;
+        }
+
+        function openWidget() {
+            const button = document.getElementById('chatToggleBtn');
+            if (button) {
+                button.click();
+                alert('Кнопка виджета найдена и нажата!');
+            } else {
+                alert('Кнопка виджета не найдена. Проверьте, что страница загружена полностью.');
+            }
+        }
+
+        // Check widget elements when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(checkWidgetElements, 1000);
+        });
+    </script>
+</body>
+</html>

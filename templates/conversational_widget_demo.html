@@ -1,0 +1,355 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conversational AI Widget - Тестирование</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            color: #2c3e50;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #7f8c8d;
+            font-size: 1.2em;
+        }
+
+        .demo-section {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            border-left: 4px solid #ff6b6b;
+        }
+
+        .demo-title {
+            font-size: 1.4em;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .demo-title::before {
+            content: "🤖";
+            margin-right: 10px;
+            font-size: 1.2em;
+        }
+
+        .demo-description {
+            color: #5a6c7d;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            border-left: 4px solid #ff6b6b;
+            transition: transform 0.2s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-3px);
+        }
+
+        .feature-card h3 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+
+        .feature-card h3::before {
+            content: "✨";
+            margin-right: 8px;
+        }
+
+        .feature-card ul {
+            color: #5a6c7d;
+            padding-left: 20px;
+        }
+
+        .feature-card li {
+            margin-bottom: 5px;
+        }
+
+        .comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .comparison-side {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            text-align: center;
+        }
+
+        .comparison-side.old {
+            border-top: 4px solid #e74c3c;
+        }
+
+        .comparison-side.new {
+            border-top: 4px solid #27ae60;
+        }
+
+        .comparison-side h3 {
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        .old .comparison-title {
+            color: #e74c3c;
+        }
+
+        .new .comparison-title {
+            color: #27ae60;
+        }
+
+        .test-instructions {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .test-instructions h3 {
+            color: #d76827;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+
+        .test-instructions h3::before {
+            content: "💡";
+            margin-right: 8px;
+        }
+
+        .test-instructions ul {
+            color: #d76827;
+            padding-left: 20px;
+        }
+
+        .test-instructions li {
+            margin-bottom: 5px;
+        }
+
+        .widget-demo {
+            background: #2c3e50;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .widget-demo p {
+            color: white;
+            margin-bottom: 15px;
+        }
+
+        .status {
+            padding: 10px 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+            font-weight: bold;
+        }
+
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .status.info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+
+        .status.warning {
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeaa7;
+        }
+
+        @media (max-width: 768px) {
+            .comparison {
+                grid-template-columns: 1fr;
+            }
+
+            .container {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🤖 Conversational AI Widget</h1>
+            <p>Протестируйте нового говорящего AI консультанта в реальном времени!</p>
+        </div>
+
+        <div class="status success">
+            ✅ <strong>Conversational AI агент запущен</strong> - Работает на порту 8002
+        </div>
+
+        <div class="status info">
+            🌐 <strong>Django прокси активен</strong> - API доступен на /api/v1/ai/conversational/agent/
+        </div>
+
+        <div class="demo-section">
+            <div class="demo-title">Новый Conversational AI агент</div>
+            <div class="demo-description">
+                Это улучшенная версия AI консультанта с естественным общением, широким пониманием контекста
+                и дружелюбным стилем общения. Бот теперь действительно помогает создавать клубы!
+            </div>
+        </div>
+
+        <div class="features-grid">
+            <div class="feature-card">
+                <h3>Естественное общение</h3>
+                <ul>
+                    <li>15+ вариаций приветствий</li>
+                    <li>Дружелюбный, легкий тон</li>
+                    <li>Эмоциональная вовлеченность</li>
+                    <li>Неповторяющиеся ответы</li>
+                </ul>
+            </div>
+
+            <div class="feature-card">
+                <h3>Улучшенное понимание</h3>
+                <ul>
+                    <li>Широкий контекст понимания</li>
+                    <li>Распознавание сокращений</li>
+                    <li>Гибкое понимание синонимов</li>
+                    <li>Распознавание намерений</li>
+                </ul>
+            </div>
+
+            <div class="feature-card">
+                <h3>Помощь в создании клубов</h3>
+                <ul>
+                    <li>Пошаговое сопровождение</li>
+                    <li>Предложения по типам клубов</li>
+                    <li>Помощь с названиями</li>
+                    <li>Советы по описанию</li>
+                </ul>
+            </div>
+
+            <div class="feature-card">
+                <h3>Инновационный дизайн</h3>
+                <ul>
+                    <li>Современный анимированный интерфейс</li>
+                    <li>Адаптивный под мобильные устройства</li>
+                    <li>Интуитивные быстрые ответы</li>
+                    <li>Плавные анимации</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="comparison">
+            <div class="comparison-side old">
+                <h3 class="comparison-title">Старая версия</h3>
+                <p><em>"Здравствуйте! Я - AI консультант UnitySphere"</em></p>
+                <ul style="text-align: left; color: #e74c3c;">
+                    <li>Формальный тон</li>
+                    <li>Повторяющиеся шаблоны</li>
+                    <li>Жесткое понимание</li>
+                    <li>Медленная реакция</li>
+                </ul>
+            </div>
+
+            <div class="comparison-side new">
+                <h3 class="comparison-title">Новая версия</h3>
+                <p><em>"Привет! 😊 Я помогу создать твой фан-клуб. О чем мечтаешь?"</em></p>
+                <ul style="text-align: left; color: #27ae60;">
+                    <li>Дружелюбный тон</li>
+                    <li>15+ вариаций ответов</li>
+                    <li>Гибкое понимание</li>
+                    <li>Быстрая реакция</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="test-instructions">
+            <h3>Как тестировать виджет</h3>
+            <ul>
+                <li><strong>Кликните на робота 🤖</strong> в правом нижнем углу</li>
+                <li><strong>Напишите сообщение:</strong> "Хочу создать шахматный клуб"</li>
+                <li><strong>Попробуйте другие фразы:</strong> "Нужен клуб по программированию", "Создать книжный клуб"</li>
+                <li><strong>Используйте быстрые ответы:</strong> выбирайте из предложенных вариантов</li>
+                <li><strong>Наслаждайтесь естественным общением!</strong></li>
+            </ul>
+        </div>
+
+        <div class="widget-demo">
+            <p>🔴 <strong>ВИДЖЕТ РАБОТАЕТ!</strong> Кликните на робота внизу справа для тестирования</p>
+        </div>
+
+        <!-- Включаем виджет -->
+        {% include 'conversational_widget.html' %}
+
+        <div class="demo-section">
+            <div class="demo-title">Техническая информация</div>
+            <div class="demo-description">
+                <strong>API Endpoint:</strong> <code>/api/v1/ai/conversational/agent/</code><br>
+                <strong>AI Agent:</strong> Запущен на порту 8002<br>
+                <strong>Протокол:</strong> HTTP/HTTPS (автоматическое определение)<br>
+                <strong>Формат:</strong> JSON запросы и ответы<br>
+                <strong>CSRF:</strong> Отключен для API endpoints
+            </div>
+        </div>
+    </div>
+
+    <script>
+        console.log('🚀 Conversational AI Widget Demo: Страница загружена');
+        console.log('✅ Готов к тестированию нового AI агента!');
+
+        // Показываем уведомление о готовности
+        setTimeout(() => {
+            console.log('🤖 Виджет готов к использованию!');
+            console.log('💡 Попробуйте: "Хочу создать шахматный клуб"');
+        }, 1000);
+    </script>
+</body>
+</html>

@@ -1,0 +1,380 @@
+<!-- ИСПРАВЛЕННЫЙ HTTPS ВИДЖЕТ -->
+<style>
+    .unity-widget-button {
+        position: fixed !important;
+        bottom: 30px !important;
+        right: 30px !important;
+        z-index: 9999 !important;
+        width: 70px;
+        height: 70px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+        border: none !important;
+        color: white !important;
+        font-size: 32px !important;
+        cursor: pointer !important;
+        box-shadow: 0 12px 35px rgba(102, 126, 234, 0.5) !important;
+        transition: all 0.3s ease !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        animation: pulse 2s infinite !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+    }
+
+    .unity-widget-button:hover {
+        transform: scale(1.1) rotate(5deg) !important;
+        box-shadow: 0 15px 40px rgba(102, 126, 234, 0.7) !important;
+        animation-play-state: paused !important;
+    }
+
+    @keyframes pulse {
+        0% { box-shadow: 0 12px 35px rgba(102, 126, 234, 0.5); }
+        50% { box-shadow: 0 12px 35px rgba(102, 126, 234, 0.8); transform: scale(1.05); }
+        100% { box-shadow: 0 12px 35px rgba(102, 126, 234, 0.5); }
+    }
+
+    .unity-widget-chat {
+        position: fixed !important;
+        bottom: 120px !important;
+        right: 30px !important;
+        width: 420px !important;
+        height: 600px !important;
+        background: white !important;
+        border-radius: 20px !important;
+        box-shadow: 0 20px 50px rgba(0,0,0,0.3) !important;
+        z-index: 10000 !important;
+        display: none !important;
+        flex-direction: column !important;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+        overflow: hidden !important;
+        border: 1px solid #e1e8ed !important;
+    }
+
+    .unity-widget-header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+        color: white !important;
+        padding: 16px 20px !important;
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        font-weight: 600 !important;
+    }
+
+    .unity-widget-close {
+        background: rgba(255,255,255,0.2) !important;
+        border: none !important;
+        color: white !important;
+        width: 32px !important;
+        height: 32px !important;
+        border-radius: 50% !important;
+        cursor: pointer !important;
+        font-size: 16px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+    }
+
+    .unity-widget-messages {
+        flex: 1 !important;
+        padding: 20px !important;
+        overflow-y: auto !important;
+        background: #f8f9fa !important;
+        max-height: 400px !important;
+    }
+
+    .unity-widget-input {
+        padding: 16px 20px !important;
+        background: white !important;
+        display: flex !important;
+        gap: 12px !important;
+        border-top: 1px solid #e1e8ed !important;
+    }
+
+    .unity-widget-input input {
+        flex: 1 !important;
+        padding: 12px 16px !important;
+        border: 2px solid #e1e8ed !important;
+        border-radius: 25px !important;
+        outline: none !important;
+        font-size: 14px !important;
+        transition: border-color 0.3s ease !important;
+    }
+
+    .unity-widget-input input:focus {
+        border-color: #667eea !important;
+    }
+
+    .unity-widget-input button {
+        padding: 12px 24px !important;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+        color: white !important;
+        border: none !important;
+        border-radius: 20px !important;
+        cursor: pointer !important;
+        font-size: 14px !important;
+        font-weight: 500 !important;
+        transition: transform 0.2s ease !important;
+    }
+
+    .unity-widget-input button:hover {
+        transform: translateY(-2px) !important;
+    }
+
+    .unity-widget-message {
+        margin-bottom: 16px !important;
+        max-width: 80% !important;
+    }
+
+    .unity-widget-message.user {
+        margin-left: auto !important;
+        text-align: right !important;
+    }
+
+    .unity-widget-message.assistant {
+        margin-right: auto !important;
+        text-align: left !important;
+    }
+
+    .unity-widget-message-content {
+        padding: 12px 16px !important;
+        border-radius: 16px !important;
+        font-size: 14px !important;
+        line-height: 1.4 !important;
+    }
+
+    .unity-widget-message.user .unity-widget-message-content {
+        background: #667eea !important;
+        color: white !important;
+    }
+
+    .unity-widget-message.assistant .unity-widget-message-content {
+        background: #e9ecef !important;
+        color: #495057 !important;
+    }
+</style>
+
+<button class="unity-widget-button" id="unityWidgetButton" title="AI Консультант">
+    🤖
+</button>
+
+<div class="unity-widget-chat" id="unityWidgetChat">
+    <div class="unity-widget-header">
+        <span>🤖 AI Консультант по клубам</span>
+        <button class="unity-widget-close" id="unityWidgetClose">✕</button>
+    </div>
+    <div class="unity-widget-messages" id="unityWidgetMessages">
+        <div class="unity-widget-message assistant">
+            <div class="unity-widget-message-content">
+                👋 Здравствуйте! Я AI консультант по созданию фан-клубов. Чем могу помочь?
+            </div>
+        </div>
+    </div>
+    <div class="unity-widget-input">
+        <input type="text" id="unityWidgetInput" placeholder="Введите сообщение..." maxlength="500">
+        <button id="unityWidgetSend">Отправить</button>
+    </div>
+</div>
+
+<script>
+    // ИСПРАВЛЕННЫЙ HTTPS JavaScript
+    (function() {
+        'use strict';
+
+        // Проверяем, загружен ли DOM
+        function ready(fn) {
+            if (document.readyState !== 'loading') {
+                fn();
+            } else {
+                document.addEventListener('DOMContentLoaded', fn);
+            }
+        }
+
+        // Функции виджета
+        function openWidget() {
+            console.log('✅ Unity Widget: Открываем виджет');
+            const chat = document.getElementById('unityWidgetChat');
+            if (chat) {
+                chat.style.display = 'flex';
+                setTimeout(() => {
+                    const input = document.getElementById('unityWidgetInput');
+                    if (input) {
+                        input.focus();
+                    }
+                }, 100);
+            }
+        }
+
+        function closeWidget() {
+            console.log('✅ Unity Widget: Закрываем виджет');
+            const chat = document.getElementById('unityWidgetChat');
+            if (chat) {
+                chat.style.display = 'none';
+            }
+        }
+
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendWidgetMessage();
+            }
+        }
+
+        async function sendWidgetMessage() {
+            const input = document.getElementById('unityWidgetInput');
+            const messagesDiv = document.getElementById('unityWidgetMessages');
+            const userMessage = input.value.trim();
+
+            if (!userMessage) return;
+
+            console.log('✅ Unity Widget: Отправляем сообщение:', userMessage);
+
+            // Добавляем сообщение пользователя
+            messagesDiv.innerHTML += `
+                <div class="unity-widget-message user">
+                    <div class="unity-widget-message-content">${escapeHtml(userMessage)}</div>
+                </div>
+            `;
+
+            input.value = '';
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+
+            // Показываем "набирает сообщение"
+            const typingDiv = document.createElement('div');
+            typingDiv.className = 'unity-widget-message assistant';
+            typingDiv.innerHTML = '<div class="unity-widget-message-content">🤖 Печатает...</div>';
+            typingDiv.id = 'unityWidgetTyping';
+            messagesDiv.appendChild(typingDiv);
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+
+            try {
+                // ОПРЕДЕЛЯЕМ ПРАВИЛЬНЫЙ URL ДЛЯ HTTPS
+                const protocol = window.location.protocol;
+                const host = window.location.host;
+                const apiUrl = `${protocol}//${host}/api/v1/ai/production/agent/`;
+
+                console.log('✅ Unity Widget: Отправляем запрос на:', apiUrl);
+
+                // Отправляем запрос к API
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': getCsrfToken()
+                    },
+                    body: JSON.stringify({
+                        message: userMessage,
+                        session_id: 'widget_' + Math.random().toString(36).substr(2, 9)
+                    })
+                });
+
+                console.log('✅ Unity Widget: Получен ответ:', response.status);
+
+                // Убираем "набирает сообщение"
+                const typingIndicator = document.getElementById('unityWidgetTyping');
+                if (typingIndicator) {
+                    typingIndicator.remove();
+                }
+
+                if (response.ok) {
+                    const data = await response.json();
+                    console.log('✅ Unity Widget: Данные получены:', data);
+
+                    if (data.success) {
+                        const botResponse = data.response || '🤖 Ответ от AI';
+
+                        // Добавляем ответ AI
+                        messagesDiv.innerHTML += `
+                            <div class="unity-widget-message assistant">
+                                <div class="unity-widget-message-content">${escapeHtml(botResponse)}</div>
+                            </div>
+                        `;
+                    } else {
+                        throw new Error(data.error || 'AI error');
+                    }
+                } else {
+                    throw new Error('API error: ' + response.status);
+                }
+            } catch (error) {
+                console.error('❌ Unity Widget: Ошибка:', error);
+
+                // Убираем "набирает сообщение"
+                const typingIndicator = document.getElementById('unityWidgetTyping');
+                if (typingIndicator) {
+                    typingIndicator.remove();
+                }
+
+                // Показываем ошибку
+                messagesDiv.innerHTML += `
+                    <div class="unity-widget-message assistant">
+                        <div class="unity-widget-message-content">❌ Ошибка соединения. Проверьте интернет или попробуйте позже.</div>
+                    </div>
+                `;
+            }
+
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        function getCsrfToken() {
+            const token = document.querySelector('[name=csrfmiddlewaretoken]');
+            if (!token) {
+                const meta = document.querySelector('meta[name="csrf-token"]');
+                return meta ? meta.getAttribute('content') : '';
+            }
+            return token.value;
+        }
+
+        // Инициализация виджета
+        function initWidget() {
+            console.log('✅ Unity Widget: Инициализация виджета');
+
+            const button = document.getElementById('unityWidgetButton');
+            const chat = document.getElementById('unityWidgetChat');
+            const closeBtn = document.getElementById('unityWidgetClose');
+            const sendBtn = document.getElementById('unityWidgetSend');
+
+            if (!button || !chat) {
+                console.error('❌ Unity Widget: Элементы виджета не найдены');
+                return;
+            }
+
+            console.log('✅ Unity Widget: Элементы найдены, назначаем обработчики');
+
+            // Назначаем обработчики
+            button.onclick = openWidget;
+            if (closeBtn) closeBtn.onclick = closeWidget;
+            if (sendBtn) sendBtn.onclick = sendWidgetMessage;
+
+            // Добавляем обработчик Enter для input
+            const input = document.getElementById('unityWidgetInput');
+            if (input) {
+                input.addEventListener('keypress', handleKeyPress);
+            }
+
+            // Проверяем, что обработчики назначены
+            console.log('✅ Unity Widget: Обработчики назначены');
+            console.log('   - Кнопка:', button.onclick ? 'назначена' : 'не назначена');
+            console.log('   - Закрытие:', closeBtn ? 'назначено' : 'не назначено');
+            console.log('   - Отправка:', sendBtn ? 'назначено' : 'не назначено');
+        }
+
+        // Запускаем инициализацию
+        ready(initWidget);
+
+        // Делаем функции доступными глобально для отладки
+        window.unityWidget = {
+            open: openWidget,
+            close: closeWidget,
+            send: sendWidgetMessage,
+            init: initWidget
+        };
+
+        console.log('✅ Unity Widget: Система виджета загружена');
+    })();
+</script>

@@ -1,0 +1,228 @@
+<!-- STANDALONE AI CHAT WIDGET -->
+<style>
+    /* Standalone Widget Styles */
+    .ai-chat-standalone-button {
+        position: fixed !important;
+        bottom: 30px !important;
+        right: 30px !important;
+        z-index: 9999 !important;
+        width: 64px;
+        height: 64px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+        border: none;
+        color: white;
+        font-size: 28px;
+        cursor: pointer;
+        box-shadow: 0 10px 30px rgba(99, 102, 241, 0.4);
+        transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+    }
+
+    .ai-chat-standalone-button:hover {
+        transform: scale(1.1) rotate(5deg);
+        box-shadow: 0 15px 40px rgba(99, 102, 241, 0.6);
+    }
+
+    .ai-chat-standalone-button:active {
+        transform: scale(0.95) rotate(-2deg);
+    }
+</style>
+
+<button class="ai-chat-standalone-button" onclick="openAISimpleChat()" title="AI Консультант">
+    💬
+</button>
+
+<script>
+function openAISimpleChat() {
+    // Простой виджет для тестирования
+    const widgetHTML = `
+    <div id="simple-ai-widget" style="
+        position: fixed;
+        bottom: 100px;
+        right: 30px;
+        width: 400px;
+        height: 500px;
+        background: white;
+        border-radius: 16px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        z-index: 10000;
+        display: flex;
+        flex-direction: column;
+        font-family: Arial, sans-serif;
+    ">
+        <div style="
+            background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+            color: white;
+            padding: 15px;
+            border-radius: 16px 16px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        ">
+            <h3 style="margin: 0; font-size: 16px;">🤖 AI Консультант</h3>
+            <button onclick="closeSimpleWidget()" style="
+                background: rgba(255,255,255,0.2);
+                border: none;
+                color: white;
+                width: 30px;
+                height: 30px;
+                border-radius: 50%;
+                cursor: pointer;
+            ">✕</button>
+        </div>
+        <div id="simple-chat-messages" style="
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+            background: #f8f9fa;
+        ">
+            <div style="margin-bottom: 10px;">
+                <strong>🤖 AI:</strong><br>
+                👋 Здравствуйте! Я AI консультант по созданию фан-клубов. Чем могу помочь?
+            </div>
+        </div>
+        <div style="
+            padding: 15px;
+            background: white;
+            border-radius: 0 0 16px 16px;
+            display: flex;
+            gap: 10px;
+        ">
+            <input
+                id="simple-chat-input"
+                type="text"
+                placeholder="Введите сообщение..."
+                onkeypress="handleKeyPress(event)"
+                style="
+                    flex: 1;
+                    padding: 10px;
+                    border: 1px solid #ddd;
+                    border-radius: 8px;
+                    outline: none;
+                "
+            />
+            <button
+                onclick="sendSimpleMessage()"
+                style="
+                    padding: 10px 20px;
+                    background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+                    color: white;
+                    border: none;
+                    border-radius: 8px;
+                    cursor: pointer;
+                    white-space: nowrap;
+                "
+            >
+                Отправить
+            </button>
+        </div>
+    </div>
+    `;
+
+    // Добавляем виджет в DOM
+    if (!document.getElementById('simple-ai-widget')) {
+        document.body.insertAdjacentHTML('beforeend', widgetHTML);
+    }
+}
+
+function closeSimpleWidget() {
+    const widget = document.getElementById('simple-ai-widget');
+    if (widget) {
+        widget.remove();
+    }
+}
+
+function handleKeyPress(event) {
+    if (event.key === 'Enter') {
+        sendSimpleMessage();
+    }
+}
+
+async function sendSimpleMessage() {
+    const input = document.getElementById('simple-chat-input');
+    const messagesDiv = document.getElementById('simple-chat-messages');
+    const userMessage = input.value.trim();
+
+    if (!userMessage) return;
+
+    // Добавляем сообщение пользователя
+    messagesDiv.innerHTML += `
+        <div style="margin-bottom: 10px; text-align: right;">
+            <strong>👤 Вы:</strong><br>
+            ${userMessage}
+        </div>
+    `;
+
+    input.value = '';
+    messagesDiv.scrollTop = messagesDiv.scrollHeight;
+
+    // Показываем "набирает сообщение"
+    const typingDiv = document.createElement('div');
+    typingDiv.id = 'typing-indicator';
+    typingDiv.innerHTML = `
+        <div style="margin-bottom: 10px;">
+            <strong>🤖 AI:</strong><br>
+            🔄 Обрабатываю запрос...
+        </div>
+    `;
+    messagesDiv.appendChild(typingDiv);
+    messagesDiv.scrollTop = messagesDiv.scrollHeight;
+
+    try {
+        // Отправляем запрос к API
+        const response = await fetch('/api/v1/ai/simple-chat/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]')?.value || ''
+            },
+            body: JSON.stringify({
+                message: userMessage,
+                user_email: 'test@example.com'
+            })
+        });
+
+        // Убираем "набирает сообщение"
+        const typingIndicator = document.getElementById('typing-indicator');
+        if (typingIndicator) {
+            typingIndicator.remove();
+        }
+
+        if (response.ok) {
+            const data = await response.json();
+            const botResponse = data.response || '🤖 Ответ от AI';
+
+            // Добавляем ответ AI
+            messagesDiv.innerHTML += `
+                <div style="margin-bottom: 10px;">
+                    <strong>🤖 AI:</strong><br>
+                    ${botResponse}
+                </div>
+            `;
+        } else {
+            throw new Error('API error');
+        }
+    } catch (error) {
+        // Убираем "набирает сообщение"
+        const typingIndicator = document.getElementById('typing-indicator');
+        if (typingIndicator) {
+            typingIndicator.remove();
+        }
+
+        // Показываем ошибку
+        messagesDiv.innerHTML += `
+            <div style="margin-bottom: 10px; color: red;">
+                <strong>🤖 AI:</strong><br>
+                ❌ Ошибка соединения. Попробуйте позже.
+            </div>
+        `;
+    }
+
+    messagesDiv.scrollTop = messagesDiv.scrollHeight;
+}
+</script>
